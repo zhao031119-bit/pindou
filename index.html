@@ -3,84 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>拼豆星球 UI Preview</title>
-    <link rel="stylesheet" href="/preview/styles.css">
+    <title>拼豆星球 v0 工作台</title>
   </head>
   <body>
-    <main class="app-shell" aria-label="拼豆星球预览">
-      <section class="phone" aria-label="首页">
-        <div class="safe-row">
-          <div class="brand">
-            <span class="brand-dot"></span>
-            <span>拼豆星球</span>
-          </div>
-          <button class="icon-button" aria-label="我的作品">
-            <span class="grid-icon"></span>
-          </button>
-        </div>
-
-        <header class="hero">
-          <p>下午好，小南瓜</p>
-          <h1>今天想<span>拼点</span>什么呢?</h1>
-        </header>
-
-        <section class="bento" aria-label="功能入口">
-          <button class="card card-hero">
-            <span class="glow glow-clay"></span>
-            <img src="/miniprogram/assets/home/card-generate.png" alt="" class="asset asset-generate">
-            <span class="copy">
-              <span class="pin pin-clay"></span>
-              <strong>生成图纸</strong>
-              <small>照片转拼豆像素图</small>
-            </span>
-          </button>
-
-          <button class="card card-square">
-            <span class="glow glow-mint"></span>
-            <img src="/miniprogram/assets/home/card-pick.png" alt="" class="asset asset-pick">
-            <span class="copy">
-              <span class="pin pin-mint"></span>
-              <strong>识别色号</strong>
-              <small>点击图片找相近豆色</small>
-            </span>
-          </button>
-
-          <button class="card card-square">
-            <span class="glow glow-butter"></span>
-            <img src="/miniprogram/assets/home/card-extract.png" alt="" class="asset asset-extract">
-            <span class="copy">
-              <span class="pin pin-butter"></span>
-              <strong>提取色号</strong>
-              <small>批量整理用豆清单</small>
-            </span>
-          </button>
-
-          <button class="card card-wide">
-            <span class="glow glow-berry"></span>
-            <img src="/miniprogram/assets/home/card-draw.png" alt="" class="asset asset-draw">
-            <span class="copy">
-              <span class="pin pin-berry"></span>
-              <strong>画豆图</strong>
-              <small>自由创作像素图纸</small>
-            </span>
-          </button>
-        </section>
-
-        <section class="draft">
-          <div class="draft-thumb">
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-          </div>
-          <div class="draft-copy">
-            <small>继续草稿</small>
-            <strong>草莓钥匙扣图纸</strong>
-            <div class="progress"><span></span></div>
-          </div>
-          <span class="chevron"></span>
-        </section>
-      </section>
-    </main>
+    <div id="root"></div>
+    <script type="module" src="/v0-app/src/main.jsx"></script>
   </body>
 </html>
