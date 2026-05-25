@@ -1,9 +1,21 @@
-import { Eye, ImageUp } from 'lucide-react';
+import { Eye, ImageUp, Check } from 'lucide-react';
 import BottomActionBar from '../components/BottomActionBar.jsx';
+import StepIndicator from '../components/StepIndicator.jsx';
+import SectionTitle from '../components/SectionTitle.jsx';
+
+const flowSteps = [
+  { id: 'upload', label: '裁剪' },
+  { id: 'size', label: '尺寸' },
+  { id: 'result', label: '图纸' }
+];
 
 export default function Upload({ goTo }) {
   return (
     <div className="page flow-page">
+      <StepIndicator steps={flowSteps} current="upload" />
+
+      <SectionTitle tone="clay" label="主体取景" hint="单指拖动，双指缩放，框选要拼的区域" />
+
       <section className="crop-stage">
         <div className="photo-surface">
           <div className="pixel-photo">
@@ -17,8 +29,9 @@ export default function Upload({ goTo }) {
             <i />
             <i />
           </div>
-          <button className="floating-eye" type="button" aria-label="查看原图">
-            <Eye size={18} />
+          <button className="floating-eye" type="button">
+            <Eye size={14} />
+            <span>原图</span>
           </button>
           <span className="crop-corner top-left" />
           <span className="crop-corner top-right" />
@@ -27,17 +40,26 @@ export default function Upload({ goTo }) {
         </div>
       </section>
 
-      <section className="panel compact-panel">
-        <div>
-          <strong>手动调整主体</strong>
-          <small>单指拖动位置，双指缩放到合适画面</small>
-        </div>
-        <span className="tag">4:5 推荐</span>
+      <section className="ratio-row">
+        {[
+          { id: '1:1', label: '1 : 1', hint: '头像' },
+          { id: '4:5', label: '4 : 5', hint: '推荐', active: true },
+          { id: 'free', label: '自由', hint: '裁切' }
+        ].map((ratio) => (
+          <button
+            className={ratio.active ? 'ratio-pill active' : 'ratio-pill'}
+            key={ratio.id}
+            type="button"
+          >
+            <strong>{ratio.label}</strong>
+            <span>{ratio.hint}</span>
+          </button>
+        ))}
       </section>
 
       <BottomActionBar
         secondary={{ label: '换图片', icon: <ImageUp size={18} /> }}
-        primary={{ label: '确认裁剪', icon: <ImageUp size={18} />, onClick: () => goTo('size') }}
+        primary={{ label: '确认裁剪', icon: <Check size={18} />, onClick: () => goTo('size') }}
       />
     </div>
   );
