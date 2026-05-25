@@ -5,12 +5,14 @@
   "description": "拼豆图纸助手微信小程序",
   "type": "commonjs",
   "scripts": {
-    "dev": "node scripts/preview-server.mjs",
-    "build": "node scripts/build-preview.mjs",
-    "preview": "node scripts/preview-server.mjs dist",
-    "test": "node tests/color.test.js && node tests/palette.test.js && node tests/pattern.test.js && node tests/render.test.js && node tests/draw.test.js && node tests/store.test.js && node tests/size-recommendation.test.js && node tests/palette-icons.test.js",
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build && node scripts/copy-preview-assets.mjs",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node tests/color.test.js && node tests/palette.test.js && node tests/pattern.test.js && node tests/render.test.js && node tests/draw.test.js && node tests/store.test.js && node tests/size-recommendation.test.js && node tests/palette-icons.test.js && node tests/preview-config.test.js",
     "check:pages": "node scripts/check-pages.mjs",
     "build:palettes": "node scripts/fetch-palettes.mjs"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "vite": "^8.0.14"
+  }
 }
