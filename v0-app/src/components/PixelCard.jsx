@@ -4,7 +4,7 @@ export default function PixelCard({ card, onClick }) {
   return (
     <button className={`pixel-card ${card.size} tone-${card.tone}`} type="button" onClick={onClick}>
       <span className="card-glow" />
-      <CardMotif size={card.size} />
+      <CardMotif cardId={card.id} size={card.size} />
       <span className="card-copy">
         <span className="accent-dot" />
         <strong>{card.title}</strong>

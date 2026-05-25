@@ -833,53 +833,56 @@ button {
   display: grid;
   z-index: 1;
   pointer-events: none;
-  right: 22px;
-  top: 22px;
-  gap: 4px;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  gap: 1px;
+  opacity: 0.9;
 }
 
 .card-motif i {
   display: block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-image: radial-gradient(
-    circle at 30% 26%,
-    rgba(255, 255, 255, 0.55) 0%,
-    rgba(255, 255, 255, 0.18) 24%,
-    transparent 52%
-  );
-  box-shadow:
-    inset 0 -2px 3px rgba(42, 31, 23, 0.28),
-    inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  width: 7px;
+  height: 7px;
+  border-radius: 0;
+  background-image: none;
+  box-shadow: none;
 }
 
 .card-motif .mt-empty {
   background: transparent;
-  box-shadow: none;
 }
 
-.card-motif-hero i { width: 16px; height: 16px; }
-.card-motif-hero { gap: 5px; right: 26px; top: 26px; }
+/* Hero card uses larger pixels and sits in upper-right corner */
+.card-motif-hero {
+  right: 22px;
+  top: 22px;
+  transform: none;
+  gap: 1px;
+}
+.card-motif-hero i { width: 9px; height: 9px; }
 
-.card-motif-wide i { width: 14px; height: 14px; }
-.card-motif-wide { gap: 5px; right: 26px; top: 50%; transform: translateY(-50%); }
+/* Wide card pixels stay vertically centered */
+.card-motif-wide i { width: 7px; height: 7px; }
+.card-motif-wide { gap: 1px; right: 18px; }
 
-/* Tone-driven bead colors */
-.tone-clay .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--clay) 35%, var(--paper)); }
-.tone-clay .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--clay) 65%, var(--paper)); }
+/* Tone-driven hard-edge pixel colors. mt-l4 = outline (charcoal). */
+.card-motif .mt-l4 { background-color: var(--charcoal); }
+
+.tone-clay .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--clay) 28%, var(--paper)); }
+.tone-clay .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--clay) 58%, var(--paper)); }
 .tone-clay .card-motif .mt-l3 { background-color: var(--clay); }
 
-.tone-mint .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--mint) 30%, var(--paper)); }
-.tone-mint .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--mint) 60%, var(--paper)); }
+.tone-mint .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--mint) 26%, var(--paper)); }
+.tone-mint .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--mint) 55%, var(--paper)); }
 .tone-mint .card-motif .mt-l3 { background-color: var(--mint); }
 
-.tone-butter .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--butter) 35%, var(--paper)); }
-.tone-butter .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--butter) 65%, var(--paper)); }
+.tone-butter .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--butter) 30%, var(--paper)); }
+.tone-butter .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--butter) 60%, var(--paper)); }
 .tone-butter .card-motif .mt-l3 { background-color: var(--butter); }
 
-.tone-berry .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--berry) 30%, var(--paper)); }
-.tone-berry .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--berry) 55%, var(--paper)); }
+.tone-berry .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--berry) 28%, var(--paper)); }
+.tone-berry .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--berry) 52%, var(--paper)); }
 .tone-berry .card-motif .mt-l3 { background-color: var(--berry); }
 
 .card-copy {
