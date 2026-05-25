@@ -4,63 +4,81 @@ export const pageRegistry = [
     label: '首页',
     title: '拼豆星球',
     subtitle: '功能入口与作品草稿',
-    miniapp: 'pages/home/home'
+    miniapp: 'pages/home/home',
+    tone: 'clay',
+    glyph: '◆'
   },
   {
     id: 'upload',
     label: '上传',
     title: '裁剪图片',
     subtitle: '拖动、缩放、确认主体',
-    miniapp: 'pages/upload/upload'
+    miniapp: 'pages/upload/upload',
+    tone: 'sky',
+    glyph: '◐'
   },
   {
     id: 'size',
     label: '尺寸',
     title: '图纸尺寸',
     subtitle: '自定义宽高与智能建议',
-    miniapp: 'pages/size/size'
+    miniapp: 'pages/size/size',
+    tone: 'butter',
+    glyph: '▦'
   },
   {
     id: 'result',
     label: '图纸',
     title: '生成图纸',
     subtitle: '预览、色卡与保存',
-    miniapp: 'pages/result/result'
+    miniapp: 'pages/result/result',
+    tone: 'clay',
+    glyph: '✦'
   },
   {
     id: 'pick',
     label: '识色',
     title: '识别色号',
     subtitle: '取样点、放大镜、品牌色卡',
-    miniapp: 'pages/pick/pick'
+    miniapp: 'pages/pick/pick',
+    tone: 'mint',
+    glyph: '◉'
   },
   {
     id: 'extract',
     label: '提取',
     title: '提取色号',
     subtitle: '批量提取用豆清单',
-    miniapp: 'pages/extract/extract'
+    miniapp: 'pages/extract/extract',
+    tone: 'butter',
+    glyph: '⏃'
   },
   {
     id: 'draw',
     label: '画图',
     title: '画豆图',
     subtitle: '低延迟像素网格编辑',
-    miniapp: 'pages/draw/draw'
+    miniapp: 'pages/draw/draw',
+    tone: 'berry',
+    glyph: '✎'
   },
   {
     id: 'projects',
     label: '作品',
     title: '我的作品',
     subtitle: '本地作品列表',
-    miniapp: 'pages/projects/projects'
+    miniapp: 'pages/projects/projects',
+    tone: 'mint',
+    glyph: '☷'
   },
   {
     id: 'detail',
     label: '详情',
     title: '作品详情',
     subtitle: '图纸、用豆和导出',
-    miniapp: 'pages/detail/detail'
+    miniapp: 'pages/detail/detail',
+    tone: 'clay',
+    glyph: '◆'
   }
 ];
 

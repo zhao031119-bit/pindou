@@ -1,27 +1,30 @@
-import { ArrowLeft, Home, MoreHorizontal } from 'lucide-react';
+import { ArrowLeft, MoreHorizontal } from 'lucide-react';
 
 export default function AppHeader({ page, onHome }) {
+  const isHome = page.id === 'home';
+
   return (
-    <header className="app-header">
-      <div className="header-side">
-        {page.id === 'home' ? (
-          <button className="icon-button" type="button" aria-label="更多">
-            <MoreHorizontal size={20} />
-          </button>
-        ) : (
-          <button className="icon-button" type="button" aria-label="返回">
-            <ArrowLeft size={20} />
-          </button>
-        )}
+    <header className={`app-header tone-${page.tone || 'clay'}`}>
+      <button
+        className="header-leading"
+        type="button"
+        aria-label={isHome ? '更多' : '返回'}
+        onClick={isHome ? undefined : onHome}
+      >
+        {isHome ? <MoreHorizontal size={18} strokeWidth={2.4} /> : <ArrowLeft size={18} strokeWidth={2.4} />}
+      </button>
+
+      <div className="header-identity">
+        <span className="header-eyebrow" aria-hidden="true">
+          <i className="header-tone-dot" />
+          <em>{page.label}</em>
+          <span className="header-glyph">{page.glyph}</span>
+        </span>
+        <strong className="header-title-text">{page.title}</strong>
       </div>
-      <div className="header-title">
-        <strong>{page.title}</strong>
-        <span>{page.subtitle}</span>
-      </div>
-      <div className="header-side right">
-        <button className="icon-button" type="button" aria-label="回到首页" onClick={onHome}>
-          <Home size={19} />
-        </button>
+
+      <div className="header-trailing">
+        <span className="header-page-no" aria-hidden="true">{page.miniapp.split('/')[1] || page.id}</span>
       </div>
     </header>
   );
