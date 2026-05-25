@@ -12,20 +12,8 @@ export default function Projects({ goTo }) {
   return (
     <div className="page flow-page">
       <SectionTitle
-        tone="clay"
         label="我的作品"
-        hint={projects.length ? `${projects.length} 个本地草稿` : '还没有保存过作品'}
-        action={
-          <button
-            className={showEmpty ? 'section-toggle active' : 'section-toggle'}
-            type="button"
-            onClick={() => setShowEmpty((v) => !v)}
-            aria-label="切换空状态预览"
-          >
-            <Search size={12} />
-            <span>{showEmpty ? '空状态' : '空态预览'}</span>
-          </button>
-        }
+        action={<span>{projects.length ? `${projects.length} 个` : '空'}</span>}
       />
 
       {projects.length === 0 ? (
@@ -65,6 +53,15 @@ export default function Projects({ goTo }) {
           ))}
         </section>
       )}
+
+      <button
+        type="button"
+        className={showEmpty ? 'dev-chip active' : 'dev-chip'}
+        onClick={() => setShowEmpty((v) => !v)}
+      >
+        <Search size={11} />
+        <span>{showEmpty ? '空状态' : '空态'}</span>
+      </button>
     </div>
   );
 }

@@ -20,27 +20,11 @@ export default function Extract() {
 
   return (
     <div className="page flow-page">
-      <SectionTitle
-        tone="butter"
-        label="批量提取完成"
-        hint="识别到 18 个主要颜色，已合并相近豆色"
-        action={
-          <button
-            className={loading ? 'section-toggle active' : 'section-toggle'}
-            type="button"
-            onClick={() => setLoading((v) => !v)}
-          >
-            <Loader size={12} />
-            <span>{loading ? '提取中' : '提取中态'}</span>
-          </button>
-        }
-      />
-
       {loading ? (
         <LoadingPixels label="正在批量提取" hint="逐像素聚类、合并相近豆色…" />
       ) : (
         <>
-          <section className="extract-summary fade-in">
+          <section className="card-feature extract-summary fade-in">
             <PixelPreview cells={flowerPattern} columns={8} />
             <div>
               <strong>192 颗 · 5 主色</strong>
@@ -48,7 +32,7 @@ export default function Extract() {
             </div>
           </section>
 
-          <SectionTitle tone="berry" label="色卡频率" hint="占比从高到低排列" />
+          <SectionTitle label="色卡频率" action={<span>占比从高到低</span>} />
 
           <section className="freq-list stagger-in">
             {distribution.map((item, index) => (
@@ -72,7 +56,7 @@ export default function Extract() {
             ))}
           </section>
 
-          <SectionTitle tone="clay" label="可匹配品牌" hint="点选切换匹配清单" />
+          <SectionTitle label="可匹配品牌" />
 
           <section className="palette-cards">
             {palettes.slice(0, 3).map((palette) => (
@@ -90,6 +74,15 @@ export default function Extract() {
           </section>
         </>
       )}
+
+      <button
+        type="button"
+        className={loading ? 'dev-chip active' : 'dev-chip'}
+        onClick={() => setLoading((v) => !v)}
+      >
+        <Loader size={11} />
+        <span>{loading ? '提取中' : '加载态'}</span>
+      </button>
     </div>
   );
 }

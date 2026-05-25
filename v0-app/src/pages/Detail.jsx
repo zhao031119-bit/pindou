@@ -21,7 +21,7 @@ export default function Detail() {
 
   return (
     <div className="page flow-page">
-      <section className="detail-hero">
+      <section className="card-feature detail-hero">
         <PixelPreview cells={project.cells} columns={8} />
         <div>
           <strong>{project.name}</strong>
@@ -48,7 +48,7 @@ export default function Detail() {
         ))}
       </section>
 
-      <SectionTitle tone="clay" label="豆子清单" hint="按用量排序" />
+      <SectionTitle label="豆子清单" />
       <section className="bead-list">
         {beads.map((b) => (
           <div className="bead-row" key={b.name}>
@@ -59,7 +59,7 @@ export default function Detail() {
         ))}
       </section>
 
-      <SectionTitle tone="mint" label="最近修改" />
+      <SectionTitle label="最近修改" />
       <section className="history-list">
         {history.map((h) => (
           <div className="history-row" key={h.time}>

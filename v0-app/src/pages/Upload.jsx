@@ -18,25 +18,9 @@ export default function Upload({ goTo }) {
     <div className="page flow-page">
       <StepIndicator steps={flowSteps} current="upload" />
 
-      <SectionTitle
-        tone="clay"
-        label="主体取景"
-        hint={hasImage ? '单指拖动，双指缩放，框选要拼的区域' : '从相册或拍照选取一张图开始'}
-        action={
-          <button
-            className={hasImage ? 'section-toggle' : 'section-toggle active'}
-            type="button"
-            onClick={() => setHasImage((v) => !v)}
-          >
-            <ImageIcon size={12} />
-            <span>{hasImage ? '空态预览' : '已选图'}</span>
-          </button>
-        }
-      />
-
       {hasImage ? (
         <>
-          <section className="crop-stage fade-in">
+          <section className="card-feature crop-stage fade-in">
             <div className="photo-surface">
               <div className="pixel-photo">
                 <i />
@@ -49,8 +33,8 @@ export default function Upload({ goTo }) {
                 <i />
                 <i />
               </div>
-              <button className="floating-eye" type="button">
-                <Eye size={14} />
+              <button className="floating-chip" type="button">
+                <Eye size={13} />
                 <span>原图</span>
               </button>
               <span className="crop-corner top-left" />
@@ -59,6 +43,8 @@ export default function Upload({ goTo }) {
               <span className="crop-corner bottom-right" />
             </div>
           </section>
+
+          <SectionTitle label="裁剪比例" />
 
           <section className="ratio-row stagger-in">
             {[
@@ -91,6 +77,15 @@ export default function Upload({ goTo }) {
           }
         />
       )}
+
+      <button
+        type="button"
+        className={hasImage ? 'dev-chip' : 'dev-chip active'}
+        onClick={() => setHasImage((v) => !v)}
+      >
+        <ImageIcon size={11} />
+        <span>{hasImage ? '空态' : '已选图'}</span>
+      </button>
 
       <BottomActionBar
         secondary={{ label: '换图片', icon: <ImageUp size={18} /> }}

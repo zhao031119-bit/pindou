@@ -1,22 +1,21 @@
-import { Check } from 'lucide-react';
-
 export default function StepIndicator({ steps, current }) {
   const currentIndex = steps.findIndex((s) => s.id === current);
+  const total = steps.length;
+  const ratio = ((currentIndex + 1) / total) * 100;
+  const currentStep = steps[currentIndex];
 
   return (
     <nav className="step-indicator" aria-label="流程进度">
-      {steps.map((step, index) => {
-        const state = index < currentIndex ? 'done' : index === currentIndex ? 'active' : 'todo';
-        return (
-          <div className={`step-node step-${state}`} key={step.id}>
-            <span className="step-dot">
-              {state === 'done' ? <Check size={12} strokeWidth={3} /> : <i />}
-            </span>
-            <span className="step-label">{step.label}</span>
-            {index < steps.length - 1 ? <span className="step-line" /> : null}
-          </div>
-        );
-      })}
+      <div className="step-meta">
+        <span className="step-counter">
+          {String(currentIndex + 1).padStart(2, '0')}
+          <em>/ {String(total).padStart(2, '0')}</em>
+        </span>
+        <span className="step-current">{currentStep?.label}</span>
+      </div>
+      <div className="step-track" role="progressbar" aria-valuenow={ratio} aria-valuemin={0} aria-valuemax={100}>
+        <span className="step-fill" style={{ width: `${ratio}%` }} />
+      </div>
     </nav>
   );
 }

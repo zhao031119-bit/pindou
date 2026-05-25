@@ -12,23 +12,7 @@ export default function Pick() {
 
   return (
     <div className="page flow-page">
-      <SectionTitle
-        tone="clay"
-        label="拖动取色"
-        hint="移动放大镜，对准要识别的位置"
-        action={
-          <button
-            className={loading ? 'section-toggle active' : 'section-toggle'}
-            type="button"
-            onClick={() => setLoading((v) => !v)}
-          >
-            <Loader size={12} />
-            <span>{loading ? '识别中' : '识别中态'}</span>
-          </button>
-        }
-      />
-
-      <section className="pick-stage">
+      <section className="card-feature pick-stage">
         <div className="sample-image">
           <span className="loupe">
             <Search size={20} />
@@ -47,9 +31,7 @@ export default function Pick() {
       </section>
 
       <SectionTitle
-        tone="mint"
         label="匹配色号"
-        hint="按相似度排序，已合并相近豆色"
         action={<span>{loading ? '搜索中' : `${beadMatches.length} 项`}</span>}
       />
 
@@ -80,6 +62,15 @@ export default function Pick() {
           })}
         </section>
       )}
+
+      <button
+        type="button"
+        className={loading ? 'dev-chip active' : 'dev-chip'}
+        onClick={() => setLoading((v) => !v)}
+      >
+        <Loader size={11} />
+        <span>{loading ? '识别中' : '加载态'}</span>
+      </button>
     </div>
   );
 }

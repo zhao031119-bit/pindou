@@ -31,40 +31,23 @@ export default function Result() {
     <div className="page flow-page">
       <StepIndicator steps={flowSteps} current="result" />
 
-      <SectionTitle
-        tone="berry"
-        label={loading ? '生成中' : '生成完成'}
-        hint="48 × 60 颗 · 5 种颜色"
-        action={
-          <button
-            className={loading ? 'section-toggle active' : 'section-toggle'}
-            type="button"
-            onClick={() => setLoading((v) => !v)}
-          >
-            <Loader size={12} />
-            <span>{loading ? '生成中' : '生成态'}</span>
-          </button>
-        }
-      />
-
       {loading ? (
         <LoadingPixels label="正在生成图纸" hint="像素聚类、色号匹配、生成清单…" />
       ) : (
         <>
-          <section className="result-preview fade-in">
-            <button className="floating-eye" type="button">
-              <Eye size={14} />
+          <section className="card-feature result-preview fade-in">
+            <button className="floating-chip" type="button">
+              <Eye size={13} />
               <span>放大</span>
             </button>
             <PixelPreview cells={strawberryPattern} columns={8} />
+            <div className="result-caption">
+              <strong>48 × 60 颗 · 5 色</strong>
+              <span>合计 {total} 颗</span>
+            </div>
           </section>
 
-          <SectionTitle
-            tone="clay"
-            label="可选色卡"
-            hint="切换品牌后下方清单会自动更新"
-            action={<span>3 个品牌</span>}
-          />
+          <SectionTitle label="可选色卡" action={<span>3 个品牌</span>} />
 
           <section className="palette-row">
             {palettes.map((palette, index) => (
@@ -75,12 +58,7 @@ export default function Result() {
             ))}
           </section>
 
-          <SectionTitle
-            tone="mint"
-            label="豆子清单"
-            hint={`合计 ${total} 颗`}
-            action={<span>导出</span>}
-          />
+          <SectionTitle label="豆子清单" action={<span>导出</span>} />
 
           <section className="bead-list stagger-in">
             {beads.map(([name, color, count], index) => (
@@ -93,6 +71,15 @@ export default function Result() {
           </section>
         </>
       )}
+
+      <button
+        type="button"
+        className={loading ? 'dev-chip active' : 'dev-chip'}
+        onClick={() => setLoading((v) => !v)}
+      >
+        <Loader size={11} />
+        <span>{loading ? '生成中' : '加载态'}</span>
+      </button>
 
       <BottomActionBar
         secondary={{ label: '加入作品', icon: <FolderPlus size={18} /> }}

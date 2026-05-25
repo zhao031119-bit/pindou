@@ -13,27 +13,19 @@ export default function Draw() {
 
   return (
     <div className="page flow-page draw-page">
-      <SectionTitle
-        tone="clay"
-        label="像素画板"
-        hint="单格单击上色，长按可连涂"
-        action={
-          <button
-            type="button"
-            className={showGrid ? 'section-toggle active' : 'section-toggle'}
-            onClick={() => setShowGrid((v) => !v)}
-          >
-            <Grid3x3 size={12} />
-            <span>网格</span>
-          </button>
-        }
-      />
-
-      <section className={showGrid ? 'draw-board' : 'draw-board no-grid'}>
+      <section className={showGrid ? 'card-feature draw-board' : 'card-feature draw-board no-grid'}>
+        <button
+          type="button"
+          className={showGrid ? 'floating-chip active' : 'floating-chip'}
+          onClick={() => setShowGrid((v) => !v)}
+        >
+          <Grid3x3 size={13} />
+          <span>网格</span>
+        </button>
         <PixelPreview cells={flowerPattern} columns={8} />
       </section>
 
-      <SectionTitle tone="mint" label="工具" />
+      <SectionTitle label="工具" />
       <section className="tool-dock">
         <button
           type="button"
@@ -63,7 +55,7 @@ export default function Draw() {
         </button>
       </section>
 
-      <SectionTitle tone="butter" label="调色盘" hint="点选颜色后在画板上涂抹" />
+      <SectionTitle label="调色盘" />
       <section className="color-dock">
         {colors.map((c) => (
           <button

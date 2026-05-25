@@ -34,61 +34,56 @@ export default function Size({ goTo }) {
     <div className="page flow-page">
       <StepIndicator steps={flowSteps} current="size" />
 
-      <SectionTitle tone="butter" label="自定义尺寸" hint="按颗数填写宽高，最大支持 200 × 200" />
-
-      <section className="panel size-panel">
-        <div className="size-inputs">
-          <label>
-            <span>宽 (颗)</span>
-            <div className="stepper">
-              <button type="button" onClick={() => setWidth((v) => Math.max(8, v - 1))} aria-label="减">
-                <Minus size={14} />
-              </button>
-              <input
-                value={width}
-                onChange={(e) => setWidth(Number(e.target.value) || 0)}
-                inputMode="numeric"
-              />
-              <button type="button" onClick={() => setWidth((v) => Math.min(200, v + 1))} aria-label="加">
-                <Plus size={14} />
-              </button>
-            </div>
-          </label>
-          <label>
-            <span>高 (颗)</span>
-            <div className="stepper">
-              <button type="button" onClick={() => setHeight((v) => Math.max(8, v - 1))} aria-label="减">
-                <Minus size={14} />
-              </button>
-              <input
-                value={height}
-                onChange={(e) => setHeight(Number(e.target.value) || 0)}
-                inputMode="numeric"
-              />
-              <button type="button" onClick={() => setHeight((v) => Math.min(200, v + 1))} aria-label="加">
-                <Plus size={14} />
-              </button>
-            </div>
-          </label>
+      <section className="card-feature size-hero">
+        <div className="size-hero-stat">
+          <small>预估颗数</small>
+          <strong>{beadCount.toLocaleString()}</strong>
+          <em>{realCm}</em>
         </div>
-
-        <div className="size-stats">
-          <div>
-            <small>预估颗数</small>
-            <strong>{beadCount.toLocaleString()}</strong>
-          </div>
-          <div>
-            <small>成品尺寸</small>
-            <strong>{realCm}</strong>
-          </div>
-          <div>
-            <small>预估价格</small>
-            <strong>¥{(beadCount * 0.05).toFixed(0)}</strong>
-          </div>
+        <div className="size-hero-aside">
+          <small>预估价格</small>
+          <strong>¥{(beadCount * 0.05).toFixed(0)}</strong>
         </div>
       </section>
 
-      <SectionTitle tone="mint" label="尺寸推荐" hint="按用途选预设，可在上方继续微调" />
+      <SectionTitle label="尺寸" />
+
+      <section className="size-inputs">
+        <label>
+          <span>宽 (颗)</span>
+          <div className="stepper">
+            <button type="button" onClick={() => setWidth((v) => Math.max(8, v - 1))} aria-label="减">
+              <Minus size={14} />
+            </button>
+            <input
+              value={width}
+              onChange={(e) => setWidth(Number(e.target.value) || 0)}
+              inputMode="numeric"
+            />
+            <button type="button" onClick={() => setWidth((v) => Math.min(200, v + 1))} aria-label="加">
+              <Plus size={14} />
+            </button>
+          </div>
+        </label>
+        <label>
+          <span>高 (颗)</span>
+          <div className="stepper">
+            <button type="button" onClick={() => setHeight((v) => Math.max(8, v - 1))} aria-label="减">
+              <Minus size={14} />
+            </button>
+            <input
+              value={height}
+              onChange={(e) => setHeight(Number(e.target.value) || 0)}
+              inputMode="numeric"
+            />
+            <button type="button" onClick={() => setHeight((v) => Math.min(200, v + 1))} aria-label="加">
+              <Plus size={14} />
+            </button>
+          </div>
+        </label>
+      </section>
+
+      <SectionTitle label="尺寸预设" />
 
       <section className="recommend-row">
         {presets.map((item) => (
@@ -104,10 +99,9 @@ export default function Size({ goTo }) {
         ))}
       </section>
 
-      <SectionTitle tone="clay" label="比例预览" hint={`${width} × ${height} 颗`} />
+      <SectionTitle label="比例预览" action={<span>{width} × {height}</span>} />
 
       <section className="preview-board">
-        <span className="board-ratio">{width} × {height}</span>
         <div
           className="ghost-grid"
           style={{
