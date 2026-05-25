@@ -830,60 +830,45 @@ button {
 
 .card-motif {
   position: absolute;
-  display: grid;
   z-index: 1;
   pointer-events: none;
+  right: 14px;
+  top: 14px;
+  transform: none;
+  width: 56px;
+  height: 56px;
+  --mt-out: var(--charcoal);
+  --mt-dark: #5a4232;
+}
+
+.card-motif-hero {
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 96px;
+  height: 96px;
+}
+
+.card-motif-wide {
   right: 18px;
   top: 50%;
   transform: translateY(-50%);
-  gap: 1px;
-  opacity: 0.9;
+  width: 72px;
+  height: 72px;
 }
 
-.card-motif i {
-  display: block;
-  width: 7px;
-  height: 7px;
-  border-radius: 0;
-  background-image: none;
-  box-shadow: none;
-}
-
-.card-motif .mt-empty {
-  background: transparent;
-}
-
-/* Hero card uses larger pixels and sits in upper-right corner */
-.card-motif-hero {
-  right: 22px;
-  top: 22px;
-  transform: none;
-  gap: 1px;
-}
-.card-motif-hero i { width: 9px; height: 9px; }
-
-/* Wide card pixels stay vertically centered */
-.card-motif-wide i { width: 7px; height: 7px; }
-.card-motif-wide { gap: 1px; right: 18px; }
-
-/* Tone-driven hard-edge pixel colors. mt-l4 = outline (charcoal). */
-.card-motif .mt-l4 { background-color: var(--charcoal); }
-
-.tone-clay .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--clay) 28%, var(--paper)); }
-.tone-clay .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--clay) 58%, var(--paper)); }
-.tone-clay .card-motif .mt-l3 { background-color: var(--clay); }
-
-.tone-mint .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--mint) 26%, var(--paper)); }
-.tone-mint .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--mint) 55%, var(--paper)); }
-.tone-mint .card-motif .mt-l3 { background-color: var(--mint); }
-
-.tone-butter .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--butter) 30%, var(--paper)); }
-.tone-butter .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--butter) 60%, var(--paper)); }
-.tone-butter .card-motif .mt-l3 { background-color: var(--butter); }
-
-.tone-berry .card-motif .mt-l1 { background-color: color-mix(in srgb, var(--berry) 28%, var(--paper)); }
-.tone-berry .card-motif .mt-l2 { background-color: color-mix(in srgb, var(--berry) 52%, var(--paper)); }
-.tone-berry .card-motif .mt-l3 { background-color: var(--berry); }
+.tone-clay   { --mt-1: color-mix(in srgb, var(--clay)   25%, var(--paper));
+               --mt-2: color-mix(in srgb, var(--clay)   55%, var(--paper));
+               --mt-3: var(--clay); }
+.tone-mint   { --mt-1: color-mix(in srgb, var(--mint)   24%, var(--paper));
+               --mt-2: color-mix(in srgb, var(--mint)   52%, var(--paper));
+               --mt-3: var(--mint); }
+.tone-butter { --mt-1: color-mix(in srgb, var(--butter) 28%, var(--paper));
+               --mt-2: color-mix(in srgb, var(--butter) 58%, var(--paper));
+               --mt-3: var(--butter); }
+.tone-berry  { --mt-1: color-mix(in srgb, var(--berry)  24%, var(--paper));
+               --mt-2: color-mix(in srgb, var(--berry)  50%, var(--paper));
+               --mt-3: var(--berry); }
 
 .card-copy {
   position: relative;
@@ -896,11 +881,11 @@ button {
 }
 
 .pixel-card.hero .card-copy {
-  max-width: 60%;
+  max-width: calc(100% - 130px);
 }
 
 .pixel-card.wide .card-copy {
-  max-width: 60%;
+  max-width: calc(100% - 110px);
   padding: 16px 20px;
 }
 
