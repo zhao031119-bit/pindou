@@ -1,0 +1,84 @@
+<view class="draw-page" style="{{pageStyle}}">
+  <view class="topbar">
+    <view class="draw-nav">
+      <button class="round-icon" bindtap="goBack"><icon name="back" size="28" /></button>
+      <button class="round-icon" bindtap="goHome"><icon name="home" size="28" /></button>
+    </view>
+    <scroll-view scroll-x class="seg-scroll" show-scrollbar="{{false}}">
+      <view class="seg">
+        <view wx:for="{{sizes}}" wx:key="id" class="seg-item {{sizeId === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="changeSize">{{item.label}}</view>
+      </view>
+    </scroll-view>
+    <view class="zoom-text">{{width}} x {{height}} · {{zoomLabel}}</view>
+  </view>
+
+  <view wx:if="{{draftStatus}}" class="draft-status">{{draftStatus}}</view>
+
+  <view class="canvas-wrap">
+    <canvas
+      canvas-id="drawCanvas"
+      class="draw-canvas"
+      style="width: {{canvasSize}}px; height: {{canvasSize}}px;"
+      width="{{canvasSize}}"
+      height="{{canvasSize}}"
+      bindtouchstart="onCanvasTouchStart"
+      catchtouchmove="onCanvasTouchMove"
+      bindtouchend="onCanvasTouchEnd"
+      bindtouchcancel="onCanvasTouchEnd"
+    ></canvas>
+  </view>
+
+  <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="draw-controls-scroll">
+    <view class="toolbar">
+      <view wx:for="{{tools}}" wx:key="id" class="tool {{tool === item.id ? 'active' : ''}}" data-tool="{{item.id}}" bindtap="chooseTool">{{item.label}}</view>
+    </view>
+
+    <view class="sub-toolbar">
+      <view class="sub-group">
+        <text class="sub-label">笔刷</text>
+        <view wx:for="{{brushSizes}}" wx:key="id" class="sub-chip {{brushSize === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="chooseBrushSize">{{item.label}}</view>
+      </view>
+      <view class="sub-group">
+        <text class="sub-label">对称</text>
+        <view wx:for="{{symmetryModes}}" wx:key="id" class="sub-chip {{symmetry === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="chooseSymmetry">{{item.label}}</view>
+      </view>
+    </view>
+
+    <view class="actions">
+      <button class="mini-btn" bindtap="undo" disabled="{{!canUndo}}">撤销</button>
+      <button class="mini-btn" bindtap="redo" disabled="{{!canRedo}}">重做</button>
+      <button class="mini-btn" bindtap="resetView">复位</button>
+      <button class="mini-btn primary wide {{isSaved ? 'saved' : ''}}" loading="{{saving}}" bindtap="saveProject">{{isSaved ? '打开作品' : '加入作品'}}</button>
+      <button class="mini-btn" bindtap="saveLongImage">保存图片</button>
+    </view>
+
+    <view class="palette-panel">
+      <scroll-view scroll-x class="palette-tabs" show-scrollbar="{{false}}">
+        <view wx:for="{{palettes}}" wx:key="id" class="palette-tab {{paletteId === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="changePalette">
+          <image class="palette-tab-icon" src="{{item.icon}}" mode="aspectFit"></image>
+          <text>{{item.name}}</text>
+        </view>
+      </scroll-view>
+      <scroll-view scroll-y class="swatches">
+        <view
+          wx:for="{{colors}}"
+          wx:key="id"
+          class="swatch {{selectedColor.id === item.id ? 'active' : ''}}"
+          style="background: {{item.hex}};"
+          data-index="{{index}}"
+          bindtap="chooseColor"
+        >
+          <text>{{item.code}}</text>
+        </view>
+      </scroll-view>
+    </view>
+  </scroll-view>
+
+  <canvas
+    canvas-id="exportCanvas"
+    class="hidden-export"
+    style="width: {{exportWidth}}px; height: {{exportHeight}}px;"
+    width="{{exportWidth}}"
+    height="{{exportHeight}}"
+  ></canvas>
+</view>

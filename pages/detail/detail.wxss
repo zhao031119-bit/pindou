@@ -1,0 +1,362 @@
+.detail-page {
+  height: 100vh;
+  min-height: 0;
+  padding: 72rpx 24rpx 56rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+}
+
+.detail-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  margin-bottom: 22rpx;
+}
+
+.detail-scroll {
+  flex: 1;
+  height: 0;
+  min-height: 0;
+  padding-bottom: 36rpx;
+}
+
+.round-btn {
+  width: 72rpx;
+  height: 72rpx;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--warm-white);
+  color: var(--foreground);
+  border: 2rpx solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  font-weight: 700;
+  box-shadow: 0 16rpx 34rpx -24rpx rgba(42, 31, 23, 0.18);
+}
+
+.round-btn.danger {
+  color: var(--destructive);
+  font-size: 24rpx;
+}
+
+.header-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.eyebrow {
+  color: var(--primary);
+  font-size: 20rpx;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.detail-title {
+  margin-top: 5rpx;
+  color: var(--foreground);
+  font-size: 36rpx;
+  font-weight: 820;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detail-sub {
+  margin-top: 6rpx;
+  color: var(--muted-foreground);
+  font-size: 22rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preview-card {
+  padding: 16rpx;
+  border-radius: 40rpx;
+  background: var(--warm-white);
+  border: 2rpx solid var(--card-border);
+  box-shadow:
+    0 2rpx 4rpx rgba(42, 31, 23, 0.03),
+    0 24rpx 54rpx -30rpx rgba(42, 31, 23, 0.16);
+}
+
+.warn-tap {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.highlight-hint {
+  margin-bottom: 12rpx;
+  padding: 10rpx 16rpx;
+  border-radius: 14rpx;
+  background: rgba(197, 106, 76, 0.1);
+  color: var(--primary);
+  font-size: 22rpx;
+  line-height: 1.4;
+}
+
+.check-box {
+  width: 48rpx;
+  height: 48rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12rpx;
+  background: rgba(42, 31, 23, 0.04);
+  color: var(--muted-foreground);
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.bead-row-detail.checked .check-box {
+  background: rgba(127, 178, 154, 0.2);
+  color: var(--accent);
+}
+
+.bead-row-detail.checked .bead-code,
+.bead-row-detail.checked .bead-name,
+.bead-row-detail.checked .bead-count {
+  color: var(--muted-foreground);
+  text-decoration: line-through;
+}
+
+.bead-row-detail.highlighted {
+  background: rgba(197, 106, 76, 0.12);
+}
+
+.reset-checks {
+  height: 48rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
+  background: rgba(184, 75, 58, 0.12);
+  color: var(--destructive);
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.preview-scroll {
+  width: 100%;
+  border-radius: 24rpx;
+  background:
+    linear-gradient(to right, rgba(217, 205, 179, 0.45) 1rpx, transparent 1rpx),
+    linear-gradient(to bottom, rgba(217, 205, 179, 0.45) 1rpx, transparent 1rpx),
+    #fbf6ec;
+  background-size: 28rpx 28rpx;
+}
+
+.preview-canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12rpx;
+  margin-top: 18rpx;
+}
+
+.stat-item {
+  min-width: 0;
+  padding: 20rpx 12rpx;
+  border-radius: 28rpx;
+  background: var(--warm-white);
+  border: 2rpx solid var(--card-border);
+  text-align: center;
+}
+
+.stat-value {
+  display: block;
+  color: var(--foreground);
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 1.15;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stat-label {
+  display: block;
+  margin-top: 6rpx;
+  color: var(--muted-foreground);
+  font-size: 20rpx;
+}
+
+.info-card,
+.bead-card,
+.missing-card {
+  margin-top: 18rpx;
+  padding: 24rpx;
+  border-radius: 36rpx;
+  background: var(--warm-white);
+  border: 2rpx solid var(--card-border);
+  box-shadow: 0 20rpx 48rpx -34rpx rgba(42, 31, 23, 0.14);
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  min-height: 58rpx;
+  border-bottom: 1rpx solid rgba(42, 31, 23, 0.06);
+}
+
+.info-row:last-child {
+  border-bottom: 0;
+}
+
+.info-label {
+  color: var(--muted-foreground);
+  font-size: 23rpx;
+}
+
+.info-value {
+  color: var(--foreground);
+  font-size: 24rpx;
+  font-weight: 700;
+  text-align: right;
+}
+
+.action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14rpx;
+  margin-top: 18rpx;
+}
+
+.action-btn {
+  height: 82rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid var(--card-border);
+  background: var(--warm-white);
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 27rpx;
+  font-weight: 700;
+}
+
+.action-btn.primary {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+}
+
+.card-title {
+  color: var(--foreground);
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.card-sub {
+  margin-top: 5rpx;
+  color: var(--muted-foreground);
+  font-size: 22rpx;
+}
+
+.bead-list-detail {
+  overflow: hidden;
+  border-radius: 22rpx;
+  border: 1rpx solid rgba(42, 31, 23, 0.07);
+}
+
+.bead-row-detail {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  min-height: 92rpx;
+  padding: 14rpx 16rpx;
+  border-bottom: 1rpx solid rgba(42, 31, 23, 0.07);
+}
+
+.bead-row-detail:last-child {
+  border-bottom: 0;
+}
+
+.swatch {
+  width: 58rpx;
+  height: 58rpx;
+  flex-shrink: 0;
+  border-radius: 16rpx;
+  box-shadow:
+    inset 0 0 0 1rpx rgba(42, 31, 23, 0.12),
+    inset 0 -3rpx 5rpx rgba(42, 31, 23, 0.13);
+}
+
+.bead-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.bead-code {
+  color: var(--foreground);
+  font-size: 27rpx;
+  font-weight: 800;
+}
+
+.bead-name {
+  margin-top: 4rpx;
+  color: var(--muted-foreground);
+  font-size: 22rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bead-count {
+  min-width: 76rpx;
+  color: var(--foreground);
+  font-size: 30rpx;
+  font-weight: 820;
+  text-align: right;
+}
+
+.empty-list {
+  padding: 42rpx 20rpx;
+  border-radius: 22rpx;
+  background: var(--background);
+  color: var(--muted-foreground);
+  text-align: center;
+  font-size: 24rpx;
+}
+
+.missing-card {
+  margin-top: 140rpx;
+  text-align: center;
+}
+
+.missing-title {
+  color: var(--foreground);
+  font-size: 34rpx;
+  font-weight: 800;
+}
+
+.missing-sub {
+  margin: 12rpx 0 28rpx;
+  color: var(--muted-foreground);
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
+.hidden-export {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+}

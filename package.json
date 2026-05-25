@@ -1,0 +1,13 @@
+{
+  "name": "bead-pattern-miniapp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "拼豆图纸助手微信小程序",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node tests/color.test.js && node tests/palette.test.js && node tests/pattern.test.js && node tests/render.test.js && node tests/draw.test.js && node tests/store.test.js && node tests/size-recommendation.test.js && node tests/palette-icons.test.js",
+    "check:pages": "node scripts/check-pages.mjs",
+    "build:palettes": "node scripts/fetch-palettes.mjs"
+  },
+  "devDependencies": {}
+}

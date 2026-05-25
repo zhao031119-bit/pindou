@@ -1,0 +1,28 @@
+<view class="icon icon-{{name}}" style="width: {{size}}rpx; height: {{size}}rpx; {{color ? 'color:' + color + ';' : ''}}">
+  <!-- arrows -->
+  <block wx:if="{{name === 'back'}}"><view class="i-arrow left"></view></block>
+  <block wx:elif="{{name === 'forward'}}"><view class="i-arrow right"></view></block>
+
+  <!-- actions -->
+  <block wx:elif="{{name === 'close'}}"><view class="i-cross"></view></block>
+  <block wx:elif="{{name === 'check'}}"><view class="i-check"></view></block>
+  <block wx:elif="{{name === 'checkbox'}}"><view class="i-checkbox"></view></block>
+  <block wx:elif="{{name === 'checkbox-on'}}"><view class="i-checkbox on"><view class="i-check sm"></view></view></block>
+
+  <!-- tools -->
+  <block wx:elif="{{name === 'ruler'}}"><view class="i-ruler"></view></block>
+  <block wx:elif="{{name === 'eye'}}"><view class="i-eye"></view></block>
+  <block wx:elif="{{name === 'image'}}"><view class="i-image"></view></block>
+  <block wx:elif="{{name === 'crop'}}"><view class="i-crop"></view></block>
+  <block wx:elif="{{name === 'pipette'}}"><view class="i-pipette"></view></block>
+  <block wx:elif="{{name === 'star'}}"><view class="i-star"></view></block>
+  <block wx:elif="{{name === 'info'}}"><view class="i-info"></view></block>
+  <block wx:elif="{{name === 'swap'}}"><view class="i-swap"></view></block>
+  <block wx:elif="{{name === 'home'}}"><view class="i-home"></view></block>
+  <block wx:elif="{{name === 'save'}}"><view class="i-save"></view></block>
+  <block wx:elif="{{name === 'share'}}"><view class="i-share"></view></block>
+  <block wx:elif="{{name === 'trash'}}"><view class="i-trash"></view></block>
+  <block wx:elif="{{name === 'edit'}}"><view class="i-edit"></view></block>
+  <block wx:elif="{{name === 'zoom-in'}}"><view class="i-zoom plus"></view></block>
+  <block wx:elif="{{name === 'zoom-out'}}"><view class="i-zoom minus"></view></block>
+</view>

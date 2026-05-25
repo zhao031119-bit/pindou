@@ -1,0 +1,84 @@
+<view class="page projects-page" style="{{pageStyle}}">
+  <view class="projects-head">
+    <view>
+      <view class="eyebrow">MY WORKS</view>
+      <view class="title">我的作品</view>
+      <view class="subtitle">已保存 {{projectCount}} 个图纸和色号清单</view>
+    </view>
+    <view class="head-badge">{{projects.length}}</view>
+  </view>
+
+  <scroll-view scroll-x class="filters" show-scrollbar="{{false}}">
+    <view class="filter-inner">
+      <view
+        wx:for="{{filters}}"
+        wx:key="id"
+        class="chip {{filter === item.id ? 'active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="changeFilter"
+      >{{item.label}}</view>
+    </view>
+  </scroll-view>
+
+  <scroll-view wx:if="{{projects.length > 0}}" scroll-x class="sort-row" show-scrollbar="{{false}}">
+    <view class="sort-inner">
+      <text class="sort-label">排序</text>
+      <view
+        wx:for="{{sorts}}"
+        wx:key="id"
+        class="sort-chip {{sort === item.id ? 'active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="changeSort"
+      >{{item.label}}</view>
+    </view>
+  </scroll-view>
+
+  <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="projects-scroll">
+  <view wx:if="{{projects.length === 0}}" class="empty-card">
+    <view class="empty-art">
+      <view class="empty-dot dot-a"></view>
+      <view class="empty-dot dot-b"></view>
+      <view class="empty-dot dot-c"></view>
+    </view>
+    <view class="empty-title">还没有作品</view>
+    <view class="empty-sub">保存画豆图、图片生成图纸或提取色号后，会在这里看到缩略图。</view>
+    <button class="empty-btn" bindtap="goDraw">开始画豆图</button>
+  </view>
+
+  <view wx:else class="project-list">
+    <view wx:for="{{projects}}" wx:key="id" class="project-card" data-id="{{item.id}}" bindtap="openProject">
+      <view class="thumb-shell">
+        <view
+          class="thumb-grid"
+          style="width: {{item.thumbWidthPercent}}%; height: {{item.thumbHeightPercent}}%; grid-template-columns: repeat({{item.previewWidth}}, 1fr); grid-template-rows: repeat({{item.previewHeight}}, 1fr);"
+        >
+          <view
+            wx:for="{{item.previewCells}}"
+            wx:key="index"
+            class="thumb-cell {{item.empty ? 'empty' : ''}}"
+            style="background: {{item.hex}};"
+          ></view>
+        </view>
+      </view>
+
+      <view class="project-main">
+        <view class="project-top">
+          <view class="project-title">{{item.name}}</view>
+          <view class="type-tag">{{item.typeLabel}}</view>
+        </view>
+        <view class="project-meta">
+          <text>{{item.width}} x {{item.height}}</text>
+          <text>{{item.totalCount}} 颗</text>
+          <text>{{item.colorCount}} 色</text>
+        </view>
+        <view class="project-time">{{item.updatedText}}</view>
+      </view>
+
+      <view class="project-actions">
+        <button class="rename-btn" data-id="{{item.id}}" catchtap="renameItem">改名</button>
+        <button class="delete-btn" data-id="{{item.id}}" catchtap="deleteProject">删除</button>
+      </view>
+    </view>
+  </view>
+  </scroll-view>
+</view>

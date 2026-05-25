@@ -1,0 +1,27 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/upload/upload",
+    "pages/size/size",
+    "pages/pick/pick",
+    "pages/extract/extract",
+    "pages/draw/draw",
+    "pages/projects/projects",
+    "pages/detail/detail",
+    "pages/result/result"
+  ],
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  },
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationStyle": "custom",
+    "navigationBarBackgroundColor": "#F7F5F0",
+    "navigationBarTitleText": "拼豆星球",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F7F5F0"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "darkmode": true
+}

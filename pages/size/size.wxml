@@ -1,0 +1,84 @@
+<view class="screen">
+  <view class="app-header" style="{{navStyle}}">
+    <view class="header-side">
+      <button class="back-btn" bindtap="goCrop"><icon name="back" size="32" /></button>
+    </view>
+    <view class="header-center">
+      <view class="header-title">确认尺寸</view>
+      <view class="header-subtitle">{{width}} × {{height}} · {{stats.total}} 颗</view>
+    </view>
+    <view class="header-side right">
+      <button class="icon-btn" bindtap="goHome"><icon name="home" size="30" /></button>
+    </view>
+  </view>
+
+  <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body size-body">
+    <view class="card padded size-option-card">
+      <view class="form-label">豆子规格</view>
+      <view class="segmented">
+        <button wx:for="{{beadSizes}}" wx:key="id" class="segment {{beadSize === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="selectBeadSize">{{item.label}}</button>
+      </view>
+    </view>
+
+    <view class="smart-strip {{primaryRecommendation && selectedRecommendationId === primaryRecommendation.id ? 'active' : ''}}" bindtap="applyPrimaryRecommendation">
+      <view class="smart-icon"><icon name="star" size="26" /></view>
+      <view class="smart-main">
+        <view class="smart-title">{{recommendationLoading ? '正在分析图片' : '推荐尺寸'}}</view>
+        <view class="smart-sub">{{recommendationLoading ? '稍等一下' : (primaryRecommendation ? primaryRecommendation.width + ' × ' + primaryRecommendation.height + ' · ' + primaryRecommendation.total + ' 颗' : '按图片细节自动估算')}}</view>
+      </view>
+      <view wx:if="{{!recommendationLoading && primaryRecommendation}}" class="smart-size">{{primaryRecommendation.width}}×{{primaryRecommendation.height}}</view>
+    </view>
+
+    <view class="card padded custom-size-card">
+      <view class="control-head">
+        <view>
+          <view class="section-title">自定义尺寸</view>
+          <view class="section-muted">直接填写最终图纸宽高</view>
+        </view>
+        <button class="ghost-btn ratio-toggle {{keepRatio ? 'active' : ''}}" bindtap="toggleKeepRatio">{{keepRatio ? '锁比例' : '自由'}}</button>
+      </view>
+      <view class="size-input-grid">
+        <view class="size-field">
+          <view class="form-label">宽（豆）</view>
+          <input class="size-input" type="number" value="{{width}}" bindinput="onWidthInput" />
+        </view>
+        <view class="size-field">
+          <view class="form-label">高（豆）</view>
+          <input class="size-input" type="number" value="{{height}}" bindinput="onHeightInput" />
+        </view>
+      </view>
+    </view>
+
+    <view class="estimate-mini">
+      <view>
+        <view class="summary-label">预计用豆</view>
+        <view class="summary-value">{{stats.total}} 颗</view>
+      </view>
+      <view>
+        <view class="summary-label">拼板</view>
+        <view class="summary-value">{{stats.boardColumns * stats.boardRows}} 块</view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{generating && generateStage}}" class="generate-stage-bar">{{generateStage}}</view>
+  <view class="bottom-bar">
+    <button class="secondary-btn" bindtap="goCrop">重新裁剪</button>
+    <button class="primary-btn" loading="{{generating}}" bindtap="generatePattern">{{generating ? '生成中' : '生成图纸'}}</button>
+  </view>
+
+  <canvas
+    class="hidden-canvas generator-canvas"
+    canvas-id="sourceCanvas"
+    style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
+    width="{{canvasWidth}}"
+    height="{{canvasHeight}}"
+  ></canvas>
+  <canvas
+    class="hidden-canvas generator-canvas"
+    canvas-id="recommendCanvas"
+    style="width: {{analysisCanvasSize}}px; height: {{analysisCanvasSize}}px;"
+    width="{{analysisCanvasSize}}"
+    height="{{analysisCanvasSize}}"
+  ></canvas>
+</view>

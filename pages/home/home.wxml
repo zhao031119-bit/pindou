@@ -1,0 +1,131 @@
+<!-- 首页 — 拼豆星球 Bento 还原 -->
+<view class="page" style="padding-top: {{safeTopPx}}px">
+
+  <!-- 品牌识别小条 -->
+  <view class="brand">
+    <view class="brand-dot"></view>
+    <text class="brand-text">拼豆星球</text>
+  </view>
+
+  <!-- 大标题 -->
+  <view class="header">
+    <text class="greeting">{{greeting}}, {{userName}}</text>
+    <view class="title">
+      今天想<text class="title-accent">拼点</text>什么呢?
+    </view>
+  </view>
+
+  <!-- Bento 不规则宫格 -->
+  <view class="bento">
+
+    <!-- Hero — 整行 -->
+    <view class="card card-hero" hover-class="card-press" hover-stay-time="120"
+          data-target="upload" bindtap="goPage">
+      <view class="card-glow glow-hero"></view>
+      <image class="card-asset asset-generate" src="/miniprogram/assets/home/card-generate.png" mode="aspectFit"></image>
+      <view class="card-inner inner-hero">
+        <view class="accent-dot dot-clay"></view>
+        <view class="card-title title-hero">生成图纸</view>
+        <view class="card-subtitle">{{generateSubtitle}}</view>
+      </view>
+    </view>
+
+    <!-- Square × 2 -->
+    <view class="card card-square" hover-class="card-press" hover-stay-time="120"
+          data-target="pick" bindtap="goPage">
+      <view class="card-glow glow-mint"></view>
+      <image class="card-asset asset-pick" src="/miniprogram/assets/home/card-pick.png" mode="aspectFit"></image>
+      <view class="card-inner">
+        <view class="accent-dot dot-mint"></view>
+        <view class="card-title">识别色号</view>
+        <view class="card-subtitle">{{pickSubtitle}}</view>
+      </view>
+    </view>
+
+    <view class="card card-square" hover-class="card-press" hover-stay-time="120"
+          data-target="extract" bindtap="goPage">
+      <view class="card-glow glow-butter"></view>
+      <image class="card-asset asset-extract" src="/miniprogram/assets/home/card-extract.png" mode="aspectFit"></image>
+      <view class="card-inner">
+        <view class="accent-dot dot-butter"></view>
+        <view class="card-title">提取色号</view>
+        <view class="card-subtitle">{{extractSubtitle}}</view>
+      </view>
+    </view>
+
+    <!-- Wide -->
+    <view class="card card-wide" hover-class="card-press" hover-stay-time="120"
+          data-target="draw" bindtap="goPage">
+      <view class="card-glow glow-strawberry"></view>
+      <image class="card-asset asset-draw" src="/miniprogram/assets/home/card-draw.png" mode="aspectFit"></image>
+      <view class="card-inner inner-wide">
+        <view class="accent-dot dot-strawberry"></view>
+        <view class="card-title">画豆图</view>
+        <view class="card-subtitle">{{drawSubtitle}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 继续上次草稿 -->
+  <view wx:if="{{hasDraft}}" class="draft-card" hover-class="card-press" hover-stay-time="120"
+        data-target="draft" bindtap="goPage">
+    <view class="draft-thumb-wrap">
+      <image wx:if="{{draftThumbnailType === 'image'}}" class="draft-thumb draft-thumb-image" src="{{draftImagePath}}" mode="aspectFill"></image>
+      <view wx:elif="{{draftThumbnailType === 'grid'}}" class="draft-thumb draft-thumb-grid" style="width: {{draftThumbWidthPercent}}%; height: {{draftThumbHeightPercent}}%; grid-template-columns: repeat({{draftPreviewWidth}}, 1fr); grid-template-rows: repeat({{draftPreviewHeight}}, 1fr);">
+        <view
+          wx:for="{{draftPreviewCells}}"
+          wx:key="index"
+          class="draft-dot {{item.empty ? 'empty' : ''}}"
+          style="background: {{item.hex}};"
+        ></view>
+      </view>
+      <view wx:else class="draft-thumb mini-art"></view>
+      <view class="draft-pulse"></view>
+    </view>
+    <view class="draft-meta">
+      <text class="draft-eyebrow">继续草稿</text>
+      <view class="draft-title">{{draftTitle}}</view>
+      <view class="draft-progress-row">
+        <view class="draft-progress">
+          <view class="draft-progress-fill" style="width: {{draftProgress}}%"></view>
+        </view>
+        <text class="draft-remain">{{draftSubtitle}}</text>
+      </view>
+    </view>
+    <view class="chev">
+      <view class="chev-arrow"></view>
+    </view>
+  </view>
+
+  <!-- 我的作品 -->
+  <view class="works-card" hover-class="card-press" hover-stay-time="120"
+        data-target="projects" bindtap="goPage">
+    <view class="works-head">
+      <view class="works-title-row">
+        <text class="works-title">我的作品</text>
+        <text class="works-count">· {{projectCount}}</text>
+      </view>
+      <view class="chev">
+        <view class="chev-arrow"></view>
+      </view>
+    </view>
+    <view class="works-thumbs">
+      <view wx:for="{{recentWorks}}" wx:key="name" class="works-thumb">
+        <view
+          class="works-thumb-grid"
+          style="width: {{item.thumbWidthPercent}}%; height: {{item.thumbHeightPercent}}%; grid-template-columns: repeat({{item.previewWidth}}, 1fr); grid-template-rows: repeat({{item.previewHeight}}, 1fr);"
+        >
+          <view
+            wx:for="{{item.previewCells}}"
+            wx:key="index"
+            class="works-thumb-cell {{item.empty ? 'empty' : ''}}"
+            style="background: {{item.hex}};"
+          ></view>
+        </view>
+      </view>
+      <view class="works-all">看全部</view>
+    </view>
+  </view>
+
+  <view class="bottom-pad"></view>
+</view>
