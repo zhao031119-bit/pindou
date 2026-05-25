@@ -1,5 +1,7 @@
-import { Download, Eye, FolderPlus } from 'lucide-react';
+import { useState } from 'react';
+import { Download, Eye, FolderPlus, Loader } from 'lucide-react';
 import BottomActionBar from '../components/BottomActionBar.jsx';
+import LoadingPixels from '../components/LoadingPixels.jsx';
 import PaletteLogo from '../components/PaletteLogo.jsx';
 import PixelPreview from '../components/PixelPreview.jsx';
 import StepIndicator from '../components/StepIndicator.jsx';
@@ -22,54 +24,75 @@ const beads = [
 ];
 
 export default function Result() {
+  const [loading, setLoading] = useState(false);
   const total = beads.reduce((sum, b) => sum + b[2], 0);
 
   return (
     <div className="page flow-page">
       <StepIndicator steps={flowSteps} current="result" />
 
-      <SectionTitle tone="berry" label="生成完成" hint="48 × 60 颗 · 5 种颜色" />
-
-      <section className="result-preview">
-        <button className="floating-eye" type="button">
-          <Eye size={14} />
-          <span>放大</span>
-        </button>
-        <PixelPreview cells={strawberryPattern} columns={8} />
-      </section>
-
       <SectionTitle
-        tone="clay"
-        label="可选色卡"
-        hint="切换品牌后下方清单会自动更新"
-        action={<span>3 个品牌</span>}
-      />
-
-      <section className="palette-row">
-        {palettes.map((palette, index) => (
-          <button className={index === 0 ? 'palette-pill active' : 'palette-pill'} key={palette.id} type="button">
-            <PaletteLogo id={palette.id} name={palette.name} swatches={palette.swatches} />
-            <span>{palette.name}</span>
+        tone="berry"
+        label={loading ? '生成中' : '生成完成'}
+        hint="48 × 60 颗 · 5 种颜色"
+        action={
+          <button
+            className={loading ? 'section-toggle active' : 'section-toggle'}
+            type="button"
+            onClick={() => setLoading((v) => !v)}
+          >
+            <Loader size={12} />
+            <span>{loading ? '生成中' : '生成态'}</span>
           </button>
-        ))}
-      </section>
-
-      <SectionTitle
-        tone="mint"
-        label="豆子清单"
-        hint={`合计 ${total} 颗`}
-        action={<span>导出</span>}
+        }
       />
 
-      <section className="bead-list">
-        {beads.map(([name, color, count]) => (
-          <div className="bead-row" key={name}>
-            <i style={{ background: color }} />
-            <span>{name}</span>
-            <em className="bead-count">×{count}</em>
-          </div>
-        ))}
-      </section>
+      {loading ? (
+        <LoadingPixels label="正在生成图纸" hint="像素聚类、色号匹配、生成清单…" />
+      ) : (
+        <>
+          <section className="result-preview fade-in">
+            <button className="floating-eye" type="button">
+              <Eye size={14} />
+              <span>放大</span>
+            </button>
+            <PixelPreview cells={strawberryPattern} columns={8} />
+          </section>
+
+          <SectionTitle
+            tone="clay"
+            label="可选色卡"
+            hint="切换品牌后下方清单会自动更新"
+            action={<span>3 个品牌</span>}
+          />
+
+          <section className="palette-row">
+            {palettes.map((palette, index) => (
+              <button className={index === 0 ? 'palette-pill active' : 'palette-pill'} key={palette.id} type="button">
+                <PaletteLogo id={palette.id} name={palette.name} swatches={palette.swatches} />
+                <span>{palette.name}</span>
+              </button>
+            ))}
+          </section>
+
+          <SectionTitle
+            tone="mint"
+            label="豆子清单"
+            hint={`合计 ${total} 颗`}
+            action={<span>导出</span>}
+          />
+
+          <section className="bead-list stagger-in">
+            {beads.map(([name, color, count], index) => (
+              <div className="bead-row" key={name} style={{ animationDelay: `${index * 60}ms` }}>
+                <i style={{ background: color }} />
+                <span>{name}</span>
+                <em className="bead-count">×{count}</em>
+              </div>
+            ))}
+          </section>
+        </>
+      )}
 
       <BottomActionBar
         secondary={{ label: '加入作品', icon: <FolderPlus size={18} /> }}

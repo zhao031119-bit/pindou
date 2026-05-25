@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { Loader } from 'lucide-react';
+import LoadingPixels from '../components/LoadingPixels.jsx';
 import PaletteLogo from '../components/PaletteLogo.jsx';
 import PixelPreview from '../components/PixelPreview.jsx';
 import SectionTitle from '../components/SectionTitle.jsx';
@@ -13,54 +16,80 @@ const distribution = [
 ];
 
 export default function Extract() {
+  const [loading, setLoading] = useState(false);
+
   return (
     <div className="page flow-page">
-      <SectionTitle tone="butter" label="批量提取完成" hint="识别到 18 个主要颜色，已合并相近豆色" />
+      <SectionTitle
+        tone="butter"
+        label="批量提取完成"
+        hint="识别到 18 个主要颜色，已合并相近豆色"
+        action={
+          <button
+            className={loading ? 'section-toggle active' : 'section-toggle'}
+            type="button"
+            onClick={() => setLoading((v) => !v)}
+          >
+            <Loader size={12} />
+            <span>{loading ? '提取中' : '提取中态'}</span>
+          </button>
+        }
+      />
 
-      <section className="extract-summary">
-        <PixelPreview cells={flowerPattern} columns={8} />
-        <div>
-          <strong>192 颗 · 5 主色</strong>
-          <small>覆盖率 96%，剩余像素已就近映射</small>
-        </div>
-      </section>
-
-      <SectionTitle tone="berry" label="色卡频率" hint="占比从高到低排列" />
-
-      <section className="freq-list">
-        {distribution.map((item) => (
-          <div className="freq-row" key={item.name}>
-            <i style={{ background: item.color }} />
-            <div className="freq-meta">
-              <div className="freq-head">
-                <strong>{item.name}</strong>
-                <em>×{item.count}</em>
-              </div>
-              <span className="freq-track">
-                <i style={{ width: `${item.ratio}%`, background: item.color }} />
-              </span>
-            </div>
-            <span className="freq-ratio">{item.ratio}%</span>
-          </div>
-        ))}
-      </section>
-
-      <SectionTitle tone="clay" label="可匹配品牌" hint="点选切换匹配清单" />
-
-      <section className="palette-cards">
-        {palettes.slice(0, 3).map((palette) => (
-          <article className="palette-card" key={palette.id}>
-            <PaletteLogo id={palette.id} name={palette.name} swatches={palette.swatches} />
+      {loading ? (
+        <LoadingPixels label="正在批量提取" hint="逐像素聚类、合并相近豆色…" />
+      ) : (
+        <>
+          <section className="extract-summary fade-in">
+            <PixelPreview cells={flowerPattern} columns={8} />
             <div>
-              <strong>{palette.name}</strong>
-              <small>{palette.count} 色可匹配</small>
+              <strong>192 颗 · 5 主色</strong>
+              <small>覆盖率 96%，剩余像素已就近映射</small>
             </div>
-            <span className={palette.id === 'mard' ? 'tag' : 'tag tag-muted'}>
-              {palette.id === 'mard' ? '推荐' : '可选'}
-            </span>
-          </article>
-        ))}
-      </section>
+          </section>
+
+          <SectionTitle tone="berry" label="色卡频率" hint="占比从高到低排列" />
+
+          <section className="freq-list stagger-in">
+            {distribution.map((item, index) => (
+              <div
+                className="freq-row"
+                key={item.name}
+                style={{ animationDelay: `${index * 70}ms` }}
+              >
+                <i style={{ background: item.color }} />
+                <div className="freq-meta">
+                  <div className="freq-head">
+                    <strong>{item.name}</strong>
+                    <em>×{item.count}</em>
+                  </div>
+                  <span className="freq-track">
+                    <i style={{ width: `${item.ratio}%`, background: item.color }} />
+                  </span>
+                </div>
+                <span className="freq-ratio">{item.ratio}%</span>
+              </div>
+            ))}
+          </section>
+
+          <SectionTitle tone="clay" label="可匹配品牌" hint="点选切换匹配清单" />
+
+          <section className="palette-cards">
+            {palettes.slice(0, 3).map((palette) => (
+              <article className="palette-card" key={palette.id}>
+                <PaletteLogo id={palette.id} name={palette.name} swatches={palette.swatches} />
+                <div>
+                  <strong>{palette.name}</strong>
+                  <small>{palette.count} 色可匹配</small>
+                </div>
+                <span className={palette.id === 'mard' ? 'tag' : 'tag tag-muted'}>
+                  {palette.id === 'mard' ? '推荐' : '可选'}
+                </span>
+              </article>
+            ))}
+          </section>
+        </>
+      )}
     </div>
   );
 }

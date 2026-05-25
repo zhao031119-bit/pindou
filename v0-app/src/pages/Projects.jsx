@@ -1,45 +1,70 @@
-import { ChevronRight, Search } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronRight, Plus, Search } from 'lucide-react';
+import EmptyState from '../components/EmptyState.jsx';
 import PixelPreview from '../components/PixelPreview.jsx';
 import SectionTitle from '../components/SectionTitle.jsx';
 import { mockProjects } from '../data/mockProjects.js';
 
 export default function Projects({ goTo }) {
+  const [showEmpty, setShowEmpty] = useState(false);
+  const projects = showEmpty ? [] : mockProjects;
+
   return (
     <div className="page flow-page">
       <SectionTitle
         tone="clay"
         label="我的作品"
-        hint={`${mockProjects.length} 个本地草稿`}
+        hint={projects.length ? `${projects.length} 个本地草稿` : '还没有保存过作品'}
         action={
-          <button className="section-toggle" type="button" aria-label="搜索">
+          <button
+            className={showEmpty ? 'section-toggle active' : 'section-toggle'}
+            type="button"
+            onClick={() => setShowEmpty((v) => !v)}
+            aria-label="切换空状态预览"
+          >
             <Search size={12} />
-            <span>搜索</span>
+            <span>{showEmpty ? '空状态' : '空态预览'}</span>
           </button>
         }
       />
 
-      <section className="project-list">
-        {mockProjects.map((project) => (
-          <button
-            className="project-row"
-            key={project.id}
-            type="button"
-            onClick={() => goTo('detail')}
-          >
-            <PixelPreview cells={project.cells} compact />
-            <div>
-              <strong>{project.name}</strong>
-              <small>
-                {project.type} · {project.size} · {project.palette}
-              </small>
-              <span className="progress-track">
-                <i style={{ width: `${project.progress}%` }} />
-              </span>
-            </div>
-            <ChevronRight size={18} />
-          </button>
-        ))}
-      </section>
+      {projects.length === 0 ? (
+        <EmptyState
+          illustration="box"
+          title="作品空空的"
+          hint="开始一次创作，作品会自动保存在这里"
+          action={
+            <button className="empty-cta" type="button" onClick={() => goTo('upload')}>
+              <Plus size={16} />
+              <span>开始创作</span>
+            </button>
+          }
+        />
+      ) : (
+        <section className="project-list stagger-in">
+          {projects.map((project, index) => (
+            <button
+              className="project-row"
+              key={project.id}
+              type="button"
+              onClick={() => goTo('detail')}
+              style={{ animationDelay: `${index * 60}ms` }}
+            >
+              <PixelPreview cells={project.cells} compact />
+              <div>
+                <strong>{project.name}</strong>
+                <small>
+                  {project.type} · {project.size} · {project.palette}
+                </small>
+                <span className="progress-track">
+                  <i style={{ width: `${project.progress}%` }} />
+                </span>
+              </div>
+              <ChevronRight size={18} />
+            </button>
+          ))}
+        </section>
+      )}
     </div>
   );
 }

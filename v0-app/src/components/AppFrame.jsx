@@ -37,7 +37,7 @@ export default function AppFrame({ children, currentPage, pages, pageIcons, onNa
 
       <section className="phone-shell" aria-label={`${currentPage.title} 手机预览`}>
         <AppHeader page={currentPage} onHome={() => onNavigate('home')} />
-        <div className="phone-body">{children}</div>
+        <div className="phone-body" key={currentPage.id}>{children}</div>
       </section>
     </main>
   );
