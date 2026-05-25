@@ -5,57 +5,70 @@
     </view>
     <view class="header-center">
       <view class="header-title">裁剪图片</view>
-      <view class="header-subtitle">拖动图片，双指缩放</view>
+      <view class="header-subtitle">拖动图片 · 双指缩放</view>
     </view>
     <view class="header-side right">
       <button class="icon-btn" bindtap="goHome"><icon name="home" size="30" /></button>
     </view>
   </view>
 
-  <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body upload-body">
-    <view
-      class="crop-shell"
-      style="width: {{stageWidth}}px; height: {{stageHeight}}px;"
-      catchtouchstart="onCropStart"
-      catchtouchmove="onCropMove"
-      catchtouchend="onCropEnd"
-      catchtouchcancel="onCropEnd"
-    >
-      <block wx:if="{{imagePath}}">
-        <image
-          class="crop-photo"
-          src="{{imagePath}}"
-          mode="scaleToFill"
-          style="left: {{imageRect.x}}px; top: {{imageRect.y}}px; width: {{imageRect.width}}px; height: {{imageRect.height}}px;"
-        ></image>
-        <view class="crop-frame">
-          <view class="third third-v one"></view>
-          <view class="third third-v two"></view>
-          <view class="third third-h one"></view>
-          <view class="third third-h two"></view>
-          <view class="crop-size-pill">{{cropZoomLabel}}</view>
-        </view>
-        <button class="photo-chip" catchtap="replaceImage"><icon name="swap" size="28" color="#fff" /> 换图</button>
-      </block>
-      <button wx:else class="mock-photo" bindtap="chooseFromAlbum">
-        <view class="upload-icon"><icon name="image" size="64" color="#C56A4C" /></view>
-        <view class="upload-title">上传图片</view>
-        <view class="upload-sub">选择照片后开始裁剪</view>
-      </button>
+  <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body flow-body upload-body">
+    <view class="step-indicator">
+      <view class="step-meta">
+        <text class="step-counter">01<text class="step-total">/ 03</text></text>
+        <text class="step-current">裁剪</text>
+      </view>
+      <view class="step-track"><view class="step-fill step-fill-1"></view></view>
     </view>
 
-    <view wx:if="{{imagePath}}" class="crop-hint-card">
-      <view class="hint-main">
-        <view class="hint-title">只保留最重要的主体</view>
-        <view class="hint-text">单指拖动位置，双指放大细节。比例和尺寸下一步再填。</view>
+    <view class="card-feature crop-stage">
+      <view
+        class="photo-surface crop-shell"
+        style="width: {{stageWidth}}px; height: {{stageHeight}}px;"
+        catchtouchstart="onCropStart"
+        catchtouchmove="onCropMove"
+        catchtouchend="onCropEnd"
+        catchtouchcancel="onCropEnd"
+      >
+        <block wx:if="{{imagePath}}">
+          <image
+            class="crop-photo"
+            src="{{imagePath}}"
+            mode="scaleToFill"
+            style="left: {{imageRect.x}}px; top: {{imageRect.y}}px; width: {{imageRect.width}}px; height: {{imageRect.height}}px;"
+          ></image>
+          <view class="crop-frame">
+            <view class="crop-corner top-left"></view>
+            <view class="crop-corner top-right"></view>
+            <view class="crop-corner bottom-left"></view>
+            <view class="crop-corner bottom-right"></view>
+          </view>
+          <button class="floating-chip" catchtap="replaceImage">
+            <icon name="swap" size="24" color="#fffdf8" />
+            <text>换图</text>
+          </button>
+        </block>
+        <button wx:else class="mock-photo" bindtap="chooseFromAlbum">
+          <view class="upload-icon"><icon name="image" size="64" color="#4f7fa6" /></view>
+          <view class="upload-title">上传图片</view>
+          <view class="upload-sub">选择照片后开始裁剪</view>
+        </button>
       </view>
-      <button class="ghost-btn" bindtap="resetCrop">复位</button>
     </view>
   </scroll-view>
 
-  <view class="bottom-bar">
-    <button wx:if="{{imagePath}}" class="secondary-btn" bindtap="replaceImage"><icon name="swap" size="28" /> 换图</button>
-    <button wx:else class="secondary-btn" bindtap="chooseFromAlbum"><icon name="image" size="28" /> 上传图片</button>
-    <button class="primary-btn {{!imagePath ? 'disabled' : ''}}" disabled="{{!imagePath}}" bindtap="goSize">下一步</button>
+  <view class="bottom-action-bar">
+    <button wx:if="{{imagePath}}" class="secondary-action" bindtap="replaceImage">
+      <icon name="swap" size="28" />
+      <text>换图</text>
+    </button>
+    <button wx:else class="secondary-action" bindtap="chooseFromAlbum">
+      <icon name="image" size="28" />
+      <text>上传</text>
+    </button>
+    <button class="primary-action {{!imagePath ? 'disabled' : ''}}" disabled="{{!imagePath}}" bindtap="goSize">
+      <icon name="check" size="28" color="#fffaf0" />
+      <text>确认裁剪</text>
+    </button>
   </view>
 </view>

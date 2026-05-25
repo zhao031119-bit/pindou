@@ -347,3 +347,71 @@
 .empty-card {
   border-radius: 38rpx;
 }
+
+.projects-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;
+  padding-top: 20rpx;
+}
+
+.projects-body .project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+  border: 2rpx solid rgba(42, 31, 23, 0.07);
+  border-radius: 30rpx;
+  background: rgba(255, 253, 248, 0.7);
+}
+
+.project-row {
+  width: 100%;
+  min-height: 132rpx;
+  display: flex;
+  align-items: center;
+  gap: 22rpx;
+  padding: 20rpx 22rpx;
+  border-bottom: 1rpx solid rgba(42, 31, 23, 0.07);
+  background: transparent;
+  text-align: left;
+}
+
+.project-row:last-child {
+  border-bottom: 0;
+}
+
+.project-row .thumb-shell {
+  width: 116rpx;
+  height: 116rpx;
+  flex-basis: 116rpx;
+}
+
+.project-row .project-title {
+  font-size: 28rpx;
+  font-weight: 900;
+}
+
+.project-row .project-meta {
+  gap: 10rpx 16rpx;
+  margin-top: 8rpx;
+  color: var(--muted-foreground);
+  font-size: 22rpx;
+  font-weight: 800;
+}
+
+.progress-track {
+  display: block;
+  height: 8rpx;
+  margin-top: 14rpx;
+  overflow: hidden;
+  border-radius: 999rpx;
+  background: rgba(42, 31, 23, 0.08);
+}
+
+.progress-track view {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--clay), var(--clay-soft));
+}

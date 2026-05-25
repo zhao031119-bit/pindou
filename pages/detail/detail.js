@@ -1,7 +1,7 @@
 const { getProject, deleteProject: removeProject, renameProject } = require('../../miniprogram/utils/store');
 const { drawPattern, drawLegend, makePatternExportLayout, saveCanvasToAlbum } = require('../../miniprogram/utils/render');
 const { getPaletteName, isPaletteVerified } = require('../../miniprogram/utils/palettes');
-const { getPageTopStyle } = require('../../miniprogram/utils/layout');
+const { getPageTopStyle, getHeaderStyle } = require('../../miniprogram/utils/layout');
 const { safeCells, formatTime, typeLabel, countPaintedCells } = require('../../miniprogram/utils/project-preview');
 const { STORAGE_KEYS } = require('../../miniprogram/utils/constants');
 const { getChecks, toggleCheck, clearChecks } = require('../../miniprogram/utils/project-checks');
@@ -22,6 +22,7 @@ function actionText(type) {
 Page({
   data: {
     pageStyle: '',
+    navStyle: '',
     project: null,
     paletteVerified: true,
     decoratedStats: [],
@@ -36,7 +37,7 @@ Page({
 
   onLoad(query) {
     this.projectId = query.id;
-    this.setData({ pageStyle: getPageTopStyle(18) });
+    this.setData({ pageStyle: getPageTopStyle(18), navStyle: getHeaderStyle(18) });
     this.loadProject();
   },
 
@@ -189,6 +190,14 @@ Page({
     wx.navigateBack({
       fail: () => wx.redirectTo({ url: '/pages/projects/projects' })
     });
+  },
+
+  goHome() {
+    if (wx.reLaunch) {
+      wx.reLaunch({ url: '/pages/home/home' });
+      return;
+    }
+    wx.redirectTo({ url: '/pages/home/home' });
   },
 
   continueEdit() {

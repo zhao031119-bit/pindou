@@ -357,3 +357,142 @@
 .swatch {
   border-radius: 18rpx;
 }
+
+.draw-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;
+  padding-top: 20rpx;
+}
+
+.draw-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx;
+  overflow: hidden;
+  background:
+    linear-gradient(to right, rgba(217, 205, 179, 0.5) 1rpx, transparent 1rpx),
+    linear-gradient(to bottom, rgba(217, 205, 179, 0.5) 1rpx, transparent 1rpx),
+    #fbf6ec;
+  background-size: 28rpx 28rpx;
+}
+
+.draw-canvas {
+  display: block;
+  max-width: 100%;
+}
+
+.tool-dock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  padding: 18rpx;
+  border-radius: 34rpx;
+  background: var(--warm-white);
+  box-shadow: inset 0 0 0 2rpx rgba(42, 31, 23, 0.07);
+}
+
+.tool-dock .tool {
+  width: 72rpx;
+  height: 72rpx;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fbf8f2;
+  color: var(--foreground);
+  font-size: 20rpx;
+  font-weight: 900;
+}
+
+.tool-dock .tool.active {
+  background: rgba(208, 79, 63, 0.14);
+  color: var(--strawberry);
+}
+
+.tool-dock .tool[disabled] {
+  opacity: 0.36;
+}
+
+.tool-divider {
+  width: 2rpx;
+  height: 42rpx;
+  background: rgba(42, 31, 23, 0.08);
+}
+
+.action-dock {
+  gap: 16rpx;
+}
+
+.small-action {
+  height: 78rpx;
+  flex: 1;
+  min-width: 0;
+  font-size: 26rpx;
+}
+
+.palette-row {
+  white-space: nowrap;
+  width: 100%;
+}
+
+.palette-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12rpx;
+  height: 82rpx;
+  margin-right: 14rpx;
+  padding: 0 22rpx 0 14rpx;
+  border-radius: 999rpx;
+  background: var(--warm-white);
+  box-shadow: inset 0 0 0 2rpx rgba(42, 31, 23, 0.08);
+  color: var(--foreground);
+  font-size: 23rpx;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.palette-pill.active {
+  color: var(--strawberry);
+  background: rgba(208, 79, 63, 0.12);
+  box-shadow: inset 0 0 0 2rpx rgba(208, 79, 63, 0.36);
+}
+
+.palette-logo {
+  width: 52rpx;
+  height: 52rpx;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #fffdf8;
+  box-shadow: inset 0 0 0 1rpx rgba(42, 31, 23, 0.08);
+}
+
+.color-dock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+  padding: 20rpx;
+  border-radius: 34rpx;
+  background: var(--warm-white);
+  box-shadow: inset 0 0 0 2rpx rgba(42, 31, 23, 0.07);
+}
+
+.color-dot {
+  width: 58rpx;
+  height: 58rpx;
+  flex-shrink: 0;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 -3rpx 5rpx rgba(42, 31, 23, 0.18),
+    inset 0 3rpx 5rpx rgba(255, 255, 255, 0.32);
+}
+
+.color-dot.active {
+  box-shadow:
+    inset 0 -3rpx 5rpx rgba(42, 31, 23, 0.18),
+    inset 0 3rpx 5rpx rgba(255, 255, 255, 0.32),
+    0 0 0 5rpx var(--warm-white),
+    0 0 0 8rpx var(--strawberry);
+}

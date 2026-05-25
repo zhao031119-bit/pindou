@@ -5,24 +5,28 @@
         <button class="back-btn" bindtap="goBack"><icon name="back" size="32" /></button>
       </view>
       <view class="header-center">
-        <view class="header-title">拼豆图纸 · {{project.width}}×{{project.height}}</view>
-        <view class="header-subtitle">{{paletteName}} · {{project.colorStats.length}} 色</view>
+        <view class="header-title">拼豆图纸</view>
+        <view class="header-subtitle">{{project.width}} x {{project.height}} · {{project.colorStats.length}} 色</view>
       </view>
       <view class="header-side right">
         <button class="icon-btn" bindtap="goHome"><icon name="home" size="30" /></button>
       </view>
     </view>
 
-    <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body result-body">
-      <view class="segmented">
-        <button class="segment {{mode === 'color' ? 'active' : ''}}" data-mode="color" bindtap="switchMode">彩图</button>
-        <button class="segment {{mode === 'code' ? 'active' : ''}}" data-mode="code" bindtap="switchMode">色号</button>
+    <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body flow-body result-body">
+      <view class="step-indicator">
+        <view class="step-meta">
+          <text class="step-counter">03<text class="step-total">/ 03</text></text>
+          <text class="step-current">图纸</text>
+        </view>
+        <view class="step-track"><view class="step-fill step-fill-3"></view></view>
       </view>
 
-      <view class="preview-card">
-        <view wx:if="{{highlightCode}}" class="preview-toolbar">
-          <button class="tool-chip ghost" bindtap="clearHighlight"><icon name="close" size="24" /> 取消高亮</button>
-        </view>
+      <view class="card-feature result-preview">
+        <button wx:if="{{sourceImage}}" class="floating-chip {{showOriginal ? 'active' : ''}}" bindtap="toggleOriginal">
+          <icon name="eye" size="24" color="#fffdf8" />
+          <text>{{showOriginal ? '图纸' : '原图'}}</text>
+        </button>
         <scroll-view scroll-x scroll-y class="preview-scroll" style="height: {{previewBoxHeight}}px;">
           <canvas
             canvas-id="previewCanvas"
@@ -38,81 +42,63 @@
             mode="aspectFit"
             style="width: {{previewCanvasWidth}}px; height: {{previewCanvasHeight}}px;"
           ></image>
-          <button wx:if="{{sourceImage}}" class="floating-eye {{showOriginal ? 'active' : ''}}" bindtap="toggleOriginal">
-            <icon name="eye" size="32" color="{{showOriginal ? '#fff' : '#2a1f17'}}" />
-          </button>
         </scroll-view>
-        <view wx:if="{{highlightCode}}" class="highlight-hint">已高亮色号 {{highlightCode}}，再次点击色号可取消</view>
-      </view>
-
-      <view class="palette-section">
-        <view class="section-head">
-          <view class="section-title">选择色卡</view>
-          <view class="active-brand">
-            <image class="brand-icon active-brand-icon" src="{{paletteIcon}}" mode="aspectFit"></image>
-            <text>{{paletteName}}</text>
-          </view>
-        </view>
-        <view wx:if="{{!paletteVerified}}" class="palette-warning" bindtap="showVerifiedInfo">
-          <text class="warning-text">当前色卡待校准，仅适合预览，不建议按清单购买。</text>
-          <text class="warning-info"><icon name="info" size="28" /></text>
-        </view>
-        <view class="brand-grid">
-          <button
-            wx:for="{{palettes}}"
-            wx:key="id"
-            class="brand-card {{project.paletteId === item.id ? 'active' : ''}}"
-            data-id="{{item.id}}"
-            bindtap="switchPalette"
-          >
-            <image class="brand-icon" src="{{item.icon}}" mode="aspectFit"></image>
-            <view class="brand-main">
-              <view class="brand-name">{{item.name}}</view>
-              <view class="brand-swatches">
-                <view wx:for="{{item.swatches}}" wx:for-item="swatch" wx:for-index="swatchIndex" wx:key="swatchIndex" class="brand-swatch" style="background: {{swatch}};"></view>
-              </view>
-              <view class="brand-meta">{{item.count}} 色<text wx:if="{{!item.verified}}"> · 待校准</text></view>
-            </view>
-          </button>
+        <view class="result-caption">
+          <text>{{project.width}} x {{project.height}} 颗 · {{project.colorStats.length}} 色</text>
+          <text>合计 {{project.stats.total}} 颗</text>
         </view>
       </view>
 
-      <view class="list-section">
-        <view class="section-head compact">
-          <view class="section-title">用豆清单</view>
-          <view class="section-actions">
-            <view class="section-muted">{{checkedCount}}/{{project.colorStats.length}} 已拼 · {{project.stats.total}} 颗</view>
-            <button wx:if="{{checkedCount > 0}}" class="reset-checks" bindtap="resetChecks">清空</button>
+      <view class="v0-section-title">
+        <text class="section-label">可选色卡</text>
+        <text class="section-action">{{palettes.length}} 个品牌</text>
+      </view>
+
+      <scroll-view scroll-x show-scrollbar="{{false}}" class="palette-row">
+        <button
+          wx:for="{{palettes}}"
+          wx:key="id"
+          class="palette-pill {{project.paletteId === item.id ? 'active' : ''}}"
+          data-id="{{item.id}}"
+          bindtap="switchPalette"
+        >
+          <image class="palette-logo" src="{{item.icon}}" mode="aspectFit"></image>
+          <text>{{item.name}}</text>
+        </button>
+      </scroll-view>
+
+      <view class="v0-section-title">
+        <text class="section-label">豆子清单</text>
+        <text class="section-action">{{project.stats.total}} 颗</text>
+      </view>
+
+      <view class="bead-list">
+        <view
+          wx:for="{{decoratedStats}}"
+          wx:key="statKey"
+          class="bead-row {{highlightCode === item.code ? 'highlighted' : ''}}"
+          data-code="{{item.code}}"
+          bindtap="highlightStat"
+        >
+          <view class="swatch" style="background: {{item.hex}};"></view>
+          <view class="bead-main">
+            <view class="bead-code">{{item.code}}</view>
+            <view class="bead-name">{{item.name}} · {{item.hex}}</view>
           </view>
-        </view>
-        <view class="legend-tip">点色号高亮主图，点方框标记已拼/已购</view>
-        <view wx:if="{{showCheckTip}}" class="check-tip-bubble" bindtap="dismissCheckTip">
-          <text>左侧方框可以勾选已拼完的色号，方便追踪进度</text>
-          <text class="tip-dismiss">知道了</text>
-        </view>
-        <view class="bead-list">
-          <view
-            wx:for="{{decoratedStats}}"
-            wx:key="statKey"
-            class="bead-row {{highlightCode === item.code ? 'highlighted' : ''}} {{item.checked ? 'checked' : ''}}"
-            data-code="{{item.code}}"
-            bindtap="highlightStat"
-          >
-            <view class="check-box" data-code="{{item.code}}" catchtap="toggleStatChecked"><icon name="{{item.checked ? 'checkbox-on' : 'checkbox'}}" size="36" /></view>
-            <view class="swatch" style="background: {{item.hex}};"></view>
-            <view class="bead-main">
-              <view class="bead-code">{{item.code}} <text class="tag muted">{{paletteName}}</text></view>
-              <view class="bead-name">{{item.name}} · <text class="hex-label">{{item.hex}}</text></view>
-            </view>
-            <view class="bead-count">{{item.count}}<view class="count-unit">颗</view></view>
-          </view>
+          <view class="bead-count">x{{item.count}}</view>
         </view>
       </view>
     </scroll-view>
 
-    <view class="bottom-bar result-actions">
-      <button class="secondary-btn" loading="{{exportingPreview}}" bindtap="saveLongImage">{{exportingPreview ? '生成中' : '保存图片'}}</button>
-      <button class="primary-btn {{isSaved ? 'saved' : ''}}" loading="{{saving}}" bindtap="saveToProjects">{{isSaved ? '已加入 · 打开' : '加入我的作品'}}</button>
+    <view class="bottom-action-bar result-actions">
+      <button class="secondary-action" loading="{{saving}}" bindtap="saveToProjects">
+        <icon name="save" size="28" />
+        <text>{{isSaved ? '打开作品' : '加入作品'}}</text>
+      </button>
+      <button class="primary-action" loading="{{exportingPreview}}" bindtap="saveLongImage">
+        <icon name="share" size="28" color="#fffaf0" />
+        <text>{{exportingPreview ? '生成中' : '保存图片'}}</text>
+      </button>
     </view>
 
     <canvas

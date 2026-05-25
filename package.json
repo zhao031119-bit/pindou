@@ -8,7 +8,7 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build && node scripts/copy-preview-assets.mjs",
     "preview": "vite preview --host 0.0.0.0",
-    "test": "node tests/color.test.js && node tests/palette.test.js && node tests/pattern.test.js && node tests/render.test.js && node tests/draw.test.js && node tests/store.test.js && node tests/size-recommendation.test.js && node tests/palette-icons.test.js && node tests/preview-config.test.js && node tests/v0-workbench.test.js",
+    "test": "node tests/color.test.js && node tests/palette.test.js && node tests/pattern.test.js && node tests/render.test.js && node tests/draw.test.js && node tests/store.test.js && node tests/size-recommendation.test.js && node tests/palette-icons.test.js && node tests/preview-config.test.js && node tests/v0-workbench.test.js && node tests/miniapp-v0-layout.test.js",
     "check:pages": "node scripts/check-pages.mjs",
     "build:palettes": "node scripts/fetch-palettes.mjs"
   },

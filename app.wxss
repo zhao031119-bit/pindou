@@ -891,3 +891,171 @@ scroll-view.scroll-body {
     inset 0 0 0 1rpx rgba(42, 31, 23, 0.14),
     inset 0 3rpx 5rpx rgba(255, 255, 255, 0.28);
 }
+
+/* v0 layout primitives used by the real miniapp pages */
+.flow-body {
+  background-image:
+    radial-gradient(circle at 1rpx 1rpx, rgba(42, 31, 23, 0.045) 1rpx, transparent 2rpx);
+  background-size: 28rpx 28rpx;
+}
+
+.card-feature {
+  position: relative;
+  border: 2rpx solid rgba(42, 31, 23, 0.07);
+  border-radius: 34rpx;
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0.98) 0%, rgba(255, 250, 242, 0.98) 100%);
+  box-shadow:
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.64),
+    0 2rpx 4rpx rgba(42, 31, 23, 0.03),
+    0 30rpx 64rpx -38rpx rgba(42, 31, 23, 0.2);
+}
+
+.step-indicator {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  padding: 12rpx 6rpx 0;
+}
+
+.step-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.step-counter {
+  color: var(--foreground);
+  font-size: 22rpx;
+  font-weight: 900;
+  letter-spacing: 2rpx;
+}
+
+.step-total {
+  margin-left: 8rpx;
+  color: var(--muted-foreground);
+}
+
+.step-current {
+  color: var(--tone-color, var(--primary));
+  font-size: 22rpx;
+  font-weight: 900;
+  letter-spacing: 2rpx;
+}
+
+.step-track {
+  height: 4rpx;
+  overflow: hidden;
+  border-radius: 999rpx;
+  background: rgba(42, 31, 23, 0.08);
+}
+
+.step-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--foreground);
+}
+
+.v0-section-title {
+  display: flex;
+  align-items: center;
+  gap: 22rpx;
+  padding: 4rpx 6rpx 0;
+}
+
+.v0-section-title::before {
+  content: "";
+  order: 2;
+  flex: 1;
+  height: 1rpx;
+  background: rgba(42, 31, 23, 0.08);
+}
+
+.section-label {
+  flex-shrink: 0;
+  color: var(--foreground);
+  font-size: 22rpx;
+  font-weight: 900;
+  letter-spacing: 2rpx;
+}
+
+.section-action {
+  order: 3;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  font-size: 20rpx;
+  font-weight: 900;
+  letter-spacing: 1rpx;
+}
+
+.floating-chip {
+  position: absolute;
+  right: 24rpx;
+  top: 24rpx;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
+  height: 56rpx;
+  padding: 0 20rpx;
+  border-radius: 999rpx;
+  background: rgba(42, 31, 23, 0.78);
+  color: #fffdf8;
+  font-size: 22rpx;
+  font-weight: 900;
+  box-shadow: 0 16rpx 32rpx -24rpx rgba(42, 31, 23, 0.4);
+}
+
+.bottom-action-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx 32rpx calc(24rpx + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, rgba(245, 241, 232, 0.98) 66%, rgba(245, 241, 232, 0));
+  z-index: 8;
+}
+
+.primary-action,
+.secondary-action {
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  border-radius: 999rpx;
+  font-size: 28rpx;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.primary-action {
+  flex: 1;
+  color: #fffaf0;
+  background: var(--tone-color, var(--primary));
+  box-shadow: 0 22rpx 44rpx -30rpx rgba(197, 106, 76, 0.72);
+}
+
+.secondary-action {
+  padding: 0 28rpx;
+  color: var(--foreground);
+  background: rgba(255, 253, 248, 0.92);
+  box-shadow: inset 0 0 0 2rpx rgba(42, 31, 23, 0.07);
+}
+
+.progress-track {
+  display: block;
+  height: 8rpx;
+  margin-top: 14rpx;
+  overflow: hidden;
+  border-radius: 999rpx;
+  background: rgba(42, 31, 23, 0.08);
+}
+
+.progress-track view {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--clay), var(--clay-soft));
+}

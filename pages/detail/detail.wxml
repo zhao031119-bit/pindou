@@ -1,90 +1,105 @@
-<view class="detail-page tone-clay" style="{{pageStyle}}" wx:if="{{project}}">
-  <view class="detail-header">
-    <button class="round-btn" bindtap="goBack"><icon name="back" size="32" /></button>
-    <view class="header-copy">
-      <view class="eyebrow">{{project.typeLabel}}</view>
-      <view class="detail-title">{{project.name}}</view>
-      <view class="detail-sub">{{project.updatedText}} · {{project.paletteLabel}}<text wx:if="{{!paletteVerified}}"> · </text><text wx:if="{{!paletteVerified}}" class="warn-tap" catchtap="showVerifiedInfo">待校准 ⓘ</text></view>
+<view class="screen tone-clay" wx:if="{{project}}">
+  <view class="app-header" style="{{navStyle}}">
+    <view class="header-side">
+      <button class="back-btn" bindtap="goBack"><icon name="back" size="32" /></button>
     </view>
-    <button class="round-btn" bindtap="rename">改名</button>
-    <button class="round-btn danger" bindtap="deleteProject">删</button>
-  </view>
-
-  <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="detail-scroll">
-  <view class="preview-card">
-    <view wx:if="{{highlightCode}}" class="highlight-hint">已高亮色号 {{highlightCode}}，点击清单或此处取消 <text class="warn-tap" catchtap="clearHighlight">取消</text></view>
-    <scroll-view scroll-x scroll-y class="preview-scroll" style="height: {{previewBoxHeight}}px;">
-      <canvas
-        canvas-id="previewCanvas"
-        class="preview-canvas"
-        style="width: {{previewCanvasWidth}}px; height: {{previewCanvasHeight}}px;"
-        width="{{previewCanvasWidth}}"
-        height="{{previewCanvasHeight}}"
-      ></canvas>
-    </scroll-view>
-  </view>
-
-  <view class="stat-strip">
-    <view class="stat-item">
-      <text class="stat-value">{{project.width}}×{{project.height}}</text>
-      <text class="stat-label">尺寸</text>
+    <view class="header-center">
+      <view class="header-title">{{project.name}}</view>
+      <view class="header-subtitle">{{project.typeLabel}} · {{project.paletteLabel}}</view>
     </view>
-    <view class="stat-item">
-      <text class="stat-value">{{project.totalCount}}</text>
-      <text class="stat-label">总豆数</text>
-    </view>
-    <view class="stat-item">
-      <text class="stat-value">{{project.colorCount}}</text>
-      <text class="stat-label">颜色</text>
+    <view class="header-side right">
+      <button class="icon-btn" bindtap="goHome"><icon name="home" size="30" /></button>
     </view>
   </view>
 
-  <view class="info-card">
-    <view class="info-row">
-      <text class="info-label">豆子规格</text>
-      <text class="info-value">{{project.beadSize}}</text>
-    </view>
-    <view class="info-row">
-      <text class="info-label">拼板估算</text>
-      <text class="info-value">{{project.boardText}}</text>
-    </view>
-  </view>
-
-  <view class="action-row">
-    <button class="action-btn primary" bindtap="continueEdit">{{project.actionText}}</button>
-    <button class="action-btn" bindtap="saveLongImage">保存为图片</button>
-  </view>
-
-  <view class="bead-card">
-    <view class="card-head">
-      <view>
-        <view class="card-title">用豆清单</view>
-        <view class="card-sub">{{checkedCount}}/{{project.colorCount}} 已拼 · 点色号高亮，方框标记已拼/已购</view>
+  <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body flow-body detail-body">
+    <view class="card-feature detail-hero">
+      <scroll-view scroll-x scroll-y class="detail-preview" style="height: {{previewBoxHeight}}px;">
+        <canvas
+          canvas-id="previewCanvas"
+          class="preview-canvas"
+          style="width: {{previewCanvasWidth}}px; height: {{previewCanvasHeight}}px;"
+          width="{{previewCanvasWidth}}"
+          height="{{previewCanvasHeight}}"
+        ></canvas>
+      </scroll-view>
+      <view class="detail-copy">
+        <text>{{project.name}}</text>
+        <text>{{project.typeLabel}} · {{project.width}} x {{project.height}} · {{project.paletteLabel}}</text>
+        <view class="progress-track"><view style="width: 100%;"></view></view>
+        <text class="detail-progress">更新于 {{project.updatedText}}</text>
       </view>
-      <button wx:if="{{checkedCount > 0}}" class="reset-checks" catchtap="resetChecks">清空</button>
+    </view>
+
+    <view class="stats-grid">
+      <view class="stat-card">
+        <text>颜色</text>
+        <text>{{project.colorCount}}</text>
+      </view>
+      <view class="stat-card">
+        <text>颗数</text>
+        <text>{{project.totalCount}}</text>
+      </view>
+      <view class="stat-card">
+        <text>尺寸</text>
+        <text>{{project.width}}x{{project.height}}</text>
+      </view>
+    </view>
+
+    <view class="v0-section-title">
+      <text class="section-label">豆子清单</text>
     </view>
 
     <view wx:if="{{decoratedStats.length === 0}}" class="empty-list">这张图纸还没有用到颜色</view>
-    <view wx:else class="bead-list-detail">
+    <view wx:else class="bead-list">
       <view
         wx:for="{{decoratedStats}}"
         wx:key="statKey"
-        class="bead-row-detail {{highlightCode === item.code ? 'highlighted' : ''}} {{item.checked ? 'checked' : ''}}"
+        class="bead-row {{highlightCode === item.code ? 'highlighted' : ''}}"
         data-code="{{item.code}}"
         bindtap="highlightStat"
       >
-        <view class="check-box" data-code="{{item.code}}" catchtap="toggleStatChecked"><icon name="{{item.checked ? 'checkbox-on' : 'checkbox'}}" size="36" /></view>
         <view class="swatch" style="background: {{item.hex}};"></view>
         <view class="bead-main">
           <view class="bead-code">{{item.code || '-'}}</view>
           <view class="bead-name">{{item.name}} · {{item.paletteLabel}}</view>
         </view>
-        <view class="bead-count">{{item.count}}</view>
+        <view class="bead-count">x{{item.count}}</view>
       </view>
     </view>
-  </view>
 
+    <view class="v0-section-title">
+      <text class="section-label">最近修改</text>
+    </view>
+
+    <view class="history-list">
+      <view class="history-row">
+        <view class="history-dot"></view>
+        <view>
+          <text>{{project.updatedText}}</text>
+          <text>更新图纸</text>
+        </view>
+      </view>
+      <view class="history-row">
+        <view class="history-dot muted"></view>
+        <view>
+          <text>{{project.typeLabel}}</text>
+          <text>创建作品</text>
+        </view>
+      </view>
+    </view>
   </scroll-view>
+
+  <view class="bottom-action-bar detail-actions">
+    <button class="secondary-action" bindtap="continueEdit">
+      <icon name="edit" size="28" />
+      <text>编辑</text>
+    </button>
+    <button class="primary-action" bindtap="saveLongImage">
+      <icon name="share" size="28" color="#fffaf0" />
+      <text>保存图片</text>
+    </button>
+  </view>
 
   <canvas
     canvas-id="exportCanvas"
@@ -95,7 +110,7 @@
   ></canvas>
 </view>
 
-<view class="detail-page tone-clay" style="{{pageStyle}}" wx:else>
+<view class="screen tone-clay" wx:else>
   <view class="missing-card">
     <view class="missing-title">作品不存在</view>
     <view class="missing-sub">这个作品可能已经被删除，或者本地缓存被清理了。</view>

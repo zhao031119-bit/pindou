@@ -5,6 +5,7 @@ const { drawPattern, drawLegend, measureLegend, saveCanvasToAlbum } = require('.
 const { SIZE_PRESETS, BEAD_SIZE_OPTIONS, DEFAULT_PALETTE_ID, MAX_GENERATE_CELLS } = require('../../miniprogram/utils/constants');
 const { getHeaderStyle } = require('../../miniprogram/utils/layout');
 const { chooseOneImage } = require('../../miniprogram/utils/media');
+const { getPaletteIcon } = require('../../miniprogram/utils/palette-icons');
 const haptic = require('../../miniprogram/utils/haptic');
 
 function toPositiveInt(value, fallback) {
@@ -24,6 +25,7 @@ Page({
     activePresetId: 'board1',
     sizePresets: SIZE_PRESETS,
     palettes: [],
+    paletteOptions: [],
     paletteNames: [],
     paletteIndex: 0,
     beadSizeLabels: BEAD_SIZE_OPTIONS.map((item) => item.label),
@@ -49,6 +51,7 @@ Page({
     this.setData({
       navStyle: getHeaderStyle(18),
       palettes,
+      paletteOptions: palettes.map((item) => Object.assign({}, item, { icon: getPaletteIcon(item.id) })),
       paletteNames: palettes.map((item) => item.name),
       paletteIndex
     });
@@ -196,10 +199,13 @@ Page({
   setProject(project, options) {
     const opts = options || {};
     const totalCount = project.colorStats.reduce((sum, item) => sum + item.count, 0);
+    const colorStats = project.colorStats.map((item) => Object.assign({}, item, {
+      percent: totalCount ? Math.max(1, Math.round(item.count / totalCount * 100)) : 0
+    }));
     const paletteVerified = isPaletteVerified(project.paletteId);
     this.setData({
       project,
-      colorStats: project.colorStats,
+      colorStats,
       totalCount,
       paletteVerified,
       generating: false,

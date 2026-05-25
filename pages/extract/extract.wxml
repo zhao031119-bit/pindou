@@ -4,20 +4,22 @@
       <button class="back-btn" bindtap="goHome"><icon name="back" size="32" /></button>
     </view>
     <view class="header-center">
-      <view class="header-title">图纸提取色号</view>
-      <view class="header-subtitle">批量采样已有图纸</view>
+      <view class="header-title">提取色号</view>
+      <view class="header-subtitle">从已有图纸生成用豆清单</view>
     </view>
-    <view class="header-side right"></view>
+    <view class="header-side right">
+      <button class="icon-btn" bindtap="goHome"><icon name="home" size="30" /></button>
+    </view>
   </view>
 
-  <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body extract-body">
+  <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body flow-body extract-body">
     <button wx:if="{{!project}}" class="upload-panel" bindtap="chooseImage">
       <block wx:if="{{imagePath}}">
         <image class="upload-preview-image" src="{{imagePath}}" mode="aspectFit"></image>
         <view class="upload-preview-mask">
           <view>
             <view class="upload-title">已选择图纸</view>
-            <view class="upload-sub">{{imageWidth}} × {{imageHeight}} · 点击换图</view>
+            <view class="upload-sub">{{imageWidth}} x {{imageHeight}} · 点击换图</view>
           </view>
           <view class="upload-badge">更换</view>
         </view>
@@ -36,20 +38,42 @@
             <view class="art-dot d9"></view>
           </view>
           <view class="upload-title">上传已有图纸</view>
-          <view class="upload-sub">选择图纸后提取色号和用豆数量</view>
+          <view class="upload-sub">选择图纸后填写宽高</view>
         </view>
       </block>
     </button>
 
-    <view wx:if="{{project}}" class="extract-preview">
-      <view class="result-panel">
-        <view class="section-head result-head">
-          <view>
-            <view class="section-title">提取结果</view>
-            <view class="section-muted">{{project.width}} × {{project.height}} · {{paletteNames[paletteIndex]}}<text wx:if="{{!paletteVerified}}"> · 色卡待校准，仅供预览</text></view>
+    <view wx:if="{{!project}}" class="card-feature extract-settings">
+      <view class="v0-section-title compact-title">
+        <text class="section-label">采样尺寸</text>
+      </view>
+      <view class="size-inputs">
+        <view class="number-field">
+          <view class="form-label">宽（颗）</view>
+          <view class="number-input-wrap">
+            <input class="number-input" type="number" value="{{width}}" bindinput="onWidthInput" />
           </view>
-          <button class="ghost-btn small-ghost" bindtap="chooseImage">换图</button>
         </view>
+        <view class="number-field">
+          <view class="form-label">高（颗）</view>
+          <view class="number-input-wrap">
+            <input class="number-input" type="number" value="{{height}}" bindinput="onHeightInput" />
+          </view>
+        </view>
+      </view>
+      <picker mode="selector" range="{{paletteNames}}" value="{{paletteIndex}}" bindchange="onPaletteChange">
+        <view class="palette-picker-row">
+          <view>
+            <view class="select-label">目标色卡</view>
+            <view class="select-value">{{paletteNames[paletteIndex]}}</view>
+          </view>
+          <view class="select-arrow"><icon name="forward" size="28" /></view>
+        </view>
+      </picker>
+    </view>
+
+    <block wx:if="{{project}}">
+      <view class="card-feature extract-summary">
         <view class="preview-stage">
           <canvas
             canvas-id="previewCanvas"
@@ -59,105 +83,56 @@
             style="width: {{previewWidth}}px; height: {{previewHeight}}px;"
           ></canvas>
         </view>
-        <view class="extract-stats">
-          <view class="extract-stat">
-            <view class="stat-value">{{totalCount}}</view>
-            <view class="stat-label">总豆数</view>
-          </view>
-          <view class="extract-stat">
-            <view class="stat-value">{{project.colorStats.length}}</view>
-            <view class="stat-label">色号数</view>
-          </view>
-          <view class="extract-stat">
-            <view class="stat-value">{{project.width}}×{{project.height}}</view>
-            <view class="stat-label">图纸尺寸</view>
-          </view>
-        </view>
-      </view>
-    </view>
-
-    <view class="card padded param-card">
-      <view class="section-head param-head">
-        <view>
-          <view class="section-title">采样设置</view>
-          <view class="section-muted">按已有图纸的豆格宽高填写</view>
+        <view class="extract-summary-copy">
+          <text>{{totalCount}} 颗 · {{project.colorStats.length}} 主色</text>
+          <text>{{project.width}} x {{project.height}} · {{paletteNames[paletteIndex]}}</text>
         </view>
       </view>
 
-      <scroll-view scroll-x class="preset-scroll">
-        <button
-          wx:for="{{sizePresets}}"
-          wx:key="id"
-          class="preset-chip {{activePresetId === item.id ? 'active' : ''}}"
-          data-index="{{index}}"
-          bindtap="selectPreset"
-        >{{item.width}}×{{item.height}}</button>
-      </scroll-view>
-
-      <view class="size-grid">
-        <view class="number-field">
-          <view class="form-label">宽</view>
-          <view class="number-input-wrap">
-            <input class="number-input" type="number" value="{{width}}" bindinput="onWidthInput" />
-            <text class="input-unit">豆</text>
-          </view>
-        </view>
-        <view class="number-field">
-          <view class="form-label">高</view>
-          <view class="number-input-wrap">
-            <input class="number-input" type="number" value="{{height}}" bindinput="onHeightInput" />
-            <text class="input-unit">豆</text>
-          </view>
-        </view>
+      <view class="v0-section-title">
+        <text class="section-label">色卡频率</text>
+        <text class="section-action">占比从高到低</text>
       </view>
 
-      <view class="select-list">
-        <picker mode="selector" range="{{beadSizeLabels}}" value="{{beadSizeIndex}}" bindchange="onBeadSizeChange">
-          <view class="select-row">
-            <view>
-              <view class="select-label">豆子规格</view>
-              <view class="select-value">{{beadSizeLabels[beadSizeIndex]}}</view>
+      <view class="freq-list">
+        <view wx:for="{{colorStats}}" wx:key="statKey" class="freq-row">
+          <view class="freq-swatch" style="background: {{item.hex}};"></view>
+          <view class="freq-meta">
+            <view class="freq-head">
+              <text>{{item.name}}</text>
+              <text>x{{item.count}}</text>
             </view>
-            <view class="select-arrow"><icon name="forward" size="28" /></view>
+            <view class="freq-track"><view style="width: {{item.percent}}%; background: {{item.hex}};"></view></view>
           </view>
-        </picker>
-
-        <picker mode="selector" range="{{paletteNames}}" value="{{paletteIndex}}" bindchange="onPaletteChange">
-          <view class="select-row">
-            <view>
-              <view class="select-label">目标色卡</view>
-              <view class="select-value">{{paletteNames[paletteIndex]}}</view>
-            </view>
-            <view class="select-arrow"><icon name="forward" size="28" /></view>
-          </view>
-        </picker>
-      </view>
-    </view>
-
-    <view wx:if="{{project}}" class="match-section">
-      <view class="section-head">
-        <view class="section-title">色号清单</view>
-        <view class="section-muted">共 {{project.colorStats.length}} 色</view>
-      </view>
-      <view class="bead-list">
-        <view wx:for="{{colorStats}}" wx:key="statKey" class="bead-row">
-          <view class="swatch" style="background: {{item.hex}};"></view>
-          <view class="bead-main">
-            <view class="bead-code">{{item.code}} <text class="tag muted">{{paletteNames[paletteIndex]}}</text></view>
-            <view class="bead-name">{{item.name}}</view>
-          </view>
-          <view class="bead-count">{{item.count}}</view>
+          <text class="freq-ratio">{{item.percent}}%</text>
         </view>
       </view>
-    </view>
+
+      <view class="v0-section-title">
+        <text class="section-label">可匹配品牌</text>
+      </view>
+
+      <view class="palette-cards">
+        <view wx:for="{{paletteOptions}}" wx:key="id" class="palette-card">
+          <image class="palette-logo" src="{{item.icon}}" mode="aspectFit"></image>
+          <view>
+            <text>{{item.name}}</text>
+            <text>{{item.count}} 色可匹配</text>
+          </view>
+          <text class="tag {{item.id === palettes[paletteIndex].id ? '' : 'tag-muted'}}">{{item.id === palettes[paletteIndex].id ? '当前' : '可选'}}</text>
+        </view>
+      </view>
+    </block>
   </scroll-view>
 
-  <view class="bottom-bar extract-actions">
-    <button wx:if="{{!project}}" class="primary-btn" loading="{{generating}}" bindtap="generate">{{generating ? '采样中' : '采样生成清单'}}</button>
+  <view class="bottom-action-bar extract-actions">
+    <button wx:if="{{!project}}" class="primary-action" loading="{{generating}}" bindtap="generate">
+      <icon name="star" size="28" color="#fffaf0" />
+      <text>{{generating ? '采样中' : '生成清单'}}</text>
+    </button>
     <block wx:else>
-      <button class="secondary-btn" bindtap="copyList">复制清单</button>
-      <button class="secondary-btn" bindtap="saveLongImage">保存为图片</button>
-      <button class="primary-btn {{isSaved ? 'saved' : ''}}" loading="{{saving}}" bindtap="saveLocalProject">{{isSaved ? '已加入 · 打开' : '加入我的作品'}}</button>
+      <button class="secondary-action" bindtap="copyList">复制清单</button>
+      <button class="primary-action {{isSaved ? 'saved' : ''}}" loading="{{saving}}" bindtap="saveLocalProject">{{isSaved ? '打开作品' : '加入作品'}}</button>
     </block>
   </view>
 

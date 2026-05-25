@@ -4,7 +4,7 @@ const { createProject } = require('../../miniprogram/utils/pattern');
 const { saveProject: persistProject, getProject } = require('../../miniprogram/utils/store');
 const { drawPattern, drawLegend, makePatternExportLayout, saveCanvasToAlbum } = require('../../miniprogram/utils/render');
 const { hexToRgb } = require('../../miniprogram/utils/color');
-const { getPageTopStyle } = require('../../miniprogram/utils/layout');
+const { getPageTopStyle, getHeaderStyle } = require('../../miniprogram/utils/layout');
 const { makePaletteIconOptions } = require('../../miniprogram/utils/palette-icons');
 const haptic = require('../../miniprogram/utils/haptic');
 
@@ -103,6 +103,7 @@ function removeDrawDraft() {
 Page({
   data: {
     pageStyle: '',
+    navStyle: '',
     sizes: DRAW_SIZE_PRESETS.filter((item) => [16, 29, 50, 100].indexOf(item.width) >= 0),
     sizeId: DEFAULT_SIZE.id,
     width: DEFAULT_SIZE.width,
@@ -129,7 +130,7 @@ Page({
   },
 
   onLoad(query) {
-    this.setData({ pageStyle: getPageTopStyle(22) });
+    this.setData({ pageStyle: getPageTopStyle(22), navStyle: getHeaderStyle(18) });
     this.cells = makeCells(DEFAULT_SIZE.width, DEFAULT_SIZE.height);
     this.history = [];
     this.redoStack = [];

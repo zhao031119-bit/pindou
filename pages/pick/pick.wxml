@@ -12,100 +12,66 @@
     </view>
   </view>
 
-  <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body pick-body">
-    <view class="picker-shell picker-canvas-shell">
-      <canvas
-        canvas-id="pickerCanvas"
-        class="picker-canvas"
-        width="{{canvasWidth}}"
-        height="{{canvasHeight}}"
-        style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
-        bindtap="onCanvasTap"
-        bindtouchstart="onCanvasTouchStart"
-        catchtouchmove="onCanvasTouchMove"
-        bindtouchend="onCanvasTouchEnd"
-        bindtouchcancel="onCanvasTouchEnd"
-      ></canvas>
-      <view wx:if="{{!imagePath}}" class="picker-gradient" bindtap="chooseImage">
-        <view class="gradient-glow one"></view>
-        <view class="gradient-glow two"></view>
-        <view class="picker-upload"><icon name="image" size="28" color="#fff" /> 换图</view>
-        <view class="picker-hint">点击上传图片</view>
-      </view>
-      <view wx:if="{{picked}}" class="loupe" style="left: {{markerLeft}}px; top: {{markerTop}}px;">
-        <view class="loupe-dot" style="background: {{picked.hex}};">
-          <icon name="pipette" size="22" color="#fff" />
+  <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body flow-body pick-body">
+    <view class="card-feature pick-stage">
+      <view class="sample-image picker-shell picker-canvas-shell">
+        <canvas
+          canvas-id="pickerCanvas"
+          class="picker-canvas"
+          width="{{canvasWidth}}"
+          height="{{canvasHeight}}"
+          style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
+          bindtap="onCanvasTap"
+          bindtouchstart="onCanvasTouchStart"
+          catchtouchmove="onCanvasTouchMove"
+          bindtouchend="onCanvasTouchEnd"
+          bindtouchcancel="onCanvasTouchEnd"
+        ></canvas>
+        <view wx:if="{{!imagePath}}" class="picker-gradient" bindtap="chooseImage">
+          <view class="picker-upload"><icon name="image" size="28" color="#fff" /> 上传图片</view>
+          <view class="picker-hint">点击后在图片上取样</view>
         </view>
-        <view class="loupe-label">{{picked.hex}}</view>
+        <view wx:if="{{picked}}" class="loupe" style="left: {{markerLeft}}px; top: {{markerTop}}px;">
+          <view class="loupe-dot" style="background: {{picked.hex}};">
+            <icon name="pipette" size="22" color="#fff" />
+          </view>
+          <view class="loupe-label">{{picked.hex}}</view>
+        </view>
+        <button class="floating-chip" bindtap="chooseImage">
+          <icon name="image" size="24" color="#fffdf8" />
+          <text>{{imagePath ? '换图' : '上传'}}</text>
+        </button>
       </view>
-      <button class="picker-chip right" bindtap="chooseImage"><icon name="image" size="24" color="#fff" /> 换图</button>
-      <button wx:if="{{imagePath}}" class="picker-chip left mode-chip {{pickerMode === 'pan' ? 'active' : ''}}" bindtap="togglePickerMode">{{pickerMode === 'pan' ? '移动画布' : '取色'}}</button>
-      <view wx:else class="picker-chip left"><icon name="pipette" size="24" color="#fff" /> 取色</view>
-      <view wx:if="{{imagePath}}" class="zoom-panel">
-        <button class="zoom-btn" disabled="{{!canZoomOut}}" bindtap="zoomOut"><icon name="zoom-out" size="28" /></button>
-        <button class="zoom-label" bindtap="resetZoom">{{zoomLabel}}</button>
-        <button class="zoom-btn" disabled="{{!canZoomIn}}" bindtap="zoomIn"><icon name="zoom-in" size="28" /></button>
+
+      <view class="pick-current">
+        <view class="pick-swatch" style="background: {{picked ? picked.hex : '#8FC8E8'}};"></view>
+        <view>
+          <text>当前取样</text>
+          <text class="pick-hex">{{picked ? picked.hex : '#8FC8E8'}}</text>
+        </view>
+        <text class="tag">{{picked ? '已锁定' : '待取色'}}</text>
       </view>
     </view>
 
-    <view class="sample-card card padded">
-      <view class="sample-swatch" style="background: {{picked ? picked.hex : '#8FC8E8'}};"></view>
-      <view class="sample-main">
-        <view class="sample-title"><icon name="pipette" size="24" /> 当前取样</view>
-        <view class="sample-grid">
-          <view>
-            <text class="sample-label">HEX</text>
-            <text class="sample-value">{{picked ? picked.hex : '#8FC8E8'}}</text>
-          </view>
-          <view>
-            <text class="sample-label">RGB</text>
-            <text class="sample-value">{{pickedRgb || '143,200,232'}}</text>
-          </view>
-        </view>
-        <view class="sample-size-row">
-          <text class="sample-label">采样</text>
-          <view
-            wx:for="{{sampleSizeOptions}}"
-            wx:key="id"
-            class="sample-size-chip {{sampleSize === item.id ? 'active' : ''}}"
-            data-id="{{item.id}}"
-            bindtap="selectSampleSize"
-          >{{item.label}}</view>
-        </view>
-        <view wx:if="{{recentPicks.length > 1}}" class="recent-picks">
-          <text class="sample-label">历史</text>
-          <view
-            wx:for="{{recentPicks}}"
-            wx:key="hex"
-            class="recent-dot {{picked && picked.hex === item.hex ? 'active' : ''}}"
-            style="background: {{item.hex}};"
-            data-hex="{{item.hex}}"
-            bindtap="recallPick"
-          ></view>
-        </view>
-      </view>
+    <view class="v0-section-title">
+      <text class="section-label">匹配色号</text>
+      <text class="section-action">{{matches.length ? matches.length + ' 项' : '待取样'}}</text>
     </view>
 
-    <view class="match-section">
-      <view class="section-head">
-        <view class="section-title">各色卡最近匹配</view>
-        <view class="section-muted">按 ΔE 升序⌄</view>
-      </view>
-
-      <view class="bead-list">
-        <view wx:for="{{matches}}" wx:key="paletteId" class="bead-row">
-          <image class="match-brand-icon" src="{{item.icon}}" mode="aspectFit"></image>
-          <view class="swatch" style="background: {{item.hex}};"></view>
-            <view class="bead-main">
-              <view class="match-title">{{item.paletteName}}</view>
-              <view class="bead-name"><text class="bead-code">{{item.code}}</text> · {{item.name}}<text wx:if="{{!item.verified}}"> · 待校准</text></view>
-            </view>
-          <view class="delta-badge">ΔE {{item.distance}}</view>
+    <view class="match-list">
+      <view wx:for="{{matches}}" wx:key="paletteId" class="match-row">
+        <image class="palette-logo" src="{{item.icon}}" mode="aspectFit"></image>
+        <view class="match-swatch" style="background: {{item.hex}};"></view>
+        <view class="match-main">
+          <view class="match-title">{{item.code}}</view>
+          <view class="match-name">{{item.paletteName}} · {{item.name}}</view>
         </view>
-        <view wx:if="{{!matches.length}}" class="empty-row">上传图片后点击/滑动取色，查看 10 套色卡的最近色号</view>
+        <view class="match-score">
+          <text>{{item.distance}}</text>
+          <text>ΔE</text>
+        </view>
       </view>
-
-      <view class="tip-text">ΔE 越小越接近：≤2 几乎相同 · ≤3 视觉接近 · ≤5 可接受替代。</view>
+      <view wx:if="{{!matches.length}}" class="empty-row">上传图片后点击颜色，即可匹配各品牌色号。</view>
     </view>
   </scroll-view>
 </view>

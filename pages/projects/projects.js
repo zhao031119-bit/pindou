@@ -1,5 +1,5 @@
 const { listProjects, deleteProject: removeProject, renameProject } = require('../../miniprogram/utils/store');
-const { getPageTopStyle } = require('../../miniprogram/utils/layout');
+const { getPageTopStyle, getHeaderStyle } = require('../../miniprogram/utils/layout');
 const { formatTime, typeLabel, makeProjectThumbnail } = require('../../miniprogram/utils/project-preview');
 const { STORAGE_KEYS } = require('../../miniprogram/utils/constants');
 const haptic = require('../../miniprogram/utils/haptic');
@@ -38,6 +38,7 @@ function compareProjects(sortId) {
 Page({
   data: {
     pageStyle: '',
+    navStyle: '',
     filters: FILTERS,
     filter: 'all',
     sorts: SORTS,
@@ -48,7 +49,7 @@ Page({
 
   onShow() {
     if (!this.data.pageStyle) {
-      this.setData({ pageStyle: getPageTopStyle(18) });
+      this.setData({ pageStyle: getPageTopStyle(18), navStyle: getHeaderStyle(18) });
     }
     this.loadProjects();
   },
@@ -137,5 +138,19 @@ Page({
 
   goDraw() {
     wx.navigateTo({ url: '/pages/draw/draw' });
+  },
+
+  goHome() {
+    if (wx.reLaunch) {
+      wx.reLaunch({ url: '/pages/home/home' });
+      return;
+    }
+    wx.redirectTo({ url: '/pages/home/home' });
+  },
+
+  goBack() {
+    wx.navigateBack({
+      fail: () => this.goHome()
+    });
   }
 });

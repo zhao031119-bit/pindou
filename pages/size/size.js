@@ -14,6 +14,12 @@ const haptic = require('../../miniprogram/utils/haptic');
 const DRAFT_KEY = STORAGE_KEYS.UPLOAD_DRAFT;
 const CURRENT_PROJECT_KEY = STORAGE_KEYS.CURRENT_PROJECT;
 const RECOMMEND_CANVAS_SIZE = 96;
+const FIXED_BEAD_SIZE = '5mm';
+const SIMPLE_PRESETS = [
+  { id: 'avatar', label: '头像', width: 40, height: 40 },
+  { id: 'pendant', label: '挂件', width: 48, height: 60 },
+  { id: 'frame', label: '摆台', width: 72, height: 72 }
+];
 
 function toPositiveInt(value, fallback) {
   const number = parseInt(value, 10);
@@ -23,6 +29,29 @@ function toPositiveInt(value, fallback) {
 
 function clampDimension(value) {
   return Math.max(1, Math.min(MAX_DIMENSION, Math.round(value)));
+}
+
+function findSimplePresetId(width, height) {
+  const preset = SIMPLE_PRESETS.find((item) => item.width === width && item.height === height);
+  return preset ? preset.id : '';
+}
+
+function makePreviewStyle(width, height) {
+  const maxSide = 320;
+  const ratioBase = Math.max(width, height, 1);
+  const previewWidth = Math.max(120, Math.round((width / ratioBase) * maxSide));
+  const previewHeight = Math.max(120, Math.round((height / ratioBase) * maxSide));
+  return `width: ${previewWidth}rpx; height: ${previewHeight}rpx;`;
+}
+
+function makeSizeViewData(width, height, beadSize) {
+  const stats = estimateStats(width, height, beadSize);
+  return {
+    stats,
+    estimatedPrice: Math.max(1, Math.round(stats.total * 0.05)),
+    previewStyle: makePreviewStyle(width, height),
+    selectedPresetId: findSimplePresetId(width, height)
+  };
 }
 
 function getDraftRatio(draft) {
@@ -96,7 +125,9 @@ Page({
     navStyle: '',
     beadSizes: BEAD_SIZE_OPTIONS,
     sizePresets: SIZE_PRESETS,
-    beadSize: '5mm',
+    simplePresets: SIMPLE_PRESETS,
+    selectedPresetId: '',
+    beadSize: FIXED_BEAD_SIZE,
     width: 29,
     height: 29,
     analysisCanvasSize: RECOMMEND_CANVAS_SIZE,
@@ -108,8 +139,10 @@ Page({
     selectedRecommendationId: '',
     cropRatio: 1,
     cropRatioText: '1.00 : 1',
-    keepRatio: true,
-    stats: estimateStats(29, 29, '5mm'),
+    keepRatio: false,
+    stats: estimateStats(29, 29, FIXED_BEAD_SIZE),
+    estimatedPrice: 42,
+    previewStyle: makePreviewStyle(29, 29),
     pendingPreset: null,
     generating: false,
     generateStage: '',
@@ -131,24 +164,24 @@ Page({
     }
     const cropRatio = getDraftRatio(draft);
     const nextSize = dimensionsFromRatio(29, cropRatio);
-    const savedSize = getSavedSizeDraft(draft, nextSize, this.data.beadSize, this.data.keepRatio);
+    const savedSize = getSavedSizeDraft(draft, nextSize, FIXED_BEAD_SIZE, false);
     this.shouldAutoApplyRecommendation = !savedSize.restored;
     this.setData({
       cropRatio,
       cropRatioText: cropRatio.toFixed(2) + ' : 1',
       width: savedSize.width,
       height: savedSize.height,
-      beadSize: savedSize.beadSize,
-      keepRatio: savedSize.keepRatio,
-      stats: estimateStats(savedSize.width, savedSize.height, savedSize.beadSize)
-    }, () => this.analyzeSmartRecommendation(draft));
+      beadSize: FIXED_BEAD_SIZE,
+      keepRatio: false,
+      ...makeSizeViewData(savedSize.width, savedSize.height, FIXED_BEAD_SIZE)
+    }, () => this.persistSizeDraft());
   },
 
   selectBeadSize(event) {
     const beadSize = event.currentTarget.dataset.id;
     this.setData({
       beadSize,
-      stats: estimateStats(this.data.width, this.data.height, beadSize)
+      ...makeSizeViewData(this.data.width, this.data.height, beadSize)
     }, () => {
       this.refreshSmartRecommendations(false);
       this.persistSizeDraft();
@@ -170,8 +203,8 @@ Page({
       selectedRecommendationId: '',
       width: preset.width,
       height: preset.height,
-      beadSize: preset.beadSize,
-      stats: estimateStats(preset.width, preset.height, preset.beadSize)
+      beadSize: FIXED_BEAD_SIZE,
+      ...makeSizeViewData(preset.width, preset.height, FIXED_BEAD_SIZE)
     }, () => this.persistSizeDraft());
   },
 
@@ -182,34 +215,30 @@ Page({
       selectedRecommendationId: '',
       width: preset.width,
       height: preset.height,
-      beadSize: preset.beadSize,
-      stats: estimateStats(preset.width, preset.height, preset.beadSize)
+      beadSize: FIXED_BEAD_SIZE,
+      ...makeSizeViewData(preset.width, preset.height, FIXED_BEAD_SIZE)
     }, () => this.persistSizeDraft());
   },
 
   onWidthInput(event) {
     const width = toPositiveInt(event.detail.value, this.data.width);
-    const height = this.data.keepRatio
-      ? clampDimension(width / this.data.cropRatio)
-      : this.data.height;
+    const height = this.data.height;
     this.setData({
       selectedRecommendationId: '',
       width,
       height,
-      stats: estimateStats(width, height, this.data.beadSize)
+      ...makeSizeViewData(width, height, FIXED_BEAD_SIZE)
     }, () => this.persistSizeDraft());
   },
 
   onHeightInput(event) {
     const height = toPositiveInt(event.detail.value, this.data.height);
-    const width = this.data.keepRatio
-      ? clampDimension(height * this.data.cropRatio)
-      : this.data.width;
+    const width = this.data.width;
     this.setData({
       selectedRecommendationId: '',
       width,
       height,
-      stats: estimateStats(width, height, this.data.beadSize)
+      ...makeSizeViewData(width, height, FIXED_BEAD_SIZE)
     }, () => this.persistSizeDraft());
   },
 
@@ -220,15 +249,25 @@ Page({
     const next = toPositiveInt(this.data[field] + delta, this.data[field]);
     let width = field === 'width' ? next : this.data.width;
     let height = field === 'height' ? next : this.data.height;
-    if (this.data.keepRatio) {
-      if (field === 'width') height = clampDimension(width / this.data.cropRatio);
-      if (field === 'height') width = clampDimension(height * this.data.cropRatio);
-    }
     this.setData({
       selectedRecommendationId: '',
       width,
       height,
-      stats: estimateStats(width, height, this.data.beadSize)
+      ...makeSizeViewData(width, height, FIXED_BEAD_SIZE)
+    }, () => this.persistSizeDraft());
+  },
+
+  applySimplePreset(event) {
+    const index = Number(event.currentTarget.dataset.index);
+    const preset = SIMPLE_PRESETS[index];
+    if (!preset) return;
+    haptic.tap();
+    this.setData({
+      selectedRecommendationId: '',
+      width: preset.width,
+      height: preset.height,
+      beadSize: FIXED_BEAD_SIZE,
+      ...makeSizeViewData(preset.width, preset.height, FIXED_BEAD_SIZE)
     }, () => this.persistSizeDraft());
   },
 
@@ -244,7 +283,7 @@ Page({
       keepRatio,
       width,
       height,
-      stats: estimateStats(width, height, this.data.beadSize)
+      ...makeSizeViewData(width, height, FIXED_BEAD_SIZE)
     }, () => this.persistSizeDraft());
   },
 
@@ -315,8 +354,8 @@ Page({
       selectedRecommendationId: option.id,
       width: option.width,
       height: option.height,
-      beadSize: option.beadSize,
-      stats: estimateStats(option.width, option.height, option.beadSize)
+      beadSize: FIXED_BEAD_SIZE,
+      ...makeSizeViewData(option.width, option.height, FIXED_BEAD_SIZE)
     }, () => this.persistSizeDraft());
   },
 
@@ -330,8 +369,8 @@ Page({
         sizeDraft: {
           width: this.data.width,
           height: this.data.height,
-          beadSize: this.data.beadSize,
-          keepRatio: this.data.keepRatio
+          beadSize: FIXED_BEAD_SIZE,
+          keepRatio: false
         },
         updatedAt: Date.now()
       }));
