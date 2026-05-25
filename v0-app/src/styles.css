@@ -1829,4 +1829,255 @@ button {
     border-radius: 0;
     box-shadow: none;
   }
+
+/* ============================================
+   Refinement pass — quality layer (CSS-only)
+   ============================================ */
+
+/* Hide decorative pixel blocks; rely on typography hierarchy instead */
+.section-pixel {
+  display: none !important;
 }
+
+/* Tighter, more deliberate section title */
+.section-title {
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 2px 0;
+  margin-bottom: -2px;
+}
+
+.section-copy {
+  display: flex !important;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.section-copy strong {
+  flex-shrink: 0;
+  font-size: 15px !important;
+  font-weight: 900;
+  letter-spacing: 0.1px;
+  margin: 0 !important;
+}
+
+.section-copy small {
+  flex: 1;
+  min-width: 0;
+  margin: 0 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Section action: strip pill, use uppercase mini-caps */
+.section-action {
+  flex-shrink: 0;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  font-size: 10px !important;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted) !important;
+}
+
+.section-action button.section-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.section-action button.section-toggle.active {
+  color: var(--clay);
+}
+
+/* Bead spheres: stronger highlight & shadow for tactile feel */
+.pixel-cell {
+  border-radius: 50%;
+  background-image: radial-gradient(
+    circle at 30% 26%,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.18) 24%,
+    transparent 52%
+  );
+  box-shadow:
+    inset 0 -3px 5px rgba(42, 31, 23, 0.3),
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.55),
+    0 1px 2px rgba(42, 31, 23, 0.2) !important;
+}
+
+.pixel-cell.empty {
+  background-image: none !important;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(42, 31, 23, 0.05) !important;
+}
+
+/* Color swatches in lists: same sphere highlight for consistency */
+.bead-row > i,
+.match-row > i,
+.pick-current > i {
+  background-image: radial-gradient(
+    circle at 30% 28%,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.15) 24%,
+    transparent 52%
+  );
+  background-blend-mode: overlay;
+}
+
+/* Phone shell vignette to focus center */
+.phone-shell {
+  position: relative;
+}
+
+.phone-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at center, transparent 58%, rgba(42, 31, 23, 0.06) 100%);
+  z-index: 100;
+}
+
+/* Subtler page background (less noisy) */
+body {
+  background:
+    radial-gradient(ellipse 60% 45% at 25% 0%, rgba(127, 178, 154, 0.10), transparent 60%),
+    radial-gradient(ellipse 55% 40% at 100% 100%, rgba(197, 106, 76, 0.10), transparent 60%),
+    var(--background);
+}
+
+/* Match score: emphasize the percentage */
+.match-row > span {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--clay);
+  font-feature-settings: "tnum";
+  letter-spacing: 0.2px;
+}
+
+/* Recommend pills: tighter, less weighty */
+.recommend {
+  padding: 12px 8px;
+  text-align: center;
+}
+
+.recommend strong {
+  font-size: 14px;
+}
+
+.recommend.active {
+  background: rgba(197, 106, 76, 0.10);
+  box-shadow: inset 0 0 0 1px rgba(197, 106, 76, 0.32);
+}
+
+/* Stepper buttons inside size-inputs: real buttons */
+.size-inputs .stepper {
+  display: grid !important;
+  grid-template-columns: 36px 1fr 36px;
+  align-items: stretch;
+  height: 52px;
+  padding: 0;
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--border);
+  overflow: hidden;
+}
+
+.size-inputs .stepper button {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+}
+
+.size-inputs .stepper button:hover {
+  color: var(--charcoal);
+  background: rgba(42, 31, 23, 0.04);
+}
+
+.size-inputs .stepper input {
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  text-align: center;
+  font-size: 22px;
+  font-feature-settings: "tnum";
+}
+
+/* Size stats: lighter, less the same color */
+.size-stats {
+  display: flex;
+  justify-content: space-around;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(232, 182, 73, 0.10);
+}
+
+.size-stats > div {
+  text-align: center;
+  flex: 1;
+}
+
+.size-stats small {
+  display: block;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.size-stats strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 900;
+  font-feature-settings: "tnum";
+  color: var(--charcoal);
+}
+
+/* Floating eye: slimmer pill */
+.floating-eye {
+  width: auto !important;
+  height: 32px !important;
+  padding: 0 12px !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px !important;
+  background: rgba(255, 253, 248, 0.94) !important;
+  box-shadow: inset 0 0 0 1px var(--border), 0 12px 26px -18px rgba(42, 31, 23, 0.32) !important;
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--charcoal);
+  backdrop-filter: blur(8px);
+}
+
+/* Step indicator: trim padding so it doesn't dominate */
+.step-indicator {
+  padding: 8px 12px !important;
+  border-radius: 18px !important;
+}
+
