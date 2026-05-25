@@ -1,4 +1,4 @@
-<view class="screen result-screen">
+<view class="screen result-screen tone-clay">
   <block wx:if="{{project}}">
     <view class="app-header" style="{{navStyle}}">
       <view class="header-side">

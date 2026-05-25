@@ -1,4 +1,4 @@
-<view class="page projects-page" style="{{pageStyle}}">
+<view class="page projects-page tone-mint" style="{{pageStyle}}">
   <view class="projects-head">
     <view>
       <view class="eyebrow">MY WORKS</view>

@@ -447,3 +447,52 @@
   display: block;
   width: 100%;
 }
+
+/* v0 result sync */
+.result-body {
+  padding-top: 18rpx;
+}
+
+.preview-card {
+  border-radius: 42rpx;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(197, 106, 76, 0.14), transparent 36%),
+    linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 250, 242, 0.98));
+  box-shadow:
+    0 4rpx 8rpx rgba(42, 31, 23, 0.03),
+    0 42rpx 90rpx -56rpx rgba(42, 31, 23, 0.24);
+}
+
+.preview-scroll {
+  border-radius: 34rpx;
+  background:
+    linear-gradient(to right, rgba(217, 205, 179, 0.5) 1rpx, transparent 1rpx),
+    linear-gradient(to bottom, rgba(217, 205, 179, 0.5) 1rpx, transparent 1rpx),
+    #fbf6ec;
+  background-size: 28rpx 28rpx;
+}
+
+.floating-eye {
+  width: 84rpx;
+  height: 84rpx;
+  background: rgba(255, 253, 248, 0.94);
+  box-shadow: 0 20rpx 42rpx -28rpx rgba(42, 31, 23, 0.38);
+}
+
+.brand-card {
+  border-radius: 28rpx;
+}
+
+.brand-icon,
+.match-brand-icon {
+  border-radius: 50%;
+}
+
+.list-section .bead-list {
+  border-radius: 30rpx;
+}
+
+.result-actions .secondary-btn,
+.result-actions .primary-btn {
+  height: 88rpx;
+}

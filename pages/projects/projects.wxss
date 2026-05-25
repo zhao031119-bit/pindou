@@ -298,3 +298,52 @@
   font-size: 26rpx;
   font-weight: 700;
 }
+
+/* v0 projects sync */
+.projects-page {
+  background:
+    radial-gradient(ellipse 120% 86% at 50% 0%, rgba(127, 178, 154, 0.18) 0%, transparent 54%),
+    var(--background);
+}
+
+.projects-head {
+  margin: 0 20rpx 26rpx;
+}
+
+.eyebrow {
+  color: #4f876b;
+}
+
+.head-badge {
+  border-radius: 24rpx;
+  color: #4f876b;
+  background: rgba(255, 253, 248, 0.9);
+}
+
+.sort-chip.active,
+.chip.active {
+  border-color: var(--mint);
+  background: rgba(127, 178, 154, 0.16);
+  color: #4f876b;
+}
+
+.project-card {
+  border-radius: 34rpx;
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 250, 242, 0.98));
+  box-shadow: 0 30rpx 66rpx -46rpx rgba(42, 31, 23, 0.22);
+}
+
+.thumb-shell {
+  border-radius: 26rpx;
+  background-size: 20rpx 20rpx;
+}
+
+.type-tag,
+.rename-btn {
+  background: rgba(127, 178, 154, 0.16);
+  color: #4f876b;
+}
+
+.empty-card {
+  border-radius: 38rpx;
+}

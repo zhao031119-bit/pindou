@@ -1,5 +1,5 @@
 <!-- 首页 — 拼豆星球 Bento 还原 -->
-<view class="page" style="padding-top: {{safeTopPx}}px">
+<view class="page page-home tone-clay" style="padding-top: {{safeTopPx}}px">
 
   <!-- 品牌识别小条 -->
   <view class="brand">

@@ -1,4 +1,4 @@
-<view class="draw-page" style="{{pageStyle}}">
+<view class="draw-page tone-berry" style="{{pageStyle}}">
   <view class="topbar">
     <view class="draw-nav">
       <button class="round-icon" bindtap="goBack"><icon name="back" size="28" /></button>

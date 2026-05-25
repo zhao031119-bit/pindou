@@ -1,4 +1,4 @@
-<view class="screen">
+<view class="screen tone-sky">
   <view class="app-header" style="{{navStyle}}">
     <view class="header-side">
       <button class="back-btn" bindtap="goBack"><icon name="back" size="32" /></button>

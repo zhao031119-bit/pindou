@@ -360,3 +360,53 @@
   left: -9999px;
   top: -9999px;
 }
+
+/* v0 detail sync */
+.detail-page {
+  background:
+    radial-gradient(ellipse 120% 86% at 50% 0%, rgba(197, 106, 76, 0.18) 0%, transparent 54%),
+    var(--background);
+}
+
+.detail-header {
+  padding: 0 2rpx;
+}
+
+.preview-card,
+.info-card,
+.bead-card,
+.missing-card,
+.stat-item {
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 250, 242, 0.98));
+  box-shadow: 0 30rpx 66rpx -46rpx rgba(42, 31, 23, 0.22);
+}
+
+.preview-card {
+  border-radius: 42rpx;
+}
+
+.preview-scroll {
+  border-radius: 32rpx;
+  background-size: 26rpx 26rpx;
+}
+
+.stat-item,
+.info-card,
+.bead-card,
+.missing-card {
+  border-radius: 34rpx;
+}
+
+.action-btn.primary {
+  border-color: var(--clay);
+  background: var(--clay);
+}
+
+.bead-list-detail {
+  border-radius: 28rpx;
+  background: rgba(255, 253, 248, 0.58);
+}
+
+.round-btn {
+  background: rgba(255, 253, 248, 0.9);
+}
