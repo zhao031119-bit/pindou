@@ -55,6 +55,8 @@ includesAll(resultWxml, 'pages/result/result.wxml', [
   'result-empty',
   'empty-illust',
   'empty-cta',
+  'v0-empty-title',
+  'v0-empty-sub',
   'saveLongImage',
   'saveToProjects'
 ]);
@@ -72,6 +74,8 @@ includesAll(appWxss, 'app.wxss', [
   '.loading-cell',
   '.loading-scan',
   '.empty-illust',
+  '.v0-empty-title',
+  '.v0-empty-sub',
   '@keyframes loadingHop'
 ]);
 assert.ok(
@@ -81,6 +85,14 @@ assert.ok(
 assert.ok(
   /\.loading-board\s*\{[^}]*aspect-ratio:\s*1\s*\/\s*1/s.test(appWxss),
   'app.wxss should make the generated-pattern loader look like a square pattern preview'
+);
+assert.ok(
+  /\.empty-state\s*\{[^}]*padding:\s*64rpx\s+32rpx/s.test(appWxss),
+  'app.wxss should copy the compact v0 empty-state card padding'
+);
+assert.ok(
+  /\.empty-illust\s*\{[^}]*grid-template-columns:\s*repeat\(4,\s*24rpx\)/s.test(appWxss),
+  'app.wxss should copy the compact 4x4 v0 empty illustration'
 );
 
 const sizeWxmlAfter = read('pages/size/size.wxml');

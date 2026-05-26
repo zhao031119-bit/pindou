@@ -155,14 +155,6 @@
     </view>
 
     <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body flow-body result-body empty-result-body">
-      <view class="step-indicator">
-        <view class="step-meta">
-          <text class="step-counter">03<text class="step-total">/ 03</text></text>
-          <text class="step-current">图纸</text>
-        </view>
-        <view class="step-track"><view class="step-fill step-fill-3"></view></view>
-      </view>
-
       <view class="card-feature empty-state result-empty">
         <view class="empty-illust">
           <view class="on"></view><view class="on"></view><view class="off"></view><view class="on"></view>
@@ -170,8 +162,8 @@
           <view class="off"></view><view class="on"></view><view class="on"></view><view class="off"></view>
           <view class="on"></view><view class="on"></view><view class="off"></view><view class="on"></view>
         </view>
-        <view class="section-title">还没有图纸</view>
-        <view class="section-muted">请先上传图片并确认尺寸。</view>
+        <view class="v0-empty-title">还没有图纸</view>
+        <view class="v0-empty-sub">请先上传图片并确认尺寸。</view>
         <button class="empty-cta" bindtap="goUpload">去上传</button>
       </view>
     </scroll-view>

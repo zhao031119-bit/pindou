@@ -12,6 +12,7 @@
 
 .empty-result-body {
   justify-content: flex-start;
+  padding-top: 8rpx;
 }
 
 .step-fill-3 {
@@ -233,20 +234,6 @@
 }
 
 .result-empty {
-  margin-top: 18rpx;
-  min-height: 420rpx;
+  margin-top: 8rpx;
   justify-content: center;
-}
-
-.result-empty .section-title {
-  color: var(--foreground);
-  font-size: 32rpx;
-  font-weight: 900;
-}
-
-.result-empty .section-muted {
-  margin-top: -8rpx;
-  color: var(--muted-foreground);
-  font-size: 24rpx;
-  font-weight: 700;
 }
