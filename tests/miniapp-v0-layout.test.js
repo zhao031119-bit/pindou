@@ -74,6 +74,20 @@ includesAll(sizeWxmlAfter, 'pages/size/size.wxml', [
   'loading-grid'
 ]);
 
+const sizeWxss = read('pages/size/size.wxss');
+assert.ok(
+  /\.recommend\s*\{[^}]*display:\s*(grid|flex)/s.test(sizeWxss),
+  'pages/size/size.wxss should give preset buttons an explicit internal layout'
+);
+assert.ok(
+  /\.recommend\s*\{[^}]*min-height:\s*\d+rpx/s.test(sizeWxss),
+  'pages/size/size.wxss should give preset buttons a stable min-height'
+);
+assert.ok(
+  /\.recommend-title,\s*\.recommend-size\s*\{[^}]*overflow:\s*hidden/s.test(sizeWxss),
+  'pages/size/size.wxss should keep preset text inside each button'
+);
+
 const extractWxml = read('pages/extract/extract.wxml');
 includesAll(extractWxml, 'pages/extract/extract.wxml', [
   'upload-body',
