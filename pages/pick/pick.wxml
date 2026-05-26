@@ -31,16 +31,14 @@
           <view class="picker-upload"><icon name="image" size="28" color="#fff" /> 上传图片</view>
           <view class="picker-hint">点击后在图片上取样</view>
         </view>
-        <view wx:if="{{picked}}" class="loupe" style="left: {{markerLeft}}px; top: {{markerTop}}px;">
-          <view class="loupe-dot" style="background: {{picked.hex}};">
-            <icon name="pipette" size="22" color="#fff" />
+        <view wx:if="{{showLoupe && imagePath}}" class="loupe" style="left: {{markerLeft}}px; top: {{markerTop}}px;">
+          <view class="loupe-preview">
+            <image class="loupe-image" src="{{imagePath}}" mode="scaleToFill" style="{{loupeImageStyle}}"></image>
+            <view class="loupe-crosshair"></view>
           </view>
-          <view class="loupe-label">{{picked.hex}}</view>
+          <view class="loupe-stem"></view>
+          <view class="loupe-label">{{picked ? picked.hex : '取样中'}}</view>
         </view>
-        <button class="floating-chip" bindtap="chooseImage">
-          <icon name="image" size="24" color="#fffdf8" />
-          <text>{{imagePath ? '换图' : '上传'}}</text>
-        </button>
       </view>
 
       <view class="pick-current">

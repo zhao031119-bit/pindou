@@ -104,6 +104,25 @@ assert.ok(
   'pages/extract/extract.wxml should let the main upload surface trigger chooseImage'
 );
 
+const pickWxml = read('pages/pick/pick.wxml');
+includesAll(pickWxml, 'pages/pick/pick.wxml', [
+  'loupe-preview',
+  'loupe-image',
+  'loupe-crosshair',
+  'loupe-label'
+]);
+excludesAll(pickWxml, 'pages/pick/pick.wxml', [
+  'floating-chip',
+  'loupe-dot'
+]);
+
+const pickJs = read('pages/pick/pick.js');
+includesAll(pickJs, 'pages/pick/pick.js', [
+  'loupeImageStyle',
+  'makeLoupeImageStyle',
+  'showLoupe'
+]);
+
 const drawWxml = read('pages/draw/draw.wxml');
 includesAll(drawWxml, 'pages/draw/draw.wxml', [
   'floating-chip',

@@ -11,6 +11,9 @@ const SAMPLE_SIZE_OPTIONS = [
   { id: 9, label: '大 9px' }
 ];
 
+const LOUPE_SIZE = 88;
+const LOUPE_ZOOM = 2.4;
+
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
@@ -38,6 +41,15 @@ function touchDistance(touches) {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
 
+function makeLoupeImageStyle(drawRect, x, y) {
+  if (!drawRect) return '';
+  const width = Math.round(drawRect.width * LOUPE_ZOOM);
+  const height = Math.round(drawRect.height * LOUPE_ZOOM);
+  const left = Math.round(LOUPE_SIZE / 2 - (x - drawRect.x) * LOUPE_ZOOM);
+  const top = Math.round(LOUPE_SIZE / 2 - (y - drawRect.y) * LOUPE_ZOOM);
+  return `width: ${width}px; height: ${height}px; left: ${left}px; top: ${top}px;`;
+}
+
 Page({
   data: {
     navStyle: '',
@@ -53,6 +65,8 @@ Page({
     recentPicks: [],
     markerLeft: 0,
     markerTop: 0,
+    showLoupe: false,
+    loupeImageStyle: '',
     sampleSize: 5,
     sampleSizeOptions: SAMPLE_SIZE_OPTIONS,
     zoom: 1,
@@ -121,6 +135,8 @@ Page({
             picked: null,
             pickedRgb: '',
             matches: [],
+            showLoupe: false,
+            loupeImageStyle: '',
             zoom: 1,
             zoomLabel: '100%',
             canZoomIn: true,
@@ -147,13 +163,17 @@ Page({
     const drawH = imageHeight * scale;
     const drawX = (canvasWidth - drawW) / 2 + this.panX;
     const drawY = (canvasHeight - drawH) / 2 + this.panY;
+    const nextDrawRect = { x: drawX, y: drawY, width: drawW, height: drawH };
     const ctx = wx.createCanvasContext('pickerCanvas', this);
     ctx.setFillStyle('#ffffff');
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     ctx.drawImage(imagePath, drawX, drawY, drawW, drawH);
     ctx.draw(false, () => {
       this.setData({
-        drawRect: { x: drawX, y: drawY, width: drawW, height: drawH },
+        drawRect: nextDrawRect,
+        loupeImageStyle: this.data.showLoupe
+          ? makeLoupeImageStyle(nextDrawRect, this.data.markerLeft, this.data.markerTop)
+          : '',
         zoom,
         zoomLabel: Math.round(zoom * 100) + '%',
         canZoomIn: zoom < 5,
@@ -193,6 +213,7 @@ Page({
     };
     if (this.data.pickerMode === 'pick') {
       this.updateMarker(point.x, point.y);
+      this.schedulePick(point.x, point.y);
     }
   },
 
@@ -307,16 +328,20 @@ Page({
   },
 
   updateMarker(x, y) {
-    const { drawRect, canvasWidth, canvasHeight, picked } = this.data;
+    const { drawRect, canvasWidth, canvasHeight } = this.data;
     if (!drawRect) return false;
     const px = Math.max(0, Math.min(canvasWidth - 1, Math.round(x)));
     const py = Math.max(0, Math.min(canvasHeight - 1, Math.round(y)));
     if (px < drawRect.x || py < drawRect.y || px > drawRect.x + drawRect.width || py > drawRect.y + drawRect.height) {
+      if (this.data.showLoupe) this.setData({ showLoupe: false });
       return false;
     }
-    if (picked) {
-      this.setData({ markerLeft: px, markerTop: py });
-    }
+    this.setData({
+      markerLeft: px,
+      markerTop: py,
+      showLoupe: true,
+      loupeImageStyle: makeLoupeImageStyle(drawRect, px, py)
+    });
     return true;
   },
 
