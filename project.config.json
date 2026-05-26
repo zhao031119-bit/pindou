@@ -19,6 +19,74 @@
       {
         "value": "scripts",
         "type": "folder"
+      },
+      {
+        "value": "node_modules",
+        "type": "folder"
+      },
+      {
+        "value": "dist",
+        "type": "folder"
+      },
+      {
+        "value": "preview",
+        "type": "folder"
+      },
+      {
+        "value": "v0-app",
+        "type": "folder"
+      },
+      {
+        "value": ".git",
+        "type": "folder"
+      },
+      {
+        "value": ".vscode",
+        "type": "folder"
+      },
+      {
+        "value": ".superpowers",
+        "type": "folder"
+      },
+      {
+        "value": "package.json",
+        "type": "file"
+      },
+      {
+        "value": "package-lock.json",
+        "type": "file"
+      },
+      {
+        "value": "index.html",
+        "type": "file"
+      },
+      {
+        "value": "vite.config.js",
+        "type": "file"
+      },
+      {
+        "value": "vercel.json",
+        "type": "file"
+      },
+      {
+        "value": "README.md",
+        "type": "file"
+      },
+      {
+        "value": "V0_GUIDE.md",
+        "type": "file"
+      },
+      {
+        "value": "拼豆微信小程序项目计划书.md",
+        "type": "file"
+      },
+      {
+        "value": ".gitignore",
+        "type": "file"
+      },
+      {
+        "value": "project.private.config.json",
+        "type": "file"
       }
     ],
     "include": []
