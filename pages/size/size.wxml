@@ -84,11 +84,15 @@
     </view>
 
     <view wx:if="{{generating}}" class="loading-pixels">
-      <view class="loading-grid">
-        <view></view><view></view><view></view><view></view>
-        <view></view><view></view><view></view><view></view>
-        <view></view><view></view><view></view><view></view>
-        <view></view><view></view><view></view><view></view>
+      <view class="loading-board">
+        <view class="loading-grid">
+          <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+          <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+          <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+          <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+          <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+        </view>
+        <view class="loading-scan"></view>
       </view>
       <text>{{generateStage || '正在生成图纸'}}</text>
       <text>像素聚类、色号匹配、生成清单...</text>

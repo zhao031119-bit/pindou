@@ -52,6 +52,9 @@ includesAll(resultWxml, 'pages/result/result.wxml', [
   'step-indicator',
   'result-preview',
   'palette-row',
+  'result-empty',
+  'empty-illust',
+  'empty-cta',
   'saveLongImage',
   'saveToProjects'
 ]);
@@ -65,13 +68,28 @@ const appWxss = read('app.wxss');
 includesAll(appWxss, 'app.wxss', [
   '.loading-pixels',
   '.loading-grid',
+  '.loading-board',
+  '.loading-cell',
+  '.loading-scan',
+  '.empty-illust',
   '@keyframes loadingHop'
 ]);
+assert.ok(
+  /\.loading-grid\s*\{[^}]*grid-template-columns:\s*repeat\(5,\s*\d+rpx\)/s.test(appWxss),
+  'app.wxss should render loading pixels as a compact board instead of a long strip'
+);
+assert.ok(
+  /\.loading-board\s*\{[^}]*aspect-ratio:\s*1\s*\/\s*1/s.test(appWxss),
+  'app.wxss should make the generated-pattern loader look like a square pattern preview'
+);
 
 const sizeWxmlAfter = read('pages/size/size.wxml');
 includesAll(sizeWxmlAfter, 'pages/size/size.wxml', [
   'loading-pixels',
-  'loading-grid'
+  'loading-board',
+  'loading-grid',
+  'loading-cell',
+  'loading-scan'
 ]);
 
 const sizeWxss = read('pages/size/size.wxss');

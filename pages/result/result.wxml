@@ -90,11 +90,15 @@
       </view>
 
       <view wx:if="{{exportingPreview}}" class="loading-pixels">
-        <view class="loading-grid">
-          <view></view><view></view><view></view><view></view>
-          <view></view><view></view><view></view><view></view>
-          <view></view><view></view><view></view><view></view>
-          <view></view><view></view><view></view><view></view>
+        <view class="loading-board">
+          <view class="loading-grid">
+            <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+            <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+            <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+            <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+            <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+          </view>
+          <view class="loading-scan"></view>
         </view>
         <text>正在生成保存图</text>
         <text>生成预览后可长按保存</text>
@@ -136,9 +140,40 @@
     </view>
   </block>
 
-  <view wx:else class="empty-state">
-    <view class="section-title">还没有图纸</view>
-    <view class="section-muted">请先上传图片并确认尺寸。</view>
-    <button class="primary-btn empty-action" bindtap="goUpload">去上传</button>
-  </view>
+  <block wx:else>
+    <view class="app-header" style="{{navStyle}}">
+      <view class="header-side">
+        <button class="back-btn" bindtap="goHome"><icon name="back" size="32" /></button>
+      </view>
+      <view class="header-center">
+        <view class="header-title">拼豆图纸</view>
+        <view class="header-subtitle">先上传图片并确认尺寸</view>
+      </view>
+      <view class="header-side right">
+        <button class="icon-btn" bindtap="goHome"><icon name="home" size="30" /></button>
+      </view>
+    </view>
+
+    <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body flow-body result-body empty-result-body">
+      <view class="step-indicator">
+        <view class="step-meta">
+          <text class="step-counter">03<text class="step-total">/ 03</text></text>
+          <text class="step-current">图纸</text>
+        </view>
+        <view class="step-track"><view class="step-fill step-fill-3"></view></view>
+      </view>
+
+      <view class="card-feature empty-state result-empty">
+        <view class="empty-illust">
+          <view class="on"></view><view class="on"></view><view class="off"></view><view class="on"></view>
+          <view class="on"></view><view class="off"></view><view class="on"></view><view class="on"></view>
+          <view class="off"></view><view class="on"></view><view class="on"></view><view class="off"></view>
+          <view class="on"></view><view class="on"></view><view class="off"></view><view class="on"></view>
+        </view>
+        <view class="section-title">还没有图纸</view>
+        <view class="section-muted">请先上传图片并确认尺寸。</view>
+        <button class="empty-cta" bindtap="goUpload">去上传</button>
+      </view>
+    </scroll-view>
+  </block>
 </view>

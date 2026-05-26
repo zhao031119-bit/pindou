@@ -63,11 +63,15 @@
     </view>
 
     <view wx:if="{{generating}}" class="loading-pixels">
-      <view class="loading-grid">
-        <view></view><view></view><view></view><view></view>
-        <view></view><view></view><view></view><view></view>
-        <view></view><view></view><view></view><view></view>
-        <view></view><view></view><view></view><view></view>
+      <view class="loading-board">
+        <view class="loading-grid">
+          <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+          <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+          <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+          <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+          <view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view><view class="loading-cell"></view>
+        </view>
+        <view class="loading-scan"></view>
       </view>
       <text>正在批量提取</text>
       <text>逐像素聚类、合并相近豆色...</text>

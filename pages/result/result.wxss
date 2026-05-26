@@ -10,6 +10,10 @@
   padding-top: 20rpx;
 }
 
+.empty-result-body {
+  justify-content: flex-start;
+}
+
 .step-fill-3 {
   width: 100%;
 }
@@ -226,4 +230,23 @@
 .empty-action {
   margin: 32rpx auto 0;
   width: 240rpx;
+}
+
+.result-empty {
+  margin-top: 18rpx;
+  min-height: 420rpx;
+  justify-content: center;
+}
+
+.result-empty .section-title {
+  color: var(--foreground);
+  font-size: 32rpx;
+  font-weight: 900;
+}
+
+.result-empty .section-muted {
+  margin-top: -8rpx;
+  color: var(--muted-foreground);
+  font-size: 24rpx;
+  font-weight: 700;
 }
