@@ -126,8 +126,15 @@ includesAll(pickJs, 'pages/pick/pick.js', [
 const drawWxml = read('pages/draw/draw.wxml');
 includesAll(drawWxml, 'pages/draw/draw.wxml', [
   'floating-chip',
+  'tool-panel',
   'tool-dock',
   'tool-icon',
+  'tool-label',
+  'tool-actions',
+  '{{item.label}}',
+  '>撤销<',
+  '>重做<',
+  '>清空<',
   'color-dock',
   'clearCanvas'
 ]);
@@ -135,5 +142,19 @@ excludesAll(drawWxml, 'pages/draw/draw.wxml', [
   'action-dock',
   '{{tool}}'
 ]);
+
+const drawWxss = read('pages/draw/draw.wxss');
+assert.ok(
+  /\.tool-dock\s*\{[^}]*grid-template-columns:\s*repeat\(5,\s*minmax\(0,\s*1fr\)\)/s.test(drawWxss),
+  'pages/draw/draw.wxss should keep the five drawing tools in a stable grid'
+);
+assert.ok(
+  /\.tool-actions\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/s.test(drawWxss),
+  'pages/draw/draw.wxss should separate undo/redo/clear into a stable action grid'
+);
+assert.ok(
+  /\.tool-label\s*\{[^}]*font-size:\s*\d+rpx/s.test(drawWxss),
+  'pages/draw/draw.wxss should show readable labels on tool buttons'
+);
 
 console.log('miniapp-v0-layout.test.js passed');

@@ -37,14 +37,27 @@
       <text class="section-label">工具</text>
     </view>
 
-    <view class="tool-dock">
-      <button wx:for="{{tools}}" wx:key="id" class="tool {{tool === item.id ? 'active' : ''}}" data-tool="{{item.id}}" bindtap="chooseTool" aria-label="{{item.label}}">
-        <icon class="tool-icon" name="{{item.icon}}" size="34" />
-      </button>
-      <view class="tool-divider"></view>
-      <button class="tool" bindtap="undo" disabled="{{!canUndo}}" aria-label="撤销"><icon class="tool-icon" name="undo" size="34" /></button>
-      <button class="tool" bindtap="redo" disabled="{{!canRedo}}" aria-label="重做"><icon class="tool-icon" name="redo" size="34" /></button>
-      <button class="tool" bindtap="clearCanvas" aria-label="清空"><icon class="tool-icon" name="trash" size="34" /></button>
+    <view class="tool-panel">
+      <view class="tool-dock">
+        <button wx:for="{{tools}}" wx:key="id" class="tool {{tool === item.id ? 'active' : ''}}" data-tool="{{item.id}}" bindtap="chooseTool" aria-label="{{item.label}}">
+          <icon class="tool-icon" name="{{item.icon}}" size="30" />
+          <text class="tool-label">{{item.label}}</text>
+        </button>
+      </view>
+      <view class="tool-actions">
+        <button class="tool action-tool" bindtap="undo" disabled="{{!canUndo}}" aria-label="撤销">
+          <icon class="tool-icon" name="undo" size="28" />
+          <text class="tool-label">撤销</text>
+        </button>
+        <button class="tool action-tool" bindtap="redo" disabled="{{!canRedo}}" aria-label="重做">
+          <icon class="tool-icon" name="redo" size="28" />
+          <text class="tool-label">重做</text>
+        </button>
+        <button class="tool action-tool danger" bindtap="clearCanvas" aria-label="清空">
+          <icon class="tool-icon" name="trash" size="28" />
+          <text class="tool-label">清空</text>
+        </button>
+      </view>
     </view>
 
     <view class="v0-section-title">
