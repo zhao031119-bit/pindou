@@ -7,3 +7,4 @@ project.private.config.json
 .vscode/
 .v0-import/
 .backup-before-v0-direct-*/
+.superpowers/

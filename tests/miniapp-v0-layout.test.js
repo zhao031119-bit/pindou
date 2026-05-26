@@ -5,6 +5,15 @@ function read(file) {
   return fs.readFileSync(file, 'utf8');
 }
 
+function readPngSize(file) {
+  const source = fs.readFileSync(file);
+  assert.strictEqual(source.toString('ascii', 1, 4), 'PNG', `${file} should be a PNG image`);
+  return {
+    width: source.readUInt32BE(16),
+    height: source.readUInt32BE(20)
+  };
+}
+
 function includesAll(source, file, needles) {
   for (const needle of needles) {
     assert.ok(source.includes(needle), `${file} should include ${needle}`);
@@ -207,5 +216,18 @@ assert.ok(
   /\.tool-label\s*\{[^}]*font-size:\s*\d+rpx/s.test(drawWxss),
   'pages/draw/draw.wxss should show readable labels on tool buttons'
 );
+
+for (const asset of [
+  'card-generate.png',
+  'card-pick.png',
+  'card-extract.png',
+  'card-draw.png'
+]) {
+  assert.deepStrictEqual(
+    readPngSize(`miniprogram/assets/home/${asset}`),
+    { width: 512, height: 384 },
+    `miniprogram/assets/home/${asset} should use the detailed 512x384 pixel art canvas`
+  );
+}
 
 console.log('miniapp-v0-layout.test.js passed');
