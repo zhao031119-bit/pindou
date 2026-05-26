@@ -34,54 +34,60 @@
       </view>
     </view>
 
-    <view class="v0-section-title">
-      <text class="section-label">尺寸</text>
-    </view>
+    <view class="size-section">
+      <view class="v0-section-title">
+        <text class="section-label">尺寸</text>
+      </view>
 
-    <view class="size-inputs">
-      <view class="size-input-label">
-        <text>宽（颗）</text>
-        <view class="stepper">
-          <button data-field="width" data-delta="-1" bindtap="stepDimension">−</button>
-          <input type="number" value="{{width}}" bindinput="onWidthInput" />
-          <button data-field="width" data-delta="1" bindtap="stepDimension">+</button>
+      <view class="size-inputs">
+        <view class="size-input-label">
+          <text>宽（颗）</text>
+          <view class="stepper">
+            <button data-field="width" data-delta="-1" bindtap="stepDimension">−</button>
+            <input type="number" value="{{width}}" bindinput="onWidthInput" />
+            <button data-field="width" data-delta="1" bindtap="stepDimension">+</button>
+          </view>
+        </view>
+        <view class="size-input-label">
+          <text>高（颗）</text>
+          <view class="stepper">
+            <button data-field="height" data-delta="-1" bindtap="stepDimension">−</button>
+            <input type="number" value="{{height}}" bindinput="onHeightInput" />
+            <button data-field="height" data-delta="1" bindtap="stepDimension">+</button>
+          </view>
         </view>
       </view>
-      <view class="size-input-label">
-        <text>高（颗）</text>
-        <view class="stepper">
-          <button data-field="height" data-delta="-1" bindtap="stepDimension">−</button>
-          <input type="number" value="{{height}}" bindinput="onHeightInput" />
-          <button data-field="height" data-delta="1" bindtap="stepDimension">+</button>
-        </view>
+    </view>
+
+    <view class="size-section">
+      <view class="v0-section-title">
+        <text class="section-label">尺寸预设</text>
+      </view>
+
+      <view class="recommend-row">
+        <button
+          wx:for="{{simplePresets}}"
+          wx:key="id"
+          class="recommend {{selectedPresetId === item.id ? 'active' : ''}}"
+          data-index="{{index}}"
+          bindtap="applySimplePreset"
+        >
+          <text class="recommend-title">{{item.label}}</text>
+          <text class="recommend-size">{{item.width}} x {{item.height}}</text>
+        </button>
       </view>
     </view>
 
-    <view class="v0-section-title">
-      <text class="section-label">尺寸预设</text>
-    </view>
+    <view class="size-section">
+      <view class="v0-section-title">
+        <text class="section-label">比例预览</text>
+        <text class="section-action">{{width}} x {{height}}</text>
+      </view>
 
-    <view class="recommend-row">
-      <button
-        wx:for="{{simplePresets}}"
-        wx:key="id"
-        class="recommend {{selectedPresetId === item.id ? 'active' : ''}}"
-        data-index="{{index}}"
-        bindtap="applySimplePreset"
-      >
-        <text class="recommend-title">{{item.label}}</text>
-        <text class="recommend-size">{{item.width}} x {{item.height}}</text>
-      </button>
-    </view>
-
-    <view class="v0-section-title">
-      <text class="section-label">比例预览</text>
-      <text class="section-action">{{width}} x {{height}}</text>
-    </view>
-
-    <view class="card-feature preview-board">
-      <text class="board-ratio">{{width}} x {{height}}</text>
-      <view class="ghost-grid" style="{{previewStyle}}"></view>
+      <view class="card-feature preview-board">
+        <text class="board-ratio">{{width}} x {{height}}</text>
+        <view class="ghost-grid" style="{{previewStyle}}"></view>
+      </view>
     </view>
 
     <view wx:if="{{generating}}" class="loading-pixels">

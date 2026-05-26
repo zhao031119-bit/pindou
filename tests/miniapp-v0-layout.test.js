@@ -30,6 +30,7 @@ const sizeWxml = read('pages/size/size.wxml');
 includesAll(sizeWxml, 'pages/size/size.wxml', [
   'step-indicator',
   'size-hero',
+  'size-section',
   'size-inputs',
   'recommend-row',
   'preview-board',
@@ -128,15 +129,27 @@ assert.ok(
   'pages/size/size.wxss should give preset buttons a stable min-height'
 );
 assert.ok(
-  /\.size-body\s*\{[^}]*gap:\s*(?:[3-9]\d|\d{3,})rpx/s.test(sizeWxss),
-  'pages/size/size.wxss should keep the size page from feeling too compressed'
+  /\.size-body\s*\{[^}]*gap:\s*(?:4[4-9]|[5-9]\d|\d{3,})rpx/s.test(sizeWxss),
+  'pages/size/size.wxss should give each size-page block enough vertical breathing room'
 );
 assert.ok(
-  /\.recommend-row\s*\{[^}]*gap:\s*(?:2[4-9]|[3-9]\d|\d{3,})rpx/s.test(sizeWxss),
-  'pages/size/size.wxss should leave clear space between preset cards'
+  /\.recommend-row\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*1fr\)/s.test(sizeWxss),
+  'pages/size/size.wxss should use stable equal-width columns for the three preset cards'
 );
 assert.ok(
-  /\.recommend\s*\{[^}]*min-height:\s*(?:13[2-9]|1[4-9]\d|[2-9]\d\d)rpx/s.test(sizeWxss),
+  /\.recommend-row\s*\{[^}]*gap:\s*(?:1[0-8]|[0-9])rpx/s.test(sizeWxss),
+  'pages/size/size.wxss should keep preset-card gaps narrow enough to fit mobile width'
+);
+assert.ok(
+  /\.recommend\s*\{[^}]*width:\s*100%/s.test(sizeWxss),
+  'pages/size/size.wxss should make each preset button fill its grid cell instead of drifting'
+);
+assert.ok(
+  /\.recommend\s*\{[^}]*box-sizing:\s*border-box/s.test(sizeWxss),
+  'pages/size/size.wxss should include preset padding inside each grid column'
+);
+assert.ok(
+  /\.recommend\s*\{[^}]*min-height:\s*(?:12[0-9]|13[0-9]|1[4-9]\d|[2-9]\d\d)rpx/s.test(sizeWxss),
   'pages/size/size.wxss should make preset cards large enough to read and tap'
 );
 assert.ok(
