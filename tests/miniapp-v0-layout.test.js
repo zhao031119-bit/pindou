@@ -230,4 +230,17 @@ for (const asset of [
   );
 }
 
+const homeAssetScript = read('scripts/generate-home-assets.mjs');
+const decorativeBlockPattern = /rect\(canvas,\s*(\d+),\s*\d+,\s*(\d+),\s*(\d+),\s*'(clay|berry|butter|mint)'\s*\)/g;
+let decorativeBlockMatch;
+while ((decorativeBlockMatch = decorativeBlockPattern.exec(homeAssetScript))) {
+  const x = Number(decorativeBlockMatch[1]);
+  const width = Number(decorativeBlockMatch[2]);
+  const height = Number(decorativeBlockMatch[3]);
+  assert.ok(
+    !(width >= 10 && height >= 10 && (x <= 20 || x >= 75)),
+    'scripts/generate-home-assets.mjs should not draw large standalone side color blocks on homepage assets'
+  );
+}
+
 console.log('miniapp-v0-layout.test.js passed');

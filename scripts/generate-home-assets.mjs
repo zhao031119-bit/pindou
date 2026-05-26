@@ -141,9 +141,6 @@ function drawPatternAsset() {
   bead(canvas, 63, 54, 'clay');
 
   rect(canvas, 72, 68, 15, 4, 'line');
-  rect(canvas, 96, 29, 16, 16, 'clay');
-  rect(canvas, 102, 48, 14, 14, 'butter');
-  rect(canvas, 96, 66, 18, 18, 'mint');
   return canvas;
 }
 
@@ -165,10 +162,6 @@ function drawPickAsset() {
   bead(canvas, 61, 30, 'butter');
   bead(canvas, 52, 37, 'butter');
   bead(canvas, 58, 37, 'clay');
-
-  rect(canvas, 86, 15, 18, 18, 'berry');
-  rect(canvas, 96, 34, 18, 18, 'butter');
-  rect(canvas, 17, 34, 10, 10, 'mint');
   return canvas;
 }
 
@@ -187,9 +180,6 @@ function drawExtractAsset() {
   rect(canvas, 48, 52, 30, 4, 'line');
   rect(canvas, 48, 59, 17, 3, 'line');
 
-  rect(canvas, 80, 17, 18, 18, 'berry');
-  rect(canvas, 90, 31, 18, 18, 'butter');
-  rect(canvas, 78, 45, 18, 18, 'mint');
   rect(canvas, 88, 64, 15, 5, 'shadow');
   return canvas;
 }
@@ -207,12 +197,12 @@ function drawDrawAsset() {
   bead(canvas, 40, 40, 'mint');
   bead(canvas, 46, 40, 'butter');
 
-  rect(canvas, 69, 36, 34, 9, 'butter');
-  rect(canvas, 96, 32, 8, 17, 'clay');
-  rect(canvas, 63, 39, 8, 9, 'ink');
-  rect(canvas, 58, 42, 6, 6, 'paper');
-  rect(canvas, 83, 48, 9, 4, 'line');
-  rect(canvas, 92, 52, 9, 4, 'line');
+  rect(canvas, 66, 36, 26, 7, 'butter');
+  rect(canvas, 92, 38, 5, 5, 'clay');
+  rect(canvas, 61, 38, 7, 7, 'ink');
+  rect(canvas, 57, 40, 4, 4, 'paper');
+  rect(canvas, 82, 47, 8, 4, 'line');
+  rect(canvas, 89, 51, 8, 4, 'line');
   return canvas;
 }
 
