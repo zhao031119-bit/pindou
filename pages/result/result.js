@@ -7,6 +7,7 @@ const { STORAGE_KEYS } = require('../../miniprogram/utils/constants');
 const { getChecks, toggleCheck, clearChecks } = require('../../miniprogram/utils/project-checks');
 const { getPaletteIcon, makePaletteIconOptions } = require('../../miniprogram/utils/palette-icons');
 const haptic = require('../../miniprogram/utils/haptic');
+const { shareAppMessage, shareTimeline } = require('../../miniprogram/utils/share');
 
 const DRAFT_KEY = STORAGE_KEYS.UPLOAD_DRAFT;
 const CURRENT_PROJECT_KEY = STORAGE_KEYS.CURRENT_PROJECT;
@@ -443,25 +444,15 @@ Page({
 
   onShareAppMessage() {
     const project = this.data.project;
-    if (project && project.id && this.data.isSaved) {
-      return {
-        title: project.name || '我做的拼豆图纸',
-        path: '/pages/home/home'
-      };
-    }
-    return {
-      title: '拼豆星球 - 从照片自动生成图纸',
-      path: '/pages/home/home'
-    };
+    return shareAppMessage('result', {
+      title: project && project.name ? project.name : '???????'
+    });
   },
 
   onShareTimeline() {
     const project = this.data.project;
-    if (project && project.id && this.data.isSaved) {
-      return {
-        title: project.name || '我做的拼豆图纸'
-      };
-    }
-    return { title: '拼豆星球 - 从照片自动生成图纸' };
+    return shareTimeline('result', {
+      title: project && project.name ? project.name : '???????'
+    });
   }
 });

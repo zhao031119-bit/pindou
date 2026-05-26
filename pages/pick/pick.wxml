@@ -8,6 +8,7 @@
       <view class="header-subtitle">点击图片取色</view>
     </view>
     <view class="header-side right">
+      <button class="icon-btn" open-type="share" aria-label="share"><icon name="share" size="30" /></button>
       <button class="icon-btn" bindtap="goHome"><icon name="home" size="30" /></button>
     </view>
   </view>

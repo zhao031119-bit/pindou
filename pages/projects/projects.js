@@ -3,6 +3,7 @@ const { getPageTopStyle, getHeaderStyle } = require('../../miniprogram/utils/lay
 const { formatTime, typeLabel, makeProjectThumbnail } = require('../../miniprogram/utils/project-preview');
 const { STORAGE_KEYS } = require('../../miniprogram/utils/constants');
 const haptic = require('../../miniprogram/utils/haptic');
+const { shareAppMessage, shareTimeline } = require('../../miniprogram/utils/share');
 
 const CURRENT_PROJECT_KEY = STORAGE_KEYS.CURRENT_PROJECT;
 
@@ -152,5 +153,12 @@ Page({
     wx.navigateBack({
       fail: () => this.goHome()
     });
+  },
+  onShareAppMessage() {
+    return shareAppMessage('projects');
+  },
+
+  onShareTimeline() {
+    return shareTimeline('projects');
   }
 });

@@ -243,4 +243,19 @@ while ((decorativeBlockMatch = decorativeBlockPattern.exec(homeAssetScript))) {
   );
 }
 
+for (const page of ['home', 'upload', 'size', 'pick', 'extract', 'draw', 'projects', 'detail', 'result']) {
+  const pageJs = read(`pages/${page}/${page}.js`);
+  const pageWxml = read(`pages/${page}/${page}.wxml`);
+  includesAll(pageJs, `pages/${page}/${page}.js`, [
+    'shareAppMessage',
+    'shareTimeline',
+    'onShareAppMessage',
+    'onShareTimeline'
+  ]);
+  assert.ok(
+    /open-type="share"/.test(pageWxml),
+    `pages/${page}/${page}.wxml should expose a visible WeChat share button`
+  );
+}
+
 console.log('miniapp-v0-layout.test.js passed');

@@ -7,6 +7,7 @@ const { getHeaderStyle } = require('../../miniprogram/utils/layout');
 const { chooseOneImage } = require('../../miniprogram/utils/media');
 const { getPaletteIcon } = require('../../miniprogram/utils/palette-icons');
 const haptic = require('../../miniprogram/utils/haptic');
+const { shareAppMessage, shareTimeline } = require('../../miniprogram/utils/share');
 
 function toPositiveInt(value, fallback) {
   const number = parseInt(value, 10);
@@ -315,5 +316,12 @@ Page({
     wx.navigateBack({
       fail: () => wx.redirectTo({ url: '/pages/home/home' })
     });
+  },
+  onShareAppMessage() {
+    return shareAppMessage('extract');
+  },
+
+  onShareTimeline() {
+    return shareTimeline('extract');
   }
 });

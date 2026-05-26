@@ -9,8 +9,9 @@
         <view class="header-subtitle">{{project.width}} x {{project.height}} · {{project.colorStats.length}} 色</view>
       </view>
       <view class="header-side right">
-        <button class="icon-btn" bindtap="goHome"><icon name="home" size="30" /></button>
-      </view>
+      <button class="icon-btn" open-type="share" aria-label="share"><icon name="share" size="30" /></button>
+      <button class="icon-btn" bindtap="goHome"><icon name="home" size="30" /></button>
+    </view>
     </view>
 
     <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body flow-body result-body">
@@ -150,8 +151,9 @@
         <view class="header-subtitle">先上传图片并确认尺寸</view>
       </view>
       <view class="header-side right">
-        <button class="icon-btn" bindtap="goHome"><icon name="home" size="30" /></button>
-      </view>
+      <button class="icon-btn" open-type="share" aria-label="share"><icon name="share" size="30" /></button>
+      <button class="icon-btn" bindtap="goHome"><icon name="home" size="30" /></button>
+    </view>
     </view>
 
     <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body flow-body result-body empty-result-body">

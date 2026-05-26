@@ -2,6 +2,7 @@ const { listProjects } = require('../../miniprogram/utils/store');
 const { countPaintedCells, makeProjectThumbnail } = require('../../miniprogram/utils/project-preview');
 const { STORAGE_KEYS } = require('../../miniprogram/utils/constants');
 const haptic = require('../../miniprogram/utils/haptic');
+const { shareAppMessage, shareTimeline } = require('../../miniprogram/utils/share');
 
 const DRAFT_KEY = STORAGE_KEYS.UPLOAD_DRAFT;
 const DRAW_DRAFT_KEY = STORAGE_KEYS.DRAW_DRAFT;
@@ -172,10 +173,10 @@ Page({
   },
 
   onShareAppMessage() {
-    return { title: '拼豆星球 - 从照片自动生成图纸', path: '/pages/home/home' };
+    return shareAppMessage('home');
   },
 
   onShareTimeline() {
-    return { title: '拼豆星球 - 从照片自动生成图纸' };
+    return shareTimeline('home');
   }
 });

@@ -1,6 +1,7 @@
 const { getHeaderStyle } = require('../../miniprogram/utils/layout');
 const { STORAGE_KEYS } = require('../../miniprogram/utils/constants');
 const haptic = require('../../miniprogram/utils/haptic');
+const { shareAppMessage, shareTimeline } = require('../../miniprogram/utils/share');
 
 const DRAFT_KEY = STORAGE_KEYS.UPLOAD_DRAFT;
 const MAX_ZOOM = 6;
@@ -311,5 +312,12 @@ Page({
       return;
     }
     wx.redirectTo({ url: '/pages/size/size' });
+  },
+  onShareAppMessage() {
+    return shareAppMessage('upload');
+  },
+
+  onShareTimeline() {
+    return shareTimeline('upload');
   }
 });

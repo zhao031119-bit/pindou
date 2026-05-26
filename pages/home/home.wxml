@@ -5,6 +5,7 @@
   <view class="brand">
     <view class="brand-dot"></view>
     <text class="brand-text">拼豆星球</text>
+    <button class="home-share-btn" open-type="share" aria-label="share"><icon name="share" size="26" /></button>
   </view>
 
   <!-- 大标题 -->

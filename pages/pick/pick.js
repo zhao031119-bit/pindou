@@ -4,6 +4,7 @@ const { getPaletteIcon } = require('../../miniprogram/utils/palette-icons');
 const { getHeaderStyle } = require('../../miniprogram/utils/layout');
 const { chooseOneImage } = require('../../miniprogram/utils/media');
 const haptic = require('../../miniprogram/utils/haptic');
+const { shareAppMessage, shareTimeline } = require('../../miniprogram/utils/share');
 
 const SAMPLE_SIZE_OPTIONS = [
   { id: 1, label: '精准 1px' },
@@ -445,5 +446,12 @@ Page({
       return;
     }
     wx.redirectTo({ url: '/pages/home/home' });
+  },
+  onShareAppMessage() {
+    return shareAppMessage('pick');
+  },
+
+  onShareTimeline() {
+    return shareTimeline('pick');
   }
 });

@@ -7,6 +7,7 @@ const { hexToRgb } = require('../../miniprogram/utils/color');
 const { getPageTopStyle, getHeaderStyle } = require('../../miniprogram/utils/layout');
 const { makePaletteIconOptions } = require('../../miniprogram/utils/palette-icons');
 const haptic = require('../../miniprogram/utils/haptic');
+const { shareAppMessage, shareTimeline } = require('../../miniprogram/utils/share');
 
 const MAX_HISTORY = 30;
 const DRAW_DRAFT_KEY = STORAGE_KEYS.DRAW_DRAFT;
@@ -776,5 +777,12 @@ Page({
         });
       });
     });
+  },
+  onShareAppMessage() {
+    return shareAppMessage('draw');
+  },
+
+  onShareTimeline() {
+    return shareTimeline('draw');
   }
 });

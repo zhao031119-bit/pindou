@@ -31,6 +31,20 @@
   opacity: 0.42;
 }
 
+.home-share-btn {
+  width: 64rpx;
+  height: 64rpx;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid rgba(42, 31, 23, 0.06);
+  border-radius: 50%;
+  background: rgba(255, 253, 248, 0.88);
+  color: var(--charcoal);
+  box-shadow: 0 18rpx 38rpx -30rpx rgba(42, 31, 23, 0.34);
+}
+
 /* ===== 大标题 ===== */
 .header {
   padding: 28rpx 40rpx 0;

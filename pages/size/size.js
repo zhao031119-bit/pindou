@@ -10,6 +10,7 @@ const { estimateStats, imageDataToAverageGrid, mapAverageGridToPalette, createPr
 const { getHeaderStyle } = require('../../miniprogram/utils/layout');
 const { analyzeImageData, buildSizeRecommendations, dimensionsFromRatio } = require('../../miniprogram/utils/size-recommendation');
 const haptic = require('../../miniprogram/utils/haptic');
+const { shareAppMessage, shareTimeline } = require('../../miniprogram/utils/share');
 
 const DRAFT_KEY = STORAGE_KEYS.UPLOAD_DRAFT;
 const CURRENT_PROJECT_KEY = STORAGE_KEYS.CURRENT_PROJECT;
@@ -472,5 +473,12 @@ Page({
         }, this);
       });
     });
+  },
+  onShareAppMessage() {
+    return shareAppMessage('size');
+  },
+
+  onShareTimeline() {
+    return shareTimeline('size');
   }
 });

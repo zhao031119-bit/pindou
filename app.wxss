@@ -143,6 +143,7 @@ scroll-view.scroll-body {
   justify-content: flex-end;
   padding-left: 0;
   padding-right: 8rpx;
+  gap: 12rpx;
 }
 
 .header-center {
@@ -679,7 +680,7 @@ scroll-view.scroll-body {
   height: var(--nav-height, calc(116rpx + env(safe-area-inset-top)));
   padding: var(--nav-top, calc(20rpx + env(safe-area-inset-top))) 32rpx 12rpx;
   display: grid;
-  grid-template-columns: 72rpx 1fr 72rpx;
+  grid-template-columns: 156rpx 1fr 156rpx;
   align-items: center;
   gap: 22rpx;
   background:
@@ -704,6 +705,7 @@ scroll-view.scroll-body {
 
 .header-side.right {
   padding-right: 0;
+  gap: 12rpx;
 }
 
 .header-center {
