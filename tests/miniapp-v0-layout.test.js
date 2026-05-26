@@ -39,6 +39,7 @@ includesAll(uploadWxml, 'pages/upload/upload.wxml', [
   'step-indicator',
   'crop-stage',
   'photo-surface',
+  'upload-placeholder-shell',
   'floating-chip',
   'goSize'
 ]);
@@ -46,6 +47,10 @@ excludesAll(uploadWxml, 'pages/upload/upload.wxml', [
   'crop-hint-card',
   'crop-size-pill'
 ]);
+assert.ok(
+  /class="[^"]*photo-surface[^"]*upload-placeholder-shell[^"]*"[^>]*bindtap="chooseFromAlbum"/.test(uploadWxml),
+  'pages/upload/upload.wxml should let the main empty upload surface trigger chooseFromAlbum'
+);
 
 const resultWxml = read('pages/result/result.wxml');
 includesAll(resultWxml, 'pages/result/result.wxml', [

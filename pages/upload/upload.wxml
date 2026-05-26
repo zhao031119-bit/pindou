@@ -23,6 +23,7 @@
 
     <view class="card-feature crop-stage">
       <view
+        wx:if="{{imagePath}}"
         class="photo-surface crop-shell"
         style="width: {{stageWidth}}px; height: {{stageHeight}}px;"
         catchtouchstart="onCropStart"
@@ -30,29 +31,35 @@
         catchtouchend="onCropEnd"
         catchtouchcancel="onCropEnd"
       >
-        <block wx:if="{{imagePath}}">
-          <image
-            class="crop-photo"
-            src="{{imagePath}}"
-            mode="scaleToFill"
-            style="left: {{imageRect.x}}px; top: {{imageRect.y}}px; width: {{imageRect.width}}px; height: {{imageRect.height}}px;"
-          ></image>
-          <view class="crop-frame">
-            <view class="crop-corner top-left"></view>
-            <view class="crop-corner top-right"></view>
-            <view class="crop-corner bottom-left"></view>
-            <view class="crop-corner bottom-right"></view>
-          </view>
-          <button class="floating-chip" catchtap="replaceImage">
-            <icon name="swap" size="24" color="#fffdf8" />
-            <text>换图</text>
-          </button>
-        </block>
-        <button wx:else class="mock-photo" bindtap="chooseFromAlbum">
+        <image
+          class="crop-photo"
+          src="{{imagePath}}"
+          mode="scaleToFill"
+          style="left: {{imageRect.x}}px; top: {{imageRect.y}}px; width: {{imageRect.width}}px; height: {{imageRect.height}}px;"
+        ></image>
+        <view class="crop-frame">
+          <view class="crop-corner top-left"></view>
+          <view class="crop-corner top-right"></view>
+          <view class="crop-corner bottom-left"></view>
+          <view class="crop-corner bottom-right"></view>
+        </view>
+        <button class="floating-chip" catchtap="replaceImage">
+          <icon name="swap" size="24" color="#fffdf8" />
+          <text>换图</text>
+        </button>
+      </view>
+
+      <view
+        wx:else
+        class="photo-surface crop-shell upload-placeholder-shell"
+        style="width: {{stageWidth}}px; height: {{stageHeight}}px;"
+        bindtap="chooseFromAlbum"
+      >
+        <view class="mock-photo">
           <view class="upload-icon"><icon name="image" size="64" color="#4f7fa6" /></view>
           <view class="upload-title">上传图片</view>
           <view class="upload-sub">选择照片后开始裁剪</view>
-        </button>
+        </view>
       </view>
     </view>
   </scroll-view>
