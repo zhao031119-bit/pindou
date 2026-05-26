@@ -1,4 +1,7 @@
 {
   "disableScroll": true,
-  "navigationBarTitleText": "确认尺寸"
+  "navigationBarTitleText": "确认尺寸",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
 }

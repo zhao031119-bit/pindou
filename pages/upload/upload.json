@@ -1,4 +1,7 @@
 {
   "disableScroll": true,
-  "navigationBarTitleText": "上传图片"
+  "navigationBarTitleText": "上传图片",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
 }

@@ -10,9 +10,7 @@
     "pages/detail/detail",
     "pages/result/result"
   ],
-  "usingComponents": {
-    "icon": "/components/icon/icon"
-  },
+  "lazyCodeLoading": "requiredComponents",
   "window": {
     "backgroundTextStyle": "dark",
     "navigationStyle": "custom",

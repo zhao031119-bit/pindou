@@ -1,4 +1,7 @@
 {
   "disableScroll": true,
-  "navigationBarTitleText": "我的作品"
+  "navigationBarTitleText": "我的作品",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
 }

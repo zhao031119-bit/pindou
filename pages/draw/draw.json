@@ -1,4 +1,7 @@
 {
   "disableScroll": true,
-  "navigationBarTitleText": "画豆图"
+  "navigationBarTitleText": "画豆图",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
 }

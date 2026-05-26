@@ -1,4 +1,7 @@
 {
   "disableScroll": true,
-  "navigationBarTitleText": "批量提取色号"
+  "navigationBarTitleText": "批量提取色号",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
 }
