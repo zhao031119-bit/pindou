@@ -15,7 +15,11 @@
   <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body flow-body draw-body">
     <view wx:if="{{draftStatus}}" class="draft-status">{{draftStatus}}</view>
 
-    <view class="card-feature draw-board">
+    <view class="card-feature draw-board {{showGrid ? '' : 'no-grid'}}">
+      <button class="floating-chip {{showGrid ? 'active' : ''}}" bindtap="toggleGrid">
+        <icon name="grid" size="24" color="#fffdf8" />
+        <text>网格</text>
+      </button>
       <canvas
         canvas-id="drawCanvas"
         class="draw-canvas"
@@ -31,20 +35,16 @@
 
     <view class="v0-section-title">
       <text class="section-label">工具</text>
-      <text class="section-action">{{tool}}</text>
     </view>
 
     <view class="tool-dock">
-      <button wx:for="{{tools}}" wx:key="id" class="tool {{tool === item.id ? 'active' : ''}}" data-tool="{{item.id}}" bindtap="chooseTool">{{item.label}}</button>
+      <button wx:for="{{tools}}" wx:key="id" class="tool {{tool === item.id ? 'active' : ''}}" data-tool="{{item.id}}" bindtap="chooseTool" aria-label="{{item.label}}">
+        <icon class="tool-icon" name="{{item.icon}}" size="34" />
+      </button>
       <view class="tool-divider"></view>
-      <button class="tool" bindtap="undo" disabled="{{!canUndo}}">撤</button>
-      <button class="tool" bindtap="redo" disabled="{{!canRedo}}">重</button>
-      <button class="tool" bindtap="resetView">居</button>
-    </view>
-
-    <view class="tool-dock action-dock">
-      <button class="secondary-action small-action {{isSaved ? 'saved' : ''}}" loading="{{saving}}" bindtap="saveProject">{{isSaved ? '打开作品' : '加入作品'}}</button>
-      <button class="primary-action small-action" bindtap="saveLongImage">保存图片</button>
+      <button class="tool" bindtap="undo" disabled="{{!canUndo}}" aria-label="撤销"><icon class="tool-icon" name="undo" size="34" /></button>
+      <button class="tool" bindtap="redo" disabled="{{!canRedo}}" aria-label="重做"><icon class="tool-icon" name="redo" size="34" /></button>
+      <button class="tool" bindtap="clearCanvas" aria-label="清空"><icon class="tool-icon" name="trash" size="34" /></button>
     </view>
 
     <view class="v0-section-title">

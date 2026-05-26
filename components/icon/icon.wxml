@@ -25,4 +25,11 @@
   <block wx:elif="{{name === 'edit'}}"><view class="i-edit"></view></block>
   <block wx:elif="{{name === 'zoom-in'}}"><view class="i-zoom plus"></view></block>
   <block wx:elif="{{name === 'zoom-out'}}"><view class="i-zoom minus"></view></block>
+  <block wx:elif="{{name === 'brush'}}"><view class="i-brush"></view></block>
+  <block wx:elif="{{name === 'eraser'}}"><view class="i-eraser"></view></block>
+  <block wx:elif="{{name === 'fill'}}"><view class="i-fill"></view></block>
+  <block wx:elif="{{name === 'pan'}}"><view class="i-pan"></view></block>
+  <block wx:elif="{{name === 'grid'}}"><view class="i-grid"></view></block>
+  <block wx:elif="{{name === 'undo'}}"><view class="i-turn left"></view></block>
+  <block wx:elif="{{name === 'redo'}}"><view class="i-turn right"></view></block>
 </view>

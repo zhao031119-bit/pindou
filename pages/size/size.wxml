@@ -82,9 +82,19 @@
       <text class="board-ratio">{{width}} x {{height}}</text>
       <view class="ghost-grid" style="{{previewStyle}}"></view>
     </view>
+
+    <view wx:if="{{generating}}" class="loading-pixels">
+      <view class="loading-grid">
+        <view></view><view></view><view></view><view></view>
+        <view></view><view></view><view></view><view></view>
+        <view></view><view></view><view></view><view></view>
+        <view></view><view></view><view></view><view></view>
+      </view>
+      <text>{{generateStage || '正在生成图纸'}}</text>
+      <text>像素聚类、色号匹配、生成清单...</text>
+    </view>
   </scroll-view>
 
-  <view wx:if="{{generating && generateStage}}" class="generate-stage-bar">{{generateStage}}</view>
   <view class="bottom-action-bar">
     <button class="primary-action" loading="{{generating}}" bindtap="generatePattern">
       <icon name="star" size="28" color="#fffaf0" />

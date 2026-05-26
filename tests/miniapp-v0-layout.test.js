@@ -61,4 +61,46 @@ excludesAll(resultWxml, 'pages/result/result.wxml', [
   'board-card'
 ]);
 
+const appWxss = read('app.wxss');
+includesAll(appWxss, 'app.wxss', [
+  '.loading-pixels',
+  '.loading-grid',
+  '@keyframes loadingHop'
+]);
+
+const sizeWxmlAfter = read('pages/size/size.wxml');
+includesAll(sizeWxmlAfter, 'pages/size/size.wxml', [
+  'loading-pixels',
+  'loading-grid'
+]);
+
+const extractWxml = read('pages/extract/extract.wxml');
+includesAll(extractWxml, 'pages/extract/extract.wxml', [
+  'upload-body',
+  'crop-stage',
+  'photo-surface',
+  'chooseImage',
+  'loading-pixels'
+]);
+excludesAll(extractWxml, 'pages/extract/extract.wxml', [
+  'placeholder-art'
+]);
+assert.ok(
+  /class="[^"]*photo-surface[^"]*"[^>]*bindtap="chooseImage"/.test(extractWxml),
+  'pages/extract/extract.wxml should let the main upload surface trigger chooseImage'
+);
+
+const drawWxml = read('pages/draw/draw.wxml');
+includesAll(drawWxml, 'pages/draw/draw.wxml', [
+  'floating-chip',
+  'tool-dock',
+  'tool-icon',
+  'color-dock',
+  'clearCanvas'
+]);
+excludesAll(drawWxml, 'pages/draw/draw.wxml', [
+  'action-dock',
+  '{{tool}}'
+]);
+
 console.log('miniapp-v0-layout.test.js passed');

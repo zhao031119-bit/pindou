@@ -13,35 +13,25 @@
   </view>
 
   <scroll-view scroll-y enhanced="{{true}}" bounces="{{false}}" show-scrollbar="{{false}}" class="scroll-body flow-body extract-body">
-    <button wx:if="{{!project}}" class="upload-panel" bindtap="chooseImage">
-      <block wx:if="{{imagePath}}">
-        <image class="upload-preview-image" src="{{imagePath}}" mode="aspectFit"></image>
-        <view class="upload-preview-mask">
-          <view>
-            <view class="upload-title">已选择图纸</view>
-            <view class="upload-sub">{{imageWidth}} x {{imageHeight}} · 点击换图</view>
+    <view wx:if="{{!project}}" class="card-feature crop-stage upload-body">
+      <view class="photo-surface extract-upload-surface" bindtap="chooseImage">
+        <block wx:if="{{imagePath}}">
+          <image class="upload-preview-image" src="{{imagePath}}" mode="aspectFit"></image>
+          <view class="upload-preview-mask">
+            <view>
+              <view class="upload-title">已选择图纸</view>
+              <view class="upload-sub">{{imageWidth}} x {{imageHeight}} · 点击换图</view>
+            </view>
+            <view class="upload-badge">更换</view>
           </view>
-          <view class="upload-badge">更换</view>
-        </view>
-      </block>
-      <block wx:else>
-        <view class="upload-placeholder">
-          <view class="placeholder-art">
-            <view class="art-dot d1"></view>
-            <view class="art-dot d2"></view>
-            <view class="art-dot d3"></view>
-            <view class="art-dot d4"></view>
-            <view class="art-dot d5"></view>
-            <view class="art-dot d6"></view>
-            <view class="art-dot d7"></view>
-            <view class="art-dot d8"></view>
-            <view class="art-dot d9"></view>
-          </view>
+        </block>
+        <button wx:else class="mock-photo" catchtap="chooseImage">
+          <view class="upload-icon"><icon name="image" size="64" color="#9a7423" /></view>
           <view class="upload-title">上传已有图纸</view>
           <view class="upload-sub">选择图纸后填写宽高</view>
-        </view>
-      </block>
-    </button>
+        </button>
+      </view>
+    </view>
 
     <view wx:if="{{!project}}" class="card-feature extract-settings">
       <view class="v0-section-title compact-title">
@@ -70,6 +60,17 @@
           <view class="select-arrow"><icon name="forward" size="28" /></view>
         </view>
       </picker>
+    </view>
+
+    <view wx:if="{{generating}}" class="loading-pixels">
+      <view class="loading-grid">
+        <view></view><view></view><view></view><view></view>
+        <view></view><view></view><view></view><view></view>
+        <view></view><view></view><view></view><view></view>
+        <view></view><view></view><view></view><view></view>
+      </view>
+      <text>正在批量提取</text>
+      <text>逐像素聚类、合并相近豆色...</text>
     </view>
 
     <block wx:if="{{project}}">

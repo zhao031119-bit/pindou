@@ -12,11 +12,11 @@ const MAX_HISTORY = 30;
 const DRAW_DRAFT_KEY = STORAGE_KEYS.DRAW_DRAFT;
 const DEFAULT_SIZE = DRAW_SIZE_PRESETS.find((item) => item.width === 29) || DRAW_SIZE_PRESETS[1];
 const TOOLS = [
-  { id: 'brush', label: '画笔' },
-  { id: 'eraser', label: '橡皮' },
-  { id: 'fill', label: '填充' },
-  { id: 'picker', label: '取色' },
-  { id: 'pan', label: '移动' }
+  { id: 'brush', label: '画笔', icon: 'brush' },
+  { id: 'eraser', label: '橡皮', icon: 'eraser' },
+  { id: 'fill', label: '填充', icon: 'fill' },
+  { id: 'picker', label: '取色', icon: 'pipette' },
+  { id: 'pan', label: '移动', icon: 'pan' }
 ];
 const BRUSH_SIZES = [
   { id: 1, label: '1×1' },
@@ -125,6 +125,7 @@ Page({
     isSaved: false,
     saving: false,
     draftStatus: '',
+    showGrid: true,
     exportWidth: 320,
     exportHeight: 420
   },
@@ -336,6 +337,10 @@ Page({
     this.drawCanvas();
   },
 
+  toggleGrid() {
+    this.setData({ showGrid: !this.data.showGrid }, () => this.drawCanvas());
+  },
+
   updateZoomLabel() {
     this.setData({ zoomLabel: Math.round(this.scale * 100) + '%' });
   },
@@ -540,13 +545,32 @@ Page({
     this.scheduleDrawDraftSave();
   },
 
+  clearCanvas() {
+    if (!hasPaintedCells(this.cells)) return;
+    wx.showModal({
+      title: '清空画布',
+      content: '确定清空当前画豆图吗？',
+      confirmColor: '#B84B3A',
+      success: (res) => {
+        if (!res.confirm) return;
+        this.pushHistory();
+        this.cells = makeCells(this.data.width, this.data.height);
+        this.currentProjectId = '';
+        this.projectMeta = null;
+        this.setData({ isSaved: false });
+        this.drawCanvas();
+        this.scheduleDrawDraftSave();
+      }
+    });
+  },
+
   drawSingleCell(ctx, cell, size) {
     const x = this.offsetX + cell.x * size;
     const y = this.offsetY + cell.y * size;
     if (x + size < 0 || y + size < 0 || x > this.data.canvasSize || y > this.data.canvasSize) return;
     ctx.setFillStyle(cell.hex);
     ctx.fillRect(x, y, Math.ceil(size), Math.ceil(size));
-    if (size >= 5) {
+    if (this.data.showGrid && size >= 5) {
       ctx.setStrokeStyle('rgba(0,0,0,0.14)');
       ctx.strokeRect(x, y, size, size);
     }

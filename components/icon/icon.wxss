@@ -338,3 +338,127 @@
   border-right: 8rpx solid transparent;
   border-bottom: 10rpx solid currentColor;
 }
+
+.i-brush {
+  width: 4rpx;
+  height: 58%;
+  border-radius: 2rpx;
+  background: currentColor;
+  transform: rotate(38deg);
+  position: relative;
+}
+.i-brush::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -18%;
+  width: 14rpx;
+  height: 16rpx;
+  transform: translateX(-50%);
+  border-radius: 5rpx 5rpx 2rpx 2rpx;
+  background: currentColor;
+}
+.i-brush::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -18%;
+  width: 18rpx;
+  height: 16rpx;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 30% 30%;
+  background: currentColor;
+}
+
+.i-eraser {
+  width: 54%;
+  height: 32%;
+  border: 3rpx solid currentColor;
+  border-radius: 6rpx;
+  transform: rotate(-28deg);
+  position: relative;
+}
+.i-eraser::after {
+  content: "";
+  position: absolute;
+  left: 48%;
+  top: 0;
+  width: 3rpx;
+  height: 100%;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.i-fill {
+  width: 44%;
+  height: 44%;
+  border: 3rpx solid currentColor;
+  border-radius: 5rpx;
+  transform: rotate(-45deg);
+  position: relative;
+}
+.i-fill::after {
+  content: "";
+  position: absolute;
+  right: -12rpx;
+  bottom: -16rpx;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.i-pan {
+  width: 46%;
+  height: 46%;
+  border: 3rpx solid currentColor;
+  border-radius: 50%;
+  position: relative;
+}
+.i-pan::before,
+.i-pan::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72%;
+  height: 3rpx;
+  transform: translate(-50%, -50%);
+  background: currentColor;
+}
+.i-pan::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.i-grid {
+  width: 58%;
+  height: 58%;
+  border: 3rpx solid currentColor;
+  border-radius: 4rpx;
+  background:
+    linear-gradient(currentColor, currentColor) 50% 0 / 3rpx 100% no-repeat,
+    linear-gradient(currentColor, currentColor) 0 50% / 100% 3rpx no-repeat;
+}
+
+.i-turn {
+  width: 54%;
+  height: 42%;
+  border-top: 4rpx solid currentColor;
+  border-left: 4rpx solid currentColor;
+  border-radius: 999rpx 0 0 0;
+  position: relative;
+}
+.i-turn::after {
+  content: "";
+  position: absolute;
+  left: -8rpx;
+  bottom: -5rpx;
+  width: 0;
+  height: 0;
+  border-top: 8rpx solid transparent;
+  border-bottom: 8rpx solid transparent;
+  border-right: 10rpx solid currentColor;
+}
+.i-turn.right {
+  transform: scaleX(-1);
+}

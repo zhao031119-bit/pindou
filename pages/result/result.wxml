@@ -88,6 +88,17 @@
           <view class="bead-count">x{{item.count}}</view>
         </view>
       </view>
+
+      <view wx:if="{{exportingPreview}}" class="loading-pixels">
+        <view class="loading-grid">
+          <view></view><view></view><view></view><view></view>
+          <view></view><view></view><view></view><view></view>
+          <view></view><view></view><view></view><view></view>
+          <view></view><view></view><view></view><view></view>
+        </view>
+        <text>正在生成保存图</text>
+        <text>生成预览后可长按保存</text>
+      </view>
     </scroll-view>
 
     <view class="bottom-action-bar result-actions">

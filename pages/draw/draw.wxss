@@ -383,6 +383,10 @@
   max-width: 100%;
 }
 
+.draw-board.no-grid {
+  background: var(--warm-white);
+}
+
 .tool-dock {
   display: flex;
   align-items: center;
@@ -410,6 +414,10 @@
 .tool-dock .tool.active {
   background: rgba(208, 79, 63, 0.14);
   color: var(--strawberry);
+}
+
+.tool-icon {
+  display: flex;
 }
 
 .tool-dock .tool[disabled] {
