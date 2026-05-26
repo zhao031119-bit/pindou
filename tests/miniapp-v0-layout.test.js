@@ -84,8 +84,24 @@ assert.ok(
   'pages/size/size.wxss should give preset buttons a stable min-height'
 );
 assert.ok(
+  /\.size-body\s*\{[^}]*gap:\s*(?:[3-9]\d|\d{3,})rpx/s.test(sizeWxss),
+  'pages/size/size.wxss should keep the size page from feeling too compressed'
+);
+assert.ok(
+  /\.recommend-row\s*\{[^}]*gap:\s*(?:2[4-9]|[3-9]\d|\d{3,})rpx/s.test(sizeWxss),
+  'pages/size/size.wxss should leave clear space between preset cards'
+);
+assert.ok(
+  /\.recommend\s*\{[^}]*min-height:\s*(?:13[2-9]|1[4-9]\d|[2-9]\d\d)rpx/s.test(sizeWxss),
+  'pages/size/size.wxss should make preset cards large enough to read and tap'
+);
+assert.ok(
   /\.recommend-title,\s*\.recommend-size\s*\{[^}]*overflow:\s*hidden/s.test(sizeWxss),
   'pages/size/size.wxss should keep preset text inside each button'
+);
+assert.ok(
+  /\.recommend\.active\s*\{[^}]*rgba\(197,\s*106,\s*76/s.test(sizeWxss),
+  'pages/size/size.wxss should use the clay selected state from the v0 preset cards'
 );
 
 const extractWxml = read('pages/extract/extract.wxml');
