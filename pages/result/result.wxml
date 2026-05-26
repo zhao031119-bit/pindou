@@ -24,10 +24,6 @@
       </view>
 
       <view class="card-feature result-preview">
-        <button wx:if="{{sourceImage}}" class="floating-chip {{showOriginal ? 'active' : ''}}" bindtap="toggleOriginal">
-          <icon name="eye" size="24" color="#fffdf8" />
-          <text>{{showOriginal ? '图纸' : '原图'}}</text>
-        </button>
         <scroll-view scroll-x scroll-y class="preview-scroll" style="height: {{previewBoxHeight}}px;">
           <canvas
             canvas-id="previewCanvas"
@@ -44,6 +40,16 @@
             style="width: {{previewCanvasWidth}}px; height: {{previewCanvasHeight}}px;"
           ></image>
         </scroll-view>
+        <view wx:if="{{sourceImage}}" class="preview-toggle-bar">
+          <button class="preview-toggle {{showOriginal ? '' : 'active'}}" bindtap="showPattern">
+            <icon name="grid" size="24" />
+            <text>图纸</text>
+          </button>
+          <button class="preview-toggle {{showOriginal ? 'active' : ''}}" bindtap="showOriginalImage">
+            <icon name="eye" size="24" />
+            <text>原图</text>
+          </button>
+        </view>
         <view class="result-caption">
           <text>{{project.width}} x {{project.height}} 颗 · {{project.colorStats.length}} 色</text>
           <text>合计 {{project.stats.total}} 颗</text>
@@ -55,18 +61,20 @@
         <text class="section-action">{{palettes.length}} 个品牌</text>
       </view>
 
-      <scroll-view scroll-x show-scrollbar="{{false}}" class="palette-row">
+      <view class="brand-grid">
         <button
           wx:for="{{palettes}}"
           wx:key="id"
-          class="palette-pill {{project.paletteId === item.id ? 'active' : ''}}"
+          class="brand-tile {{project.paletteId === item.id ? 'active' : ''}}"
           data-id="{{item.id}}"
           bindtap="switchPalette"
         >
-          <image class="palette-logo" src="{{item.icon}}" mode="aspectFit"></image>
+          <view class="brand-avatar">
+            <image class="palette-logo" src="{{item.icon}}" mode="aspectFit"></image>
+          </view>
           <text>{{item.name}}</text>
         </button>
-      </scroll-view>
+      </view>
 
       <view class="v0-section-title">
         <text class="section-label">豆子清单</text>

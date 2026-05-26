@@ -1,6 +1,6 @@
 const { getProject, deleteProject: removeProject, renameProject } = require('../../miniprogram/utils/store');
 const { drawPattern, drawLegend, makePatternExportLayout, saveCanvasToAlbum } = require('../../miniprogram/utils/render');
-const { getPaletteName, isPaletteVerified } = require('../../miniprogram/utils/palettes');
+const { getPaletteName } = require('../../miniprogram/utils/palettes');
 const { getPageTopStyle, getHeaderStyle } = require('../../miniprogram/utils/layout');
 const { safeCells, formatTime, typeLabel, countPaintedCells } = require('../../miniprogram/utils/project-preview');
 const { STORAGE_KEYS } = require('../../miniprogram/utils/constants');
@@ -25,7 +25,6 @@ Page({
     pageStyle: '',
     navStyle: '',
     project: null,
-    paletteVerified: true,
     decoratedStats: [],
     checkedCount: 0,
     highlightCode: '',
@@ -79,7 +78,6 @@ Page({
     });
     this.setData({
       project,
-      paletteVerified: isPaletteVerified(raw.paletteId),
       decoratedStats,
       checkedCount: checkedCodes.length
     }, () => this.updatePreviewSize());
@@ -150,15 +148,6 @@ Page({
         const decoratedStats = this.data.decoratedStats.map((item) => Object.assign({}, item, { checked: false }));
         this.setData({ decoratedStats, checkedCount: 0 });
       }
-    });
-  },
-
-  showVerifiedInfo() {
-    wx.showModal({
-      title: '什么是「待校准」',
-      content: '该色卡的色值还在采集和核对中，目前显示的色号仅供预览参考，按这份清单去店铺购买可能会有偏差。已校准的色卡（如 MARD家、盼盼家）则可以放心使用。',
-      showCancel: false,
-      confirmText: '我知道了'
     });
   },
 

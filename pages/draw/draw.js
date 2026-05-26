@@ -1,5 +1,5 @@
 const { DEFAULT_PALETTE_ID, DRAW_SIZE_PRESETS, STORAGE_KEYS } = require('../../miniprogram/utils/constants');
-const { listPalettes, getPalette, getPaletteName, isPaletteVerified } = require('../../miniprogram/utils/palettes');
+const { listPalettes, getPalette, getPaletteName } = require('../../miniprogram/utils/palettes');
 const { createProject } = require('../../miniprogram/utils/pattern');
 const { saveProject: persistProject, getProject } = require('../../miniprogram/utils/store');
 const { drawPattern, drawLegend, makePatternExportLayout, saveCanvasToAlbum } = require('../../miniprogram/utils/render');
@@ -296,9 +296,6 @@ Page({
       selectedColor: colors[0]
     });
     this.scheduleDrawDraftSave();
-    if (!isPaletteVerified(paletteId)) {
-      wx.showToast({ title: '该色卡待校准', icon: 'none' });
-    }
   },
 
   chooseColor(event) {

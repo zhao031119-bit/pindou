@@ -1,4 +1,4 @@
-const { listPalettes, isPaletteVerified } = require('../../miniprogram/utils/palettes');
+const { listPalettes } = require('../../miniprogram/utils/palettes');
 const { imageDataToAverageGrid, mapAverageGridToPalette, createProject } = require('../../miniprogram/utils/pattern');
 const { saveProject } = require('../../miniprogram/utils/store');
 const { drawPattern, drawLegend, measureLegend, saveCanvasToAlbum } = require('../../miniprogram/utils/render');
@@ -38,7 +38,6 @@ Page({
     previewWidth: 320,
     previewHeight: 320,
     project: null,
-    paletteVerified: true,
     colorStats: [],
     totalCount: 0,
     generating: false,
@@ -105,12 +104,8 @@ Page({
 
   onPaletteChange(event) {
     const paletteIndex = Number(event.detail.value);
-    const paletteId = this.data.palettes[paletteIndex].id;
     this.setData({ paletteIndex });
     this.clearResult();
-    if (!isPaletteVerified(paletteId)) {
-      wx.showToast({ title: '该色卡待校准', icon: 'none' });
-    }
   },
 
   onBeadSizeChange(event) {
@@ -203,12 +198,10 @@ Page({
     const colorStats = project.colorStats.map((item) => Object.assign({}, item, {
       percent: totalCount ? Math.max(1, Math.round(item.count / totalCount * 100)) : 0
     }));
-    const paletteVerified = isPaletteVerified(project.paletteId);
     this.setData({
       project,
       colorStats,
       totalCount,
-      paletteVerified,
       generating: false,
       isSaved: !!opts.saved
     }, () => this.drawPreview());

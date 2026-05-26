@@ -429,6 +429,7 @@
 .detail-preview {
   width: 210rpx;
   max-height: 210rpx;
+  overflow: hidden;
   border-radius: 28rpx;
   background:
     linear-gradient(to right, rgba(217, 205, 179, 0.45) 1rpx, transparent 1rpx),

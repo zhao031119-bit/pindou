@@ -1,4 +1,4 @@
-const { listPalettes, getPalette, getPaletteName, isPaletteVerified } = require('../../miniprogram/utils/palettes');
+const { listPalettes, getPalette, getPaletteName } = require('../../miniprogram/utils/palettes');
 const { estimateStats, remapProject } = require('../../miniprogram/utils/pattern');
 const { saveProject, getProject } = require('../../miniprogram/utils/store');
 const { drawPattern, drawLegend, makePatternExportLayout } = require('../../miniprogram/utils/render');
@@ -37,7 +37,6 @@ Page({
     palettes: makePaletteOptions(),
     paletteName: '',
     paletteIcon: '',
-    paletteVerified: true,
     canEditSource: false,
     mode: 'color',
     showOriginal: false,
@@ -112,7 +111,6 @@ Page({
       project: safeProject,
       paletteName: getPaletteName(safeProject.paletteId),
       paletteIcon: getPaletteIcon(safeProject.paletteId),
-      paletteVerified: isPaletteVerified(safeProject.paletteId),
       previewCanvasWidth: maxWidth,
       sourceImage,
       decoratedStats,
@@ -165,10 +163,16 @@ Page({
     this.setData({ mode }, () => this.updatePreviewSize());
   },
 
-  toggleOriginal() {
-    if (!this.data.sourceImage) return;
+  showPattern() {
+    if (!this.data.showOriginal) return;
     haptic.tap();
-    this.setData({ showOriginal: !this.data.showOriginal });
+    this.setData({ showOriginal: false });
+  },
+
+  showOriginalImage() {
+    if (!this.data.sourceImage || this.data.showOriginal) return;
+    haptic.tap();
+    this.setData({ showOriginal: true });
   },
 
   highlightStat(event) {
@@ -215,30 +219,10 @@ Page({
     });
   },
 
-  showVerifiedInfo() {
-    wx.showModal({
-      title: '什么是「待校准」',
-      content: '该色卡的色值还在采集和核对中，目前显示的色号仅供预览参考，按这份清单去店铺购买可能会有偏差。已校准的色卡（如 MARD家、盼盼家）则可以放心使用。',
-      showCancel: false,
-      confirmText: '我知道了'
-    });
-  },
-
   switchPalette(event) {
     haptic.tap();
     const paletteId = event.currentTarget.dataset.id;
     if (!this.data.project || paletteId === this.data.project.paletteId) return;
-    if (!isPaletteVerified(paletteId)) {
-      wx.showModal({
-        title: '色卡待校准',
-        content: '该色卡目前是示例数据，只适合预览，不建议按清单购买。确定仅预览吗？',
-        confirmText: '仅预览',
-        success: (res) => {
-          if (res.confirm) this.applyPaletteSwitch(paletteId);
-        }
-      });
-      return;
-    }
     this.applyPaletteSwitch(paletteId);
   },
 
@@ -274,9 +258,6 @@ Page({
       return;
     }
     wx.hideLoading();
-    if (!isPaletteVerified(paletteId)) {
-      wx.showToast({ title: '该色卡待校准', icon: 'none' });
-    }
   },
 
   saveToProjects() {

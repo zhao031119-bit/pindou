@@ -65,12 +65,14 @@
       <text class="section-label">调色盘</text>
     </view>
 
-    <scroll-view scroll-x class="palette-row" show-scrollbar="{{false}}">
-      <button wx:for="{{palettes}}" wx:key="id" class="palette-pill {{paletteId === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="changePalette">
-        <image class="palette-logo" src="{{item.icon}}" mode="aspectFit"></image>
+    <view class="brand-grid">
+      <button wx:for="{{palettes}}" wx:key="id" class="brand-tile {{paletteId === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="changePalette">
+        <view class="brand-avatar">
+          <image class="palette-logo" src="{{item.icon}}" mode="aspectFit"></image>
+        </view>
         <text>{{item.name}}</text>
       </button>
-    </scroll-view>
+    </view>
 
     <view class="color-dock">
       <button

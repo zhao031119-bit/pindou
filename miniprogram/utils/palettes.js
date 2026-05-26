@@ -1,4 +1,4 @@
-const { rgbToHex, hexToRgb, rgbToLab, normalizeColor } = require('./color');
+const { normalizeColor } = require('./color');
 const { PALETTE_ORDER, DEFAULT_PALETTE_ID } = require('./constants');
 let STATIC_PALETTES = {};
 
@@ -21,31 +21,13 @@ const PALETTE_META = {
   artkal418: { id: 'artkal418', name: '优肯418色', count: 418, prefix: 'YK', seed: 127 }
 };
 
-const BASE_COLORS = [
-  '#FFFFFF', '#F7F3ED', '#EDE2D1', '#D9C1A3', '#B9916D', '#8B684C', '#5A3C2D', '#2B2B2B',
-  '#F92B40', '#D40E1F', '#A9113F', '#711033', '#F893BF', '#E575C7', '#B5038F', '#7A2A8B',
-  '#F8ED33', '#F5C69B', '#FDA42E', '#F47E36', '#DD521C', '#9F5928', '#6E501D',
-  '#E8FFE7', '#B6DBAF', '#64E0A4', '#26B78E', '#1A6E3D', '#305335', '#022C22',
-  '#E6FAFF', '#9EE0F8', '#44CDFB', '#188690', '#0F52BD', '#2F1E8E', '#07004A',
-  '#F2EEFF', '#D6BAF5', '#9F85CF', '#6F4285', '#4B233A',
-  '#F4F4F4', '#D8D4D3', '#B4B4B4', '#878787', '#5D6163', '#303236'
-];
-
-function pseudoRandom(seed) {
-  let value = seed % 2147483647;
-  return function next() {
-    value = (value * 48271) % 2147483647;
-    return value / 2147483647;
-  };
+function hasBundledPalette(id) {
+  return Array.isArray(STATIC_PALETTES[id]) && STATIC_PALETTES[id].length > 0;
 }
 
-function mixChannel(a, b, ratio, jitter) {
-  return Math.round(a * (1 - ratio) + b * ratio + jitter);
-}
-
-function makeCode(prefix, index) {
-  const number = String(index + 1).padStart(3, '0');
-  return prefix + number;
+function getBundledPaletteOrder() {
+  const bundled = PALETTE_ORDER.filter((id) => hasBundledPalette(id));
+  return bundled.length ? bundled : [DEFAULT_PALETTE_ID];
 }
 
 function createPalette(meta) {
@@ -58,38 +40,19 @@ function createPalette(meta) {
       hex: item.hex
     }));
   }
-  const next = pseudoRandom(meta.seed);
-  const colors = [];
-  for (let i = 0; i < meta.count; i += 1) {
-    const base = hexToRgb(BASE_COLORS[i % BASE_COLORS.length]);
-    const target = hexToRgb(BASE_COLORS[(i * 7 + meta.seed) % BASE_COLORS.length]);
-    const ratio = (i % 9) / 10 + 0.05;
-    const jitter = () => (next() - 0.5) * 18;
-    const rgb = {
-      r: mixChannel(base.r, target.r, ratio, jitter()),
-      g: mixChannel(base.g, target.g, ratio, jitter()),
-      b: mixChannel(base.b, target.b, ratio, jitter())
-    };
-    const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
-    colors.push(normalizeColor({
-      id: meta.id + '-' + makeCode(meta.prefix, i),
-      paletteId: meta.id,
-      code: makeCode(meta.prefix, i),
-      name: meta.name + ' ' + makeCode(meta.prefix, i),
-      hex,
-      rgb,
-      lab: rgbToLab(rgb.r, rgb.g, rgb.b)
-    }));
-  }
-  return colors;
+  const fallbackMeta = PALETTE_META[DEFAULT_PALETTE_ID];
+  if (meta.id !== fallbackMeta.id) return createPalette(fallbackMeta);
+  return [];
 }
 
 const paletteCache = {};
 
 function getPaletteMeta(id) {
-  const meta = PALETTE_META[id] || PALETTE_META[DEFAULT_PALETTE_ID];
+  const requested = PALETTE_META[id] || PALETTE_META[DEFAULT_PALETTE_ID];
+  const meta = hasBundledPalette(requested.id) ? requested : PALETTE_META[DEFAULT_PALETTE_ID];
   return Object.assign({}, meta, {
-    verified: !!(STATIC_PALETTES[meta.id] && STATIC_PALETTES[meta.id].length)
+    count: hasBundledPalette(meta.id) ? STATIC_PALETTES[meta.id].length : meta.count,
+    verified: true
   });
 }
 
@@ -102,15 +65,11 @@ function getPalette(id) {
 }
 
 function listPalettes() {
-  return PALETTE_ORDER.map((id) => getPaletteMeta(id));
+  return getBundledPaletteOrder().map((id) => getPaletteMeta(id));
 }
 
 function getPaletteName(id) {
   return getPaletteMeta(id).name;
-}
-
-function isPaletteVerified(id) {
-  return getPaletteMeta(id).verified;
 }
 
 module.exports = {
@@ -119,6 +78,5 @@ module.exports = {
   listPalettes,
   getPalette,
   getPaletteMeta,
-  getPaletteName,
-  isPaletteVerified
+  getPaletteName
 };

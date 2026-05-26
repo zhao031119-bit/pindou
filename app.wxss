@@ -25,6 +25,10 @@ button::after {
   border: 0;
 }
 
+image {
+  display: block;
+}
+
 button[disabled],
 .primary-btn.disabled,
 .secondary-btn.disabled {
